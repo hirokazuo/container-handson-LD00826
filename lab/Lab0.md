@@ -58,6 +58,9 @@ systemctl start crio.service
 * シングルコントロールプレーンのKubernetesクラスターをインストールします
 * クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
 
+
+（補足）インストール手順解説
+公式サイトから確認できた手順と見比べてみてください。
 ```
 # Bootstrap a cluster
 swapoff -a
