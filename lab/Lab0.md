@@ -14,6 +14,7 @@ Kubernetes公式サイトにある「CRI-Oのインストール手順」リン�
 
 
 ### （補足）インストール手順解説
+公式サイトから確認できた手順と見比べてみてください。
 ```
 # Kubernetes、CRI-Oバージョンの変数を設定
 KUBERNETES_VERSION=v1.33
