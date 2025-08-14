@@ -30,6 +30,7 @@ NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   8s
 ```
 
+<br>
 ## 外部向けに公開
 外部向けにサービスを公開します。 公開後、再度サービスを確認します。
 
@@ -41,8 +42,10 @@ service "nginxweb" exposed
 
 `kubectl expose` コマンドで外部へ公開しました。
 
-<br>
+
+<br><br>
 サービス一覧から公開されたポートを確認します。
+
 ```
 $ kubectl get services
 
@@ -51,10 +54,12 @@ kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        5d
 nginxweb     NodePort    10.103.136.206   <none>        80:30606/TCP   1m
 ```
 
+<br><br>
 PORT 列を確認します。上の実行例でいうと「30606」ポートの部分を確認します。
 
 `--type="NodePort"` を指定すると各ノード上にアプリケーションにアクセスするポート（標準で30000–32767）を作成します。 ノードにアクセスしポッドが動いていれば、そのままアクセスします。 ノードにポッドがなければ適切なノード転送される仕組みを持っています。 そのためマスターノードにアクセスすればk8sが適切に転送するという動作をします。
 
+<br><br>
 ホストのIPを確認します。
 ```
 $ ifconfig -a | grep 192.168.*
