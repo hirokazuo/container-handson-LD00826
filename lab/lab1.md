@@ -10,7 +10,7 @@ $ kubectl run 任意のデプロイメント名 --image=nginx --port=80
 deployment "nginxweb" created
 ```
 
-<br>
+<br><br>
 デプロイが完了したら以下のコマンドで状況を確認します。
 
 ```
@@ -20,8 +20,9 @@ NAME                                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE
 nginxweb                              1         1         1            1           53s
 ```
 
-<br>
+<br><br>
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
+
 ```
 $ kubectl get services
 
