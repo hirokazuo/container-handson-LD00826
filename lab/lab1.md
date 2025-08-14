@@ -290,6 +290,17 @@ deploy/wordpress-mysql   1         1         1            1           2d
 3. 取得できた情報を元に対応実施
     1. マニフェストファイルの修正
 
+#### オペレーション簡易化のためデフォルトストレージクラスを設定
+サンプルで公開されているマニフェストを試したいときに以下の設定をしておくと簡単に起動できるようになります。
+
+* デフォルトのストレージクラスを設定
+```
+kubectl patch storageclass [StorageClass名] -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+* external ip が付与できるようにするような仕組みを導入する
+
+
 
 
 
