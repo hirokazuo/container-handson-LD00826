@@ -209,6 +209,38 @@ kubectlのオペレーションの簡易化のためlabelをつけることを�
 
 
 ### アプリケーションの稼働確認
+デプロイしたアプリケーションにアクセスし正常稼働しているか確認します。
+アクセスするIPについてはサービスを取得して確認します。
+
+```
+ kubectl get svc
+```
+
+結果として以下のような出力が得られます。
+今回はService.typeをLoadBalancerで指定しているため、EXTERNAL-IP欄に表示されたIPでアクセスしてみましょう。
+```
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes        ClusterIP   10.96.0.1      <none>        443/TCP        6d
+wordpress         LoadBalancer    10.98.247.58   192.168.10.210        80:32048/TCP   2h
+wordpress-mysql   ClusterIP   None           <none>        3306/TCP       2h
+```
+
+
+今回はオンプレミスでMetalLBを使用しLoadBalancerでExternal-IPを使用できるようにしました。
+Service.Type=NodePortについても確認しましょう。
+* 参考URL: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+#### 注釈
+kubectl引数の省略系について
+今回はServiceの確認をする際に svc という省略形でコマンドを実行しました。 他のオブジェクトも同様に省略形があります。コマンド入力を省力化したい場合は省略形も使ってみましょう。
+`kubectl --help` や `kubectl XX --help` コマンドで確認できます。
+
+#### まとめ
+kubectlやYAMLで記載するマニフェストファイルを使ってk8sへのデプロイが体感できたかと思います。 実運用になるとこのYAMLをたくさん書くことは負荷になることもあるかもしれません.
+
+その解決のためにパッケージマネージャーHelm 等を使ってデプロイすることが多いかと思います。 このラボでは仕組みを理解していただき、応用出来ることを目的としています。
+
+
 
 
 
