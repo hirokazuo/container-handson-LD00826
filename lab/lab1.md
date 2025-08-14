@@ -12,6 +12,7 @@ deployment "nginxweb" created
 
 <br>
 デプロイが完了したら以下のコマンドで状況を確認します。
+
 ```
 $ kubectl get deployments
 
