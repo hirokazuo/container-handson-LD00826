@@ -1,4 +1,4 @@
-# Lab1
+# Lab1: kubernetes基本操作
 
 ## デプロイメント
 kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。
