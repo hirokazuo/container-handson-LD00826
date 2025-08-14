@@ -265,6 +265,13 @@ deploy/wordpress-mysql   1         1         1            1           2d
 ```
 
 
+### 問題の特定方法について
+マニフェストを `kubectl get` と `kubectl describe`, `kubectl logs` を組み合わせて問題箇所を特定していきます。
+
+#### よく使うコマンド
+* kubectl describe オブジェクト名
+* kubectl describe -f deployment.yaml
+
 
 
 
