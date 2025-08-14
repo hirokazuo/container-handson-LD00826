@@ -248,7 +248,8 @@ wordpress-mysql   1         1         1            1           2d
  kubectl get all --all-namespaces
 ```
 
-<br><br>
+<br>
+
 マニフェストファイルを使用したオブジェクトの確認もできます。
 `-f` オプションを使用してデプロイ時に使用したマニフェストファイルを指定すると関連するオブジェクトをすべて表示します。
 
@@ -264,7 +265,7 @@ NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deploy/wordpress-mysql   1         1         1            1           2d
 ```
 
-
+<br>
 ### 問題の特定方法について
 マニフェストを `kubectl get` と `kubectl describe`, `kubectl logs` を組み合わせて問題箇所を特定していきます。
 
