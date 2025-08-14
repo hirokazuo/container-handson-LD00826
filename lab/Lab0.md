@@ -4,6 +4,7 @@ Kubernetesの公式ドキュメントは以下となります。
 
 K8sクラスターを構築する手順は以下「kubeadmセットアップツールのインストール」から確認できます。
 * https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+** ああ 
 
 
 ## コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
