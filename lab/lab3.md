@@ -134,7 +134,89 @@ wordpress-mysql-1894417608-x5dzt   1/1       Running   0          40s
 ```
 
 
-WordPressのデプロイ
+### WordPressのデプロイ
+MySQLのコンテナが立ち上がったらそのMySQLに接続するWordPressをデプロイします。
+
+
+アプリケーションをデプロイするマニフェストファイルの例 wordpress-deployment.yaml
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+        - image: wordpress:4.8-apache
+          name: wordpress
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: wordpress-mysql
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password
+          ports:
+            - containerPort: 80
+              name: wordpress
+```
+
+MySQLと同様にデプロイします。
+
+```
+kubectl create -f wordpress-deployment.yaml
+```
+
+
+### （補足）kubectlの操作を容易にする
+上記のマニフェストにも記載がありますが、Labelには複数の使い方があります。 Serviceが接続先を見つけるために使っている例が上記のマニフェストとなります。
+
+* 参考URL: k8s label
+kubectlのオペレーションの簡易化のためlabelをつけることをおすすめします。 例えば以下のような使い方があります。
+
+`kubectl get pods -l app=nginx` などのようにlabelがついているPod一覧を取得といったことが簡単にできます。 ほかにも以下の様なことが可能となります。
+* `kubectl delete deployment -l app=app_label`
+* `kubectl delete service -l app=app_label`
+* `kubectl delete pvc -l app=wordpress`
+
+
+### アプリケーションの稼働確認
+
+
+
+
+
+
+
+
 
 
 
