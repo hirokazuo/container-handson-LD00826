@@ -9,6 +9,9 @@ K8sクラスターを構築する手順は以下「kubeadmセットアップツ�
 ## コンテナランタイムのインストール
 今回のハンズオンではコンテナランタイムに 「CRI-O」を使用して Kubernetes環境を構築します。
 
+###  
+https://github.com/cri-o/packaging/blob/main/README.md#distributions-using-deb-packages
+
 
 ```
 # Kubernetes、CRI-Oバージョンの変数を設定
@@ -17,7 +20,7 @@ CRIO_VERSION=v1.33
 
 # リポジトリを追加するための依存関係を設定
 apt-get update
-apt-get install -y software-properties-common curl net-tools
+apt-get install -y software-properties-common curl
 
 # Ubuntu 22.04より古いリリースでは、/etc/apt/keyringsフォルダーはデフォルトでは存在しないため、curlコマンドの前に作成
 mkdir -p -m 755 /etc/apt/keyrings
