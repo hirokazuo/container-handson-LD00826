@@ -8,7 +8,8 @@ kubernetesクラスタに作成したコンテナアプリケーションをデ�
 $ kubectl run 任意のデプロイメント名 --image=nginx --port=80
 
 deployment "nginxweb" created
-```   
+```
+<br><br><br><br>
 
 
 デプロイが完了したら以下のコマンドで状況を確認します。
