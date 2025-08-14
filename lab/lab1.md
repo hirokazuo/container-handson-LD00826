@@ -20,6 +20,7 @@ NAME                                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE
 nginxweb                              1         1         1            1           53s
 ```
 
+<br>
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
 ```
 $ kubectl get services
@@ -39,6 +40,7 @@ service "nginxweb" exposed
 
 `kubectl expose` コマンドで外部へ公開しました。
 
+<br>
 サービス一覧から公開されたポートを確認します。
 ```
 $ kubectl get services
