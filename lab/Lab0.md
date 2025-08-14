@@ -13,6 +13,7 @@ Kubernetes公式サイトにある「CRI-Oのインストール手順」リン�
 https://github.com/cri-o/packaging/blob/main/README.md#distributions-using-deb-packages
 
 
+### （補足）インストール手順解説
 ```
 # Kubernetes、CRI-Oバージョンの変数を設定
 KUBERNETES_VERSION=v1.33
@@ -30,7 +31,6 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key
     gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
     tee /etc/apt/sources.list.d/kubernetes.list
-
 
 # CRI-O リポジトリを追加
 curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/Release.key |
