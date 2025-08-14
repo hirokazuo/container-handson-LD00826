@@ -132,7 +132,6 @@ $ kubectl describe -l ラベル名
 
 ## クリーンアップ
 コマンドラインの操作は完了です。 今までデプロイしたアプリケーションを削除します。
-
 ```
 $ kubectl delete deployments デプロイメント名
 $ kubectl delete services サービス名
@@ -160,13 +159,11 @@ https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 * https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/#imperative-object-configuration
 
 kubectl create デプロイメントの基本系、マニフェストファイルを指定してデプロイし、新規に行う場合に使用します。
-
 ```
  kubectl create -f deployment.yaml
 ```
 
 kubectl applyはcreate/replaceを包含できます。差分反映のアルゴリズムを理解して利用しましょう。 applyの動きとしてはすでにデプロイされていれば更新を行い、デプロイされていなければ新規作成の動きをします。
-
 ```
  kubectl apply -f deployment.yaml
 ```
