@@ -69,10 +69,12 @@ $ ifconfig -a | grep 192.168.*
 
 上記の情報を元にIPを生成してアクセスします。
 
-http://確認したIP:確認したポート番号/
+* http://確認したIP:確認したポート番号/
+
 アクセス時に「Welcome to nginx!」のメッセージが表示されれば稼働確認完了です。
 
 
+<br><br>
 nginex Webサーバの状態を確認します。
 ```
 $ kubectl describe deployment nginxweb
@@ -110,7 +112,7 @@ Events:
 
 Replicas の項目で `1 available` となっていればデプロイメント成功です。
 
-
+<br>
 ## 問題発生時のログの確認方法
 
 デプロイに失敗するようであれば以下のコマンドで状態を確認します。
@@ -120,17 +122,20 @@ Replicas の項目で `1 available` となっていればデプロイメント�
 $ kubectl logs ポッド名
 ```
 
+<br><br>
 デプロイメントの状態を確認するコマンド
 ```
 $ kubectl describe deployments デプロイメント名
 ```
 
+<br><br>
 他にも以下のようなコマンドで状態を確認することができます。 デプロイ時のYAMLファイル単位や、定義しているラベル単位でも情報を確認できます。
 ```
 $ kubectl describe -f YAML定義ファイル
 $ kubectl describe -l ラベル名
 ```
 
+<br>
 ## クリーンアップ
 コマンドラインの操作は完了です。 今までデプロイしたアプリケーションを削除します。
 ```
@@ -138,11 +143,12 @@ $ kubectl delete deployments デプロイメント名
 $ kubectl delete services サービス名
 ```
 
+<br>
 ## まとめ
 このラボではこの先のラボを行うための基本となる操作及び環境の確認を実施しました。
 よく使うコマンドや問題発生時の確認方法については以下にまとめました。 今後のラボでうまくいかない場合いはぜひ参考にしてください。
 
-
+<br>
 ## (補足)コマンドリファレンス
 kubectlの使い方・本家へのリンク
 公式ガイドへのリンクです。 詳細や使い方等については以下ページを見ることをおすすめします。 このページではよく使うコマンドについてユースケースでまとめました。
@@ -153,6 +159,8 @@ kubectlの使い方・本家へのリンク
 * https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/
 * https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
+
+<br>
 ## (補足)デプロイメントの実施
 `kubectl create/apply/patch/replace`を使用します。
 それぞれ便利な点・留意する点があります。
