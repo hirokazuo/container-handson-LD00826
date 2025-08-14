@@ -4,7 +4,6 @@
 kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。
 
 以下では `kubectl run` を実行すると「Deployment」が作成されます。
-
 ```
 $ kubectl run 任意のデプロイメント名 --image=nginx --port=80
 
@@ -12,7 +11,6 @@ deployment "nginxweb" created
 ```
 
 デプロイが完了したら以下のコマンドで状況を確認します。
-
 ```
 $ kubectl get deployments
 
@@ -21,7 +19,6 @@ nginxweb                              1         1         1            1        
 ```
 
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
-
 ```
 $ kubectl get services
 
@@ -41,7 +38,6 @@ service "nginxweb" exposed
 `kubectl expose` コマンドで外部へ公開しました。
 
 サービス一覧から公開されたポートを確認します。
-
 ```
 $ kubectl get services
 
@@ -55,7 +51,6 @@ PORT 列を確認します。上の実行例でいうと「30606」ポートの�
 `--type="NodePort"` を指定すると各ノード上にアプリケーションにアクセスするポート（標準で30000–32767）を作成します。 ノードにアクセスしポッドが動いていれば、そのままアクセスします。 ノードにポッドがなければ適切なノード転送される仕組みを持っています。 そのためマスターノードにアクセスすればk8sが適切に転送するという動作をします。
 
 ホストのIPを確認します。
-
 ```
 $ ifconfig -a | grep 192.168.*
 
@@ -69,7 +64,6 @@ http://確認したIP:確認したポート番号/
 
 
 nginex Webサーバの状態を確認します。
-
 ```
 $ kubectl describe deployment nginxweb
 
@@ -112,19 +106,16 @@ Replicas の項目で `1 available` となっていればデプロイメント�
 デプロイに失敗するようであれば以下のコマンドで状態を確認します。
 
 ポッドの状態を確認するコマンド
-
 ```
 $ kubectl logs ポッド名
 ```
 
 デプロイメントの状態を確認するコマンド
-
 ```
 $ kubectl describe deployments デプロイメント名
 ```
 
 他にも以下のようなコマンドで状態を確認することができます。 デプロイ時のYAMLファイル単位や、定義しているラベル単位でも情報を確認できます。
-
 ```
 $ kubectl describe -f YAML定義ファイル
 $ kubectl describe -l ラベル名
@@ -146,11 +137,11 @@ $ kubectl delete services サービス名
 kubectlの使い方・本家へのリンク
 公式ガイドへのリンクです。 詳細や使い方等については以下ページを見ることをおすすめします。 このページではよく使うコマンドについてユースケースでまとめました。
 
-https://kubernetes.io/docs/reference/kubectl/overview/
-https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/
-https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/
-https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+* https://kubernetes.io/docs/reference/kubectl/overview/
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+* https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/
+* https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 ## (補足)デプロイメントの実施
 `kubectl create/apply/patch/replace`を使用します。
