@@ -31,13 +31,13 @@ Lab1: 基本操作 ではコマンドラインで作成してきましたがYAML
 
 <br>
 
-サンプルファイルを準備しましたのでそれぞれの項目の意味を考え作成してみましょう。
+サンプルファイルを準備しましたのでそれぞれの項目の意味を考え作成してみましょう。<br>
 (https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/ を参考としています。）
 
 <br>
 
-ここではサンプルとしてWordPressとMySQLをデプロイします。 MySQLではSecretオブジェクトを使用しパスワードを渡すようになっています。
-流れとしては、以下の3つを実施します。
+ここではサンプルとしてWordPressとMySQLをデプロイします。 MySQLではSecretオブジェクトを使用しパスワードを渡すようになっています。<br>
+流れとしては、以下の3つを実施します。<br>
 どの部分を実施しているかを把握しながらすすめましょう。
 1. MySQL 用のSecretオブジェクトを作成
 2. MySQL をデプロイ
