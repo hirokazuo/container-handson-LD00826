@@ -231,7 +231,7 @@ Service.Type=NodePortについても確認しましょう。
 * 参考URL: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
 
 #### 注釈
-kubectl引数の省略系について
+kubectl引数の省略系について<br>
 今回はServiceの確認をする際に `svc` という省略形でコマンドを実行しました。 他のオブジェクトも同様に省略形があります。コマンド入力を省力化したい場合は省略形も使ってみましょう。
 `kubectl --help` や `kubectl XX --help` コマンドで確認できます。
 
