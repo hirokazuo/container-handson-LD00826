@@ -242,7 +242,8 @@ wordpress-mysql   1         1         1            1           2d
  kubectl get all [-n ネームスペース名]
 ```
 
-<br><br>
+<br>
+
 すべてのネームスペースのすべてのオブジェクトを確認したい場合は以下のとおりです。
 ```
  kubectl get all --all-namespaces
@@ -266,6 +267,7 @@ deploy/wordpress-mysql   1         1         1            1           2d
 ```
 
 <br>
+
 ### 問題の特定方法について
 マニフェストを `kubectl get` と `kubectl describe`, `kubectl logs` を組み合わせて問題箇所を特定していきます。
 
