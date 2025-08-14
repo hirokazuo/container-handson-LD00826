@@ -70,11 +70,76 @@ $ cd trident-installer
 ```
 
 Tridentの制御には `tridentctl` を使います。
-`tridentctl` ユーティリティではドライランモードとデバッグモードがオプションで指定できます。 ２つを設定し、実行すると以下のように必要事項を事前チェックし、その内容をすべて標準出力にプリントします。
+`tridentctl` ユーティリティではドライランモードとデバッグモードがオプションで指定できます。 
+２つを設定し、実行すると以下のように必要事項を事前チェックし、その内容をすべて標準出力にプリントします。
 
 まずは、ドライランモードで実行し問題ないことを確認します。
-
 Tridentをインストールするネームスペースを作成します。
+
+```
+$ kubectl create ns trident
+
+namespace/trident created
+```
+
+
+Tridentのインストーラーをドライランモードで実行します。
+
+```
+$ ./tridentctl install --dry-run -n trident -d
+
+DEBU Initialized logging.                          logLevel=debug
+DEBU Running outside a pod, creating CLI-based client.
+DEBU Initialized Kubernetes CLI client.            cli=kubectl flavor=k8s namespace=default version=1.11.0
+DEBU Validated installation environment.           installationNamespace=trident kubernetesVersion=
+DEBU Parsed requested volume size.                 quantity=2Gi
+DEBU Dumping RBAC fields.                          ucpBearerToken= ucpHost= useKubernetesRBAC=true
+DEBU Namespace does not exist.                     namespace=trident
+DEBU PVC does not exist.                           pvc=trident
+DEBU PV does not exist.                            pv=trident
+- snip
+INFO Dry run completed, no problems found.
+- snip
+```
+
+ドライランモードで実施すると問題ない旨(INFO Dry run completed, no problems found.) が表示されれば、インストールに必要な事前要件を満たしていることが確認できます。 バージョン、実行モードによってはログの途中に出力されることもあるためログを確認しましょう。
+
+上記の状態まで確認できたら実際にインストールを実施します。
+
+```
+$ ./tridentctl install -n trident -d
+
+DEBU Initialized logging.                          logLevel=debug
+DEBU Running outside a pod, creating CLI-based client.
+DEBU Initialized Kubernetes CLI client.            cli=kubectl flavor=k8s namespace=default version=1.11.0
+DEBU Validated installation environment.           installationNamespace=trident kubernetesVersion=
+DEBU Parsed requested volume size.                 quantity=2Gi
+DEBU Dumping RBAC fields.                          ucpBearerToken= ucpHost= useKubernetesRBAC=true
+DEBU Namespace does not exist.                     namespace=trident
+DEBU PVC does not exist.                           pvc=trident
+DEBU PV does not exist.                            pv=trident
+- snip
+INFO Trident installation succeeded.
+```
+
+「INFO Trident installation succeeded.」が出力されればインストール成功です。
+
+また、問題が発生した場合には tridentctl を使用してtridentに関するログをまとめて確認することが出来ます。
+
+
+```
+./tridentctl -n trident logs
+
+time="2018-02-15T03:32:35Z" level=error msg="API invocation failed. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out"
+time="2018-02-15T03:32:35Z" level=error msg="Problem initializing storage driver: 'ontap-nas' error: Error initializing ontap-nas driver. Could not determine Data ONTAP API version. Could not read ONTAPI version. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out" backend= handler=AddBackend
+time="2018-02-15T03:32:35Z" level=info msg="API server REST call." duration=2m10.64501326s method=POST route=AddBackend uri=/trident/v1/backend
+```
+
+### Tridentのバージョン確認
+
+
+
+
 
 
 
