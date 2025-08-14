@@ -51,12 +51,12 @@ Secretの説明はこちらです。
 * https://kubernetes.io/docs/concepts/configuration/secret/
 
 ```
- kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
+$ kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
 ```
 
 作成後は以下のコマンドで結果を確認します。
 ```
- kubectl get secrets
+$ kubectl get secrets
 
      NAME                  TYPE                    DATA      AGE
       mysql-pass            Opaque                  1         42s
@@ -66,7 +66,7 @@ Secretの説明はこちらです。
 
 
 ### MySQLのデプロイ
-mysql-pass という名前でSecretができたのでそのSecretを使ってMySQLを起動します。
+`mysql-pass` という名前でSecretができたのでそのSecretを使ってMySQLを起動します。
 
 アプリケーションをデプロイするマニフェストファイルの例 mysql-deployment.yaml
 ```
