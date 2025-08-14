@@ -65,8 +65,76 @@ Secretの説明はこちらです。
 <br>
 
 
-MySQLのデプロイ
+### MySQLのデプロイ
+mysql-pass という名前でSecretができたのでそのSecretを使ってMySQLを起動します。
 
+アプリケーションをデプロイするマニフェストファイルの例 mysql-deployment.yaml
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: wordpress
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+        - image: mysql:5.6
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password
+          ports:
+            - containerPort: 3306
+              name: mysql
+```
+
+
+上記のマニフェストをもとにDeploymentを作成します。
+
+```
+kubectl create -f mysql-deployment.yaml
+```
+
+少々時間がかかるのでどのように状態が移って行くか確認し、「Status」が「Running」になることを確認してください。
+
+```
+$ kubectl get pods
+
+NAME                               READY     STATUS    RESTARTS   AGE
+wordpress-mysql-1894417608-x5dzt   1/1       Running   0          40s
+```
+
+
+WordPressのデプロイ
 
 
 
