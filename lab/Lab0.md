@@ -56,9 +56,10 @@ systemctl start crio.service
 * https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
 作業内容以下となります。
-* シングルコントロールプレーンのKubernetesクラスターをインストールします
-* クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
-** aa 
+1. シングルコントロールプレーンのKubernetesクラスターをインストールします
+2. クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
+    1. Podネットワークがホストネットワークと重ならないようにする(LODの環境が192.168.0.0/24を使っているため`kubeadm init`のオプションは`--pod-network-cidr=10.244.0.0/16`を指定)
+    2. PodネットワークアドオンはCalicoを利用
 
 
 ### （補足）インストール手順解説
