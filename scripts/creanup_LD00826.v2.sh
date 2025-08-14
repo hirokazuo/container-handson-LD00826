@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# jumphost上で実行
+# このすスクリプトはjumphost上で実行します
 
 # -------------------------------------------------------
 # SSHコマンドの警告メッセージを抑止
 # -------------------------------------------------------
-
 # rm -f /home/user/.ssh/known_hosts
 cat <<EOF | sudo tee -a /etc/ssh/ssh_config
 StrictHostKeyChecking no
