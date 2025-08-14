@@ -174,25 +174,25 @@ kubectlの使い方・本家へのリンク
 
 * https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/#imperative-object-configuration
 
-<br>
+<br><br>
 kubectl create デプロイメントの基本系、マニフェストファイルを指定してデプロイし、新規に行う場合に使用します。
 ```
  kubectl create -f deployment.yaml
 ```
 
-<br>
+<br><br>
 kubectl applyはcreate/replaceを包含できます。差分反映のアルゴリズムを理解して利用しましょう。 applyの動きとしてはすでにデプロイされていれば更新を行い、デプロイされていなければ新規作成の動きをします。
 ```
  kubectl apply -f deployment.yaml
 ```
 
-<br>
+<br><br>
 kubectl replace は稼働中のアプリケーションに対して動的に定義を反映する。
 ```
  kubectl apply -f deployment.yaml
 ```
 
-<br>
+<br><br>
 kubectl patch は稼働中のアプリケーションに対して、一部のフィールドを書き換える用途に使用。
 
 <br>
