@@ -60,6 +60,7 @@ systemctl start crio.service
 2. クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
     1. Podネットワークがホストネットワークと重ならないようにする(LODの環境が192.168.0.0/24を使っているため`kubeadm init`のオプションは`--pod-network-cidr=10.244.0.0/16`を指定)
     2. PodネットワークアドオンはCalicoを利用
+       * https://docs.tigera.io/calico/latest/about/
 
 
 ### （補足）インストール手順解説
