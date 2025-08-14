@@ -299,6 +299,14 @@ kubectl patch storageclass [StorageClass名] -p '{"metadata": {"annotations":{"s
 ```
 
 * external ip が付与できるようにするような仕組みを導入する
+  → ラボでLoad Balancerを使った運用を紹介しています。
+
+
+  
+
+
+
+  
 
 
 
@@ -315,6 +323,13 @@ kubectl patch storageclass [StorageClass名] -p '{"metadata": {"annotations":{"s
 
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
