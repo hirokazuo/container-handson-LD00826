@@ -12,6 +12,7 @@ deployment "nginxweb" created
 ```
 
 デプロイが完了したら以下のコマンドで状況を確認します。
+
 ```
 $ kubectl get deployments
 
@@ -20,6 +21,7 @@ nginxweb                              1         1         1            1        
 ```
 
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
+
 ```
 $ kubectl get services
 
