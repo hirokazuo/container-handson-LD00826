@@ -223,20 +223,23 @@ NAME              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 wordpress-mysql   1         1         1            1           2d
 ```
 
-<br><br>
+<br>
+
 ネームスペースを指定する場合は `-n` オプション、または `--all-namespaces` で全ネームスペースのオブジェクトを確認できます。
 
 ```
  kubectl get all -n ネームスペース名
 ```
 
-<br><br>
+<br>
+
 マニフェストファイルを使用している場合は `get` の引数に `-f マニフェストファイル` を指定すると関連するオブジェクトをすべて表示してくれます。
 ```
  kubectl get -f deployment.yaml
 ```
 
-<br><br>
+<br>
+
 現状のオブジェクトをすべて確認する場合はオブジェクトを指定する箇所に `all` を設定するとすべてのオブジェクトを確認できます。
 ```
  kubectl get all [-n ネームスペース名]
@@ -272,9 +275,25 @@ deploy/wordpress-mysql   1         1         1            1           2d
 マニフェストを `kubectl get` と `kubectl describe`, `kubectl logs` を組み合わせて問題箇所を特定していきます。
 
 #### よく使うコマンド
-* kubectl describe オブジェクト名
-* kubectl describe -f deployment.yaml
+* `kubectl describe オブジェクト名`
+* `kubectl describe -f deployment.yaml`
 
+#### トラブルシュートの流れ
+1. 問題箇所の特定
+    1. `kubectl get -f deployment.yaml` で予期しない動作をしている箇所を発見
+    2. `kubectl describe -f deployment.yaml`
+
+2. うまく行っていない箇所が分かれば該当のPodを確認する
+    1. `kubectl logs pod ポッド名`
+    2. 3rd party製の `stern` というツールもあります。こちらは複数のPodに対して kubectl logs を実行する動きをします。非常に便利なものになります。
+
+3. 取得できた情報を元に対応実施
+    1. マニフェストファイルの修正
+
+
+
+
+  
 
 
 
