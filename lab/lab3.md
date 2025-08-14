@@ -45,6 +45,27 @@ Lab1: 基本操作 ではコマンドラインで作成してきましたがYAML
 
 
 ### Secretの作成
+ここではKubernetes上でパスワードを受け渡すときなどに使う、Secretを作成します。
+Secretの説明はこちらです。
+
+* https://kubernetes.io/docs/concepts/configuration/secret/
+
+```
+ kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
+```
+
+作成後は以下のコマンドで結果を確認します。
+```
+ kubectl get secrets
+
+     NAME                  TYPE                    DATA      AGE
+      mysql-pass            Opaque                  1         42s
+```
+
+<br>
+
+
+MySQLのデプロイ
 
 
 
