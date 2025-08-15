@@ -163,19 +163,47 @@ Pod名を確認してnginxwebのポッドを削除します。
 
 ```
 $ kubectl get pod
+
 NAME                        READY   STATUS    RESTARTS   AGE
 nginxweb-86b474f5bb-qlgzf   1/1     Running   0          20m
 
 $ kubectl delete pod nginxweb-86b474f5bb-qlgzf
+
 pod "nginxweb-86b474f5bb-qlgzf" deleted
 ```
 
+Podの状態を再度確認します。
 
-
-コマンドラインの操作は完了です。 今までデプロイしたアプリケーションを削除します。
 ```
-$ kubectl delete deployments デプロイメント名
-$ kubectl delete services サービス名
+$ kubectl get pod
+
+NAME                        READY   STATUS    RESTARTS   AGE
+nginxweb-86b474f5bb-cz4fb   1/1     Running   0          2m
+```
+Pod名が`nginxweb-86b474f5bb-qlgzf`から`nginxweb-86b474f5bb-cz4fb`変わって再作成されていることが確認できます。
+
+
+ Podを削除するにはデプロイメントを削除します。
+* $ kubectl delete deployments デプロイメント名
+* $ kubectl delete services サービス名
+ 
+```
+$ kubectl get deployment
+
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+nginxweb   1/1     1            1           26m
+
+$ kubectl delete deployment nginxweb
+
+deployment.apps "nginxweb" deleted
+
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        122m
+nginxweb     NodePort    10.101.151.52   <none>        80:31600/TCP   23m
+
+$  kubectl delete services nginxweb
+service "nginxweb" deleted
 ```
 
 <br>
