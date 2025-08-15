@@ -137,7 +137,7 @@ nginxweb2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
 
 
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
-* http://確認したIP:確認したポート番号/
+* http://確認したEXTERNAL-IP/
 
 アクセス時に「**Welcome to nginx!**」のメッセージが表示されれば稼働確認完了です。
 
