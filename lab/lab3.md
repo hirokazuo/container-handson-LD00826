@@ -226,10 +226,12 @@ wordpress         LoadBalancer   10.102.247.40   192.168.0.222   80:30672/TCP   
 wordpress-mysql   ClusterIP      None            <none>          3306/TCP  
 ```
 
+今回もTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。<br>
+ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
+* http://確認したEXTERNAL-IP/
+アクセス時に「Welcome to nginx!」のメッセージが表示されれば稼働確認完了です。
 
-今回はオンプレミスでMetalLBを使用しLoadBalancerでExternal-IPを使用できるようにしました。
-Service.Type=NodePortについても確認しましょう。
-* 参考URL: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
 
 #### 注釈
 kubectl引数の省略系について<br>
