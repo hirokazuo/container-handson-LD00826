@@ -142,7 +142,10 @@ kubectl apply -f calico.yaml
 Kubernetes公式サイトにある「Linuxワーカーノードの追加」に従ってセットアップします。
 * https://kubernetes.io/ja/docs/tasks/administer-cluster/kubeadm/adding-linux-nodes/
 
-先ほどインストールしたマスターノードと同様にコンテナランタイム 「CRI-O」を使用して Kubernetesワーカーノードを構築しますので`kubeadm join`コマンドまでの手順は同様となります。<br>
+作業内容は以下となります。
+* 先ほどインストールしたマスターノードと同様にコンテナランタイム 「CRI-O」を使用して Kubernetesワーカーノードを構築しますので`kubeadm join`コマンドまでの手順は同様となります。<br>
+* マスターノード上で確認した`kubeadm join`コマンドの情報を使ってワーカーノードを構築します。
+
 
 ### （補足）インストール手順解説
 公式サイトから確認できた手順と見比べてみてください。
