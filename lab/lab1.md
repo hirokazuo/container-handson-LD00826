@@ -51,9 +51,10 @@ service "nginxweb" exposed
 ```
 $ kubectl get services
 
-NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        5d
-nginxweb     NodePort    10.103.136.206   <none>        80:30606/TCP   1m
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        99m
+nginxweb     NodePort    10.101.151.52   <none>        80:31600/TCP   53s
+
 ```
 
 <br><br>
