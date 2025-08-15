@@ -80,38 +80,43 @@ Jumphost上のChromeプラウザを起動して以下のURLでアクセスしま
 
 <br><br>
 nginex Webサーバの状態を確認します。
+
 ```
 $ kubectl describe deployment nginxweb
-
 Name:                   nginxweb
 Namespace:              default
-CreationTimestamp:      Tue, 20 Mar 2018 13:44:08 +0900
-Labels:                 run=nginxweb
-Annotations:            deployment.kubernetes.io/revision=1
-Selector:               run=nginxweb
+CreationTimestamp:      Fri, 15 Aug 2025 06:39:04 +0000
+Labels:                 app=nginxweb
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=nginxweb
 Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
 StrategyType:           RollingUpdate
 MinReadySeconds:        0
-RollingUpdateStrategy:  1 max unavailable, 1 max surge
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
 Pod Template:
-  Labels:  run=nginxweb
+  Labels:  app=nginxweb
   Containers:
-   nginxweb:
-    Image:        nginx
-    Port:         80/TCP
-    Environment:  <none>
-    Mounts:       <none>
-  Volumes:        <none>
+   nginx:
+    Image:         nginx
+    Port:          80/TCP
+    Host Port:     0/TCP
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
 Conditions:
   Type           Status  Reason
   ----           ------  ------
   Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
 OldReplicaSets:  <none>
-NewReplicaSet:   nginxweb-78547ccd78 (1/1 replicas created)
+NewReplicaSet:   nginxweb-86b474f5bb (1/1 replicas created)
 Events:
   Type    Reason             Age   From                   Message
   ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  15m   deployment-controller  Scaled up replica set nginxweb-78547ccd78 to 1
+  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled up replica set nginxweb-86b474f5bb from 0 to 1
+
 ```
 
 Replicas の項目で `1 available` となっていればデプロイメント成功です。
