@@ -26,8 +26,9 @@ nginxweb   1/1     1            1           78s
 ```
 $ kubectl get services
 
+kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   8s
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   95m
 ```
 
 <br>
