@@ -130,8 +130,8 @@ kubectl create -f mysql-deployment.yaml
 ```
 $ kubectl get pods
 
-NAME                               READY     STATUS    RESTARTS   AGE
-wordpress-mysql-1894417608-x5dzt   1/1       Running   0          40s
+NAME                                    READY   STATUS    RESTARTS   AGE
+wordpress-mysql-59b85fd8dc-5gdch        1/1     Running   0          2m20s
 ```
 
 
