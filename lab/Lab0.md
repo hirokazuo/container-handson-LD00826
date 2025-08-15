@@ -63,14 +63,19 @@ systemctl start crio.service
 * kubeadmとは
 https://kubernetes.io/docs/reference/setup-tools/kubeadm/
 
-#### kubeadm initを使用して、Kubernetesのコントロールプレーンノードをブートストラップ
+#### `kubeadm init`を使用して、Kubernetesのコントロールプレーンノードをブートストラップ
 作業内容は以下となります。
 1. シングルコントロールプレーンのKubernetesクラスターをインストールします
 2. クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
     * Podネットワークがホストネットワークと重ならないようにする(LODの環境が192.168.0.0/24を使っているため`kubeadm init`のオプションは`--pod-network-cidr=10.244.0.0/16`を指定)
 
       
-###
+#### `kubeadm init`コマンド実行結果の確認
+`Your Kubernetes control-plane has initialized successfully!`のメッセージが出力されていることを確認します。
+またメッセージの末尾にワーカーノード用の`kubeadm join`コマンドが出力されていますので、自身の端末に文字列をコピーしてください。
+
+
+以下、出力サンプル
 ```
 Your Kubernetes control-plane has initialized successfully!
 
