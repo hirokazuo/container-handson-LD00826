@@ -144,3 +144,7 @@ nginxweb2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
 
 
 
+Service.Typeについては以下公式ドキュメントに解説があります。
+* 参考URL: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+
