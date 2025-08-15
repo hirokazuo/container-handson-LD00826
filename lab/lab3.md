@@ -58,8 +58,9 @@ $ kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
 ```
 $ kubectl get secrets
 
-     NAME                  TYPE                    DATA      AGE
-      mysql-pass            Opaque                  1         42s
+NAME         TYPE                             DATA   AGE
+mysql-pass   Opaque                           1      12s
+regcred      kubernetes.io/dockerconfigjson   1      137m
 ```
 
 <br>
