@@ -140,7 +140,16 @@ time="2018-02-15T03:32:35Z" level=info msg="API server REST call." duration=2m10
 ```
 
 ### Tridentのバージョン確認
+Tridentのバージョンは`tridentctl version`を使って確認することができます。
+```
+./tridentctl version -n trident
 
++----------------+----------------+
+| SERVER VERSION | CLIENT VERSION |
++----------------+----------------+
+| 25.06.0        | 25.06.0        |
++----------------+----------------+
+```
 
 
 
