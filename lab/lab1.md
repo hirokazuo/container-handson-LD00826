@@ -3,7 +3,7 @@
 ## デプロイメント
 kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。<br>
 今回はnginxのWebサーバーを作成します<br>
-以下では `kubectl run` を実行すると「Deployment」が作成されます。
+以下では `kubectl create deployment` を実行すると「Deployment」が作成されます。
 ```
 $ kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
 
