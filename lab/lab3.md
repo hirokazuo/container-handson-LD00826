@@ -155,7 +155,7 @@ spec:
     tier: frontend
   type: LoadBalancer
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
@@ -220,10 +220,10 @@ kubectlのオペレーションの簡易化のためlabelをつけることを�
 結果として以下のような出力が得られます。
 今回はService.typeをLoadBalancerで指定しているため、EXTERNAL-IP欄に表示されたIPでアクセスしてみましょう。
 ```
-NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-kubernetes        ClusterIP   10.96.0.1      <none>        443/TCP        6d
-wordpress         LoadBalancer    10.98.247.58   192.168.10.210        80:32048/TCP   2h
-wordpress-mysql   ClusterIP   None           <none>        3306/TCP       2h
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
+kubernetes        ClusterIP      10.96.0.1       <none>          443/TCP        179m
+wordpress         LoadBalancer   10.102.247.40   192.168.0.222   80:30672/TCP   16s
+wordpress-mysql   ClusterIP      None            <none>          3306/TCP  
 ```
 
 
