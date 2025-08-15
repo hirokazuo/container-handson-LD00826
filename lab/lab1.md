@@ -16,8 +16,8 @@ deployment.apps/nginxweb created
 ```
 $ kubectl get deployments
 
-NAME                                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginxweb                              1         1         1            1           53s
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+nginxweb   1/1     1            1           78s
 ```
 
 <br><br>
