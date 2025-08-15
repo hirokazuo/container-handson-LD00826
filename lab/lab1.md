@@ -159,6 +159,19 @@ $ kubectl describe -l ラベル名
 <br>
 
 ## クリーンアップ
+Pod名を確認してnginxwebのポッドを削除します。
+
+```
+$ kubectl get pod
+NAME                        READY   STATUS    RESTARTS   AGE
+nginxweb-86b474f5bb-qlgzf   1/1     Running   0          20m
+
+$ kubectl delete pod nginxweb-86b474f5bb-qlgzf
+pod "nginxweb-86b474f5bb-qlgzf" deleted
+```
+
+
+
 コマンドラインの操作は完了です。 今までデプロイしたアプリケーションを削除します。
 ```
 $ kubectl delete deployments デプロイメント名
