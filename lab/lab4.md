@@ -45,6 +45,9 @@ Tridentは CSIを使わない従来同様のTridentと CSIを使う CSI Trident�
 ## NetApp Tridentのインストール
 Dynamic storage provisioningを実現するためNetApp Tridentを導入します。 TridentはPodとしてデプロイされ通常のアプリケーションと同様に稼働します。
 
+### Trident公式ドキュメント
+* https://docs.netapp.com/us-en/trident/index.html
+
 ### インストール事前準備
 Trident のインストールでk8sクラスタの管理者権限が必要になります。
 
@@ -53,61 +56,70 @@ $ kubectl auth can-i '*' '*' --all-namespaces
 ```
 
 
-バックエンドに登録するストレージのマネジメントIP（配布資料のsvmXXのIPアドレス）にk8sクラスタのコンテナから疎通が取れるかを確認します。
+バックエンドに登録するストレージのマネジメントIPにk8sクラスタのコンテナから疎通が取れるかを確認します。<br>
+※本ラボ環境のONTAPストレージのマネージメントIPは`192.168.0.101`になります。
 ```
 $ kubectl run -i --tty ping --image=busybox --restart=Never --rm --  ping [マネジメントIP]
 ```
 
 
-### Tridentインストール(19.07〜)
-バイナリをダウンロードしてインストールします。(例はバージョン19.07.0)
-```
-$ wget https://github.com/NetApp/trident/releases/download/v19.07.0/trident-installer-19.07.0.tar.gz
+### インストール
+Tridentのインストール方法は複数ありますが、今回は`tridentctl`を使ってインストールします。<br>
 
-$ tar -xf trident-installer-19.07.0.tar.gz
+Learn about Trident installation
+* https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html
+
+### Tridentインストール(25.06)
+今回はKubernetes v1.33に対応した Trident 25.6をインストールします。
+```
+$ wget https://github.com/NetApp/trident/releases/download/v25.06.0/trident-installer-25.06.0.tar.gz
+
+$ tar -xf trident-installer-25.06.0.tar.gz
 
 $ cd trident-installer
 ```
 
 Tridentの制御には `tridentctl` を使います。
-`tridentctl` ユーティリティではドライランモードとデバッグモードがオプションで指定できます。 
-２つを設定し、実行すると以下のように必要事項を事前チェックし、その内容をすべて標準出力にプリントします。
+また`tridentctl` ユーティリティを使ってTridentをインストールします。
 
-まずは、ドライランモードで実行し問題ないことを確認します。
-Tridentをインストールするネームスペースを作成します。
-
-```
-$ kubectl create ns trident
-
-namespace/trident created
-```
-
-
-Tridentのインストーラーをドライランモードで実行します。
+`./tridentctl install -n trident`コマンドを実行します。
+* `-n`オプションでTrident用のKubernetesネームスペースを指定します。
 
 ```
-$ ./tridentctl install --dry-run -n trident -d
-
-DEBU Initialized logging.                          logLevel=debug
-DEBU Running outside a pod, creating CLI-based client.
-DEBU Initialized Kubernetes CLI client.            cli=kubectl flavor=k8s namespace=default version=1.11.0
-DEBU Validated installation environment.           installationNamespace=trident kubernetesVersion=
-DEBU Parsed requested volume size.                 quantity=2Gi
-DEBU Dumping RBAC fields.                          ucpBearerToken= ucpHost= useKubernetesRBAC=true
-DEBU Namespace does not exist.                     namespace=trident
-DEBU PVC does not exist.                           pvc=trident
-DEBU PV does not exist.                            pv=trident
-- snip
-INFO Dry run completed, no problems found.
-- snip
+$ ./tridentctl install -n trident
+INFO Starting Trident installation.                namespace=trident
+INFO Created namespace.                            namespace=trident
+INFO Created controller service account.          
+INFO Created controller role.                     
+INFO Created controller role binding.             
+INFO Created controller cluster role.             
+INFO Created controller cluster role binding.     
+INFO Created node linux service account.          
+INFO Creating or patching the Trident CRDs.       
+INFO Applied latest Trident CRDs.                 
+INFO Added finalizers to custom resource definitions. 
+INFO Created Trident service.                     
+INFO Created Trident encryption secret.           
+INFO Created Trident protocol secret.             
+INFO Created Trident resource quota.              
+INFO Created Trident deployment.                  
+INFO Created Trident daemonset.                   
+INFO Waiting for Trident pod to start.            
+INFO Trident pod started.                          deployment=trident-controller namespace=trident pod=trident-controller-6594747b-t4q9z
+INFO Waiting for Trident REST interface.          
+INFO Trident REST interface is up.                 version=25.06.0
+INFO Trident installation succeeded.   
 ```
 
-ドライランモードで実施すると問題ない旨(INFO Dry run completed, no problems found.) が表示されれば、インストールに必要な事前要件を満たしていることが確認できます。 バージョン、実行モードによってはログの途中に出力されることもあるためログを確認しましょう。
 
-上記の状態まで確認できたら実際にインストールを実施します。
+
+
+```
+
 
 ```
 $ ./tridentctl install -n trident -d
+./tridentctl install -n trident
 
 DEBU Initialized logging.                          logLevel=debug
 DEBU Running outside a pod, creating CLI-based client.
