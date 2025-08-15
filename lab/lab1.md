@@ -7,8 +7,7 @@ kubernetesクラスタに作成したコンテナアプリケーションをデ�
 ```
 $ kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
 
-
-deployment "nginxweb" created
+deployment.apps/nginxweb created
 ```
 
 <br><br>
