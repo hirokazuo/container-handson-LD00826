@@ -43,7 +43,7 @@ validatingwebhookconfiguration.admissionregistration.k8s.io/metallb-webhook-conf
 
 以下、ヒアドキュメントでの作成例（viを使った作成でも構いません）
 ```
-cat <<EOF | sudo tee $HOME/ipaddresspool.yaml
+$ cat <<EOF | sudo tee $HOME/ipaddresspool.yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -79,7 +79,7 @@ l2advertisement.metallb.io/default created
 * デプロイ用のYAMLファイルを作成してPodを作成します。
 
 ```
-cat <<EOF | sudo tee $HOME/nginxweb2.yaml
+$ cat <<EOF | sudo tee $HOME/nginxweb2.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -119,8 +119,28 @@ EOF
 
 作成したYAMLファイルを使って新しいnginxWebサーバーをデプロイします。
 ```
-kubectl apply -f nginxweb2.yaml
+$ kubectl apply -f nginxweb2.yaml
+
+service/nginxweb2 created
+deployment.apps/nginxweb2-deployment created
 ```
+
+
+サービス一覧から公開されたポートを確認します。
+```
+kubectl get services
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
+kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        161m
+nginxweb2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
+```
+今回はTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。
+
+
+ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
+* http://確認したIP:確認したポート番号/
+
+アクセス時に「**Welcome to nginx!**」のメッセージが表示されれば稼働確認完了です。
+
 
 
 
