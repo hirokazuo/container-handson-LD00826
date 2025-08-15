@@ -102,8 +102,8 @@ kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 ### ポッドネットワークアドオンのインストール
 今回はCalicoを利用します。
 以下、関連ドキュメント
-       * https://kubernetes.io/ja/docs/concepts/cluster-administration/addons/#networking-and-network-policy
-       * https://docs.tigera.io/calico/latest/about/
+* https://kubernetes.io/ja/docs/concepts/cluster-administration/addons/#networking-and-network-policy
+* https://docs.tigera.io/calico/latest/about/
 
        
 
