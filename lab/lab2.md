@@ -117,4 +117,10 @@ spec:
 EOF
 ```
 
+作成したYAMLファイルを使って新しいnginxWebサーバーをデプロイします。
+```
+kubectl apply -f nginxweb2.yaml
+```
+
+
 
