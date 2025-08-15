@@ -113,34 +113,23 @@ INFO Waiting for Trident REST interface.
 INFO Trident REST interface is up.                 version=25.06.0
 INFO Trident installation succeeded.   
 ```
-
-
-
-あああ
-```
-
-
-```
-$ ./tridentctl install -n trident -d
-./tridentctl install -n trident
-
-DEBU Initialized logging.                          logLevel=debug
-DEBU Running outside a pod, creating CLI-based client.
-DEBU Initialized Kubernetes CLI client.            cli=kubectl flavor=k8s namespace=default version=1.11.0
-DEBU Validated installation environment.           installationNamespace=trident kubernetesVersion=
-DEBU Parsed requested volume size.                 quantity=2Gi
-DEBU Dumping RBAC fields.                          ucpBearerToken= ucpHost= useKubernetesRBAC=true
-DEBU Namespace does not exist.                     namespace=trident
-DEBU PVC does not exist.                           pvc=trident
-DEBU PV does not exist.                            pv=trident
-- snip
-INFO Trident installation succeeded.
-```
-
 「INFO Trident installation succeeded.」が出力されればインストール成功です。
 
-また、問題が発生した場合には tridentctl を使用してtridentに関するログをまとめて確認することが出来ます。
 
+
+Tridentの状態を確認します。`-n`でネームスペースを指定してPodの状態を確認します。
+```
+# kubectl get pod -n trident
+
+NAME                                READY   STATUS    RESTARTS   AGE
+trident-controller-6594747b-t4q9z   6/6     Running   0          9m7s
+trident-node-linux-gs47g            2/2     Running   0          9m7s
+trident-node-linux-xqknx            2/2     Running   0          9m7s
+```
+
+
+
+もし、問題が発生した場合には tridentctl を使用してtridentに関するログをまとめて確認することが出来ます。
 
 ```
 ./tridentctl -n trident logs
