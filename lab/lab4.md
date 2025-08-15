@@ -151,7 +151,23 @@ Tridentのバージョンは`tridentctl version`を使って確認すること�
 +----------------+----------------+
 ```
 
+## Tridentへのバックエンド登録
+Tridentが、その背後で制御するストレージ(バックエンドストレージ)を登録します。
+ネットアップの各ストレージ製品ごとに必要な手順を紹介しています。
+* https://docs.netapp.com/us-en/trident/trident-use/backends.html
 
+今回はバックエンドをONTAPのNFSで接続するため、以下のドキュメントを参照します<br>
+ONTAP NAS driver overview
+* https://docs.netapp.com/us-en/trident/trident-use/ontap-nas.html
+
+Prepare to configure a backend with ONTAP NAS drivers
+* https://docs.netapp.com/us-en/trident/trident-use/ontap-nas-prep.html#requirements
+
+
+
+
+
+バックエンドストレージを設定するためにjsonファイルを用意します。 サンプルファイルがsample-inputディレクトリにあり、ここではONTAPのNASを設定しますので backend-ontap-nas.jsonをコピーして使います。
 
 
 
