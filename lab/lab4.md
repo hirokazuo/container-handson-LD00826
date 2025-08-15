@@ -69,6 +69,9 @@ Tridentのインストール方法は複数ありますが、今回は`tridentct
 Learn about Trident installation
 * https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html
 
+Install using tridentctl
+* https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy-tridentctl.html#critical-information-about-trident-25-06
+
 ### Tridentインストール(25.06)
 今回はKubernetes v1.33に対応した Trident 25.6をインストールします。
 ```
