@@ -7,10 +7,11 @@ K8sクラスターを構築する手順は以下「kubeadmセットアップツ�
 
 
 ## コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
-今回のハンズオンではコンテナランタイム 「CRI-O」を使用して Kubernetes環境を構築します。
-Kubernetes公式サイトにある「CRI-Oのインストール手順」リンク先の以下ドキュメントに CRI-O および kubeadm、kubelet、kubectlのインストール手順が掲載されています。
-こちらの手順に従ってCRI-Oバージョン1.33、Kubernetesバージョン1.33用のkubeadm、kubelet、kubectlをインストールしてください。
-「Bootstrap a cluster」設定は次のステップで実施しますので`kubeadm init` はここでは実施しないでください。
+今回のハンズオンではコンテナランタイム 「CRI-O」を使用して Kubernetes環境を構築します。<br>
+Kubernetes公式サイトにある「CRI-Oのインストール手順」リンク先の以下ドキュメントに CRI-O および kubeadm、kubelet、kubectlのインストール手順が掲載されています。<br>
+こちらの手順に従ってCRI-Oバージョン1.33、Kubernetesバージョン1.33用のkubeadm、kubelet、kubectlをインストールしてください。<br>
+「Bootstrap a cluster」設定は次のステップで実施しますので`kubeadm init` はここでは実施しないでください。<br>
+
 ### CRI-O Packaging (Ubuntu用)
 * https://github.com/cri-o/packaging/blob/main/README.md#distributions-using-deb-packages
 * `kubeadm init` は実施しない
