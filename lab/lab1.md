@@ -1,14 +1,14 @@
 # Lab1: kubernetes基本操作
 
 ## デプロイメント
-kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。
-
+kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。<br>
+今回はnginxのWebサーバーを作成します<br>
 以下では `kubectl run` を実行すると「Deployment」が作成されます。
 ```
 $ kubectl run 任意のデプロイメント名 --image=nginx --port=80
 
 deployment "nginxweb" created
-```
+`<>
 
 <br><br>
 デプロイが完了したら以下のコマンドで状況を確認します。
