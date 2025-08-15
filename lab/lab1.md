@@ -21,6 +21,17 @@ nginxweb   1/1     1            1           78s
 ```
 
 <br><br>
+Podの状態を以下のコマンドで状況を確認します。
+
+```
+$ kubectl get pod
+
+NAME                        READY   STATUS    RESTARTS   AGE
+nginxweb-86b474f5bb-qlgzf   1/1     Running   0          16m
+```
+Pod名とデプロイメント名が異なることを確認してください。
+
+<br><br>
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
 
 ```
