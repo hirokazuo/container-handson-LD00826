@@ -135,8 +135,55 @@ kubectl apply -f calico.yaml
 ```
 
 ## kubernetesワーカーノードのセットアップ
-**gpu01** をワーカーノードとしてセットアップします。
+**gpu01** をワーカーノードとしてセットアップします。<br>
 **mgmt01**にログインしている場合にはログアウトしてJumphostからSSHを使って**gpu01**にログインします。
+
+## コンテナランタイムおよび 、kubelet、kubectlのインストール
+Kubernetes公式サイトにある「Linuxワーカーノードの追加」に従ってセットアップします。
+* https://kubernetes.io/ja/docs/tasks/administer-cluster/kubeadm/adding-linux-nodes/
+
+先ほどインストールしたマスターノードと同様にコンテナランタイム 「CRI-O」を使用して Kubernetesワーカーノードを構築しますので`kubeadm join`コマンドまでの手順は同様となります。<br>
+
+### （補足）インストール手順解説
+公式サイトから確認できた手順と見比べてみてください。
+```
+# Kubernetes、CRI-Oバージョンの変数を設定
+KUBERNETES_VERSION=v1.33
+CRIO_VERSION=v1.33
+
+# リポジトリを追加するための依存関係を設定
+apt-get update
+apt-get install -y software-properties-common curl
+
+# Ubuntu 22.04より古いリリースでは、/etc/apt/keyringsフォルダーはデフォルトでは存在しないため、curlコマンドの前に作成
+mkdir -p -m 755 /etc/apt/keyrings
+
+# Kubernetes リポジトリを追加
+curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/kubernetes.list
+
+# CRI-O リポジトリを追加
+curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/cri-o.list
+
+# Install the packages
+apt-get update
+apt-get install -y cri-o kubelet kubeadm kubectl
+
+# Start CRI-O
+systemctl start crio.service
+
+# 新たなワーカーノードとしてクラスタに追加（token含むコマンド情報は自分自身の環境で出力された文字列を利用）
+kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
+	--discovery-token-ca-cert-hash sha256:0b834c42c8d3a484c27df33de06adc66fb49e98f41c130f17dd3fbc8a91d4378 
+```
+
+
+
 
 
 
