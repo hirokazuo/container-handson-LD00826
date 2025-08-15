@@ -100,12 +100,11 @@ kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 ```
 
 ### ポッドネットワークアドオンのインストール
-今回はCalicoを利用します。
-以下、関連ドキュメント
+今回はCalicoを利用します。<br>
+以下、関連ドキュメントになります。
 * https://kubernetes.io/ja/docs/concepts/cluster-administration/addons/#networking-and-network-policy
 * https://docs.tigera.io/calico/latest/about/
 
-       
 
 ### （補足）インストール手順解説
 公式サイトから確認できた手順と見比べてみてください。
@@ -135,9 +134,9 @@ curl -O -L  https://docs.projectcalico.org/manifests/calico.yaml
 kubectl apply -f calico.yaml
 ```
 
+## kubernetesワーカーノードのセットアップ
+ホスト gpu01 をワーカーノードとしてセットアップします。
+mgmt01にログインしている場合にはログアウトしてJumphostからSSHを使ってgpu01ホストにログインします。
 
 
 
-
-
-インストール
