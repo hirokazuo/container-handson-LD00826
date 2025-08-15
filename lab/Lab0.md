@@ -5,6 +5,10 @@ Kubernetesの公式ドキュメントは以下となります。
 K8sクラスターを構築する手順は以下「kubeadmセットアップツールのインストール」から確認できます。
 * https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
+## kubernetesマスターノードのセットアップ
+ホスト mgmt01 をマスターノードしてセットアップします。
+JumphostからSSHを使ってログインします。
+
 
 ## コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
 今回のハンズオンではコンテナランタイム 「CRI-O」を使用して Kubernetes環境を構築します。<br>
@@ -51,18 +55,52 @@ apt-get install -y cri-o kubelet kubeadm kubectl
 systemctl start crio.service
 ```
 
-## kubeadmを使用したクラスターの作成
+## Kubernatesクラスターの作成
 以下のドキュメントに従ってKubernetesクラスターをインストールします。
 * https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+
+### kubeadmを使ってクラスタを作成
+* kubeadmとは
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/
+
 
 作業内容以下となります。
 1. シングルコントロールプレーンのKubernetesクラスターをインストールします
 2. クラスター上にPodネットワークをインストールして、Podがお互いに通信できるようにします
-    1. Podネットワークがホストネットワークと重ならないようにする(LODの環境が192.168.0.0/24を使っているため`kubeadm init`のオプションは`--pod-network-cidr=10.244.0.0/16`を指定)
-    2. PodネットワークアドオンはCalicoを利用（以下、関連ドキュメント）
+    * Podネットワークがホストネットワークと重ならないようにする(LODの環境が192.168.0.0/24を使っているため`kubeadm init`のオプションは`--pod-network-cidr=10.244.0.0/16`を指定)
+
+      
+###
+```
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
+	--discovery-token-ca-cert-hash sha256:0b834c42c8d3a484c27df33de06adc66fb49e98f41c130f17dd3fbc8a91d4378 
+```
+
+### ポッドネットワークアドオンのインストール
+今回はCalicoを利用します。
+以下、関連ドキュメント
        * https://kubernetes.io/ja/docs/concepts/cluster-administration/addons/#networking-and-network-policy
        * https://docs.tigera.io/calico/latest/about/
 
+       
 
 ### （補足）インストール手順解説
 公式サイトから確認できた手順と見比べてみてください。
