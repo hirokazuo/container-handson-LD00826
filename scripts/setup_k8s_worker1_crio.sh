@@ -30,10 +30,6 @@ CRIO_VERSION=v1.33
 apt-get update
 apt-get install -y software-properties-common curl
 
-# リポジトリを追加するための依存関係を設定
-apt-get update
-apt-get install -y software-properties-common curl
-
 # Ubuntu 22.04より古いリリースでは、/etc/apt/keyringsフォルダーはデフォルトでは存在しないため、curlコマンドの前に作成
 mkdir -p -m 755 /etc/apt/keyrings
 
