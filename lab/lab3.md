@@ -229,6 +229,7 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 今回もTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。<br>
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
 * http://確認したEXTERNAL-IP/ <br>
+
 アクセス時に「Welcome to nginx!」のメッセージが表示されれば稼働確認完了です。
 
 
