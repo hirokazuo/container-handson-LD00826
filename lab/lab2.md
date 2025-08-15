@@ -37,7 +37,9 @@ daemonset.apps/speaker created
 validatingwebhookconfiguration.admissionregistration.k8s.io/metallb-webhook-configuration created
 ```
 
-ロードバランサー用のIPアドレスのプールを設定するためのYAMLファイル（ipaddresspool.yaml）をホームディレクトリ作成します。
+ロードバランサー用のIPアドレスのプールを設定するためのYAMLファイルを作成します。
+* ホームディレクトリに`ipaddresspool.yaml`を作成
+* IPアドレスプールは20個（192.168.0.221-192.168.0.240）
 
 以下、ヒアドキュメントでの作成例（viを使った作成でも構いません）
 ```
