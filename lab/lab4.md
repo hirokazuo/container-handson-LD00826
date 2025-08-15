@@ -164,10 +164,56 @@ Prepare to configure a backend with ONTAP NAS drivers
 * https://docs.netapp.com/us-en/trident/trident-use/ontap-nas-prep.html#requirements
 
 
+バックエンドストレージを設定するためにjsonファイルを用意します。 サンプルファイルが`sample-input`ディレクトリにあり、ここではONTAPのNASを設定しますので`backend-ontap-nas.json`をコピーして使います。
+<br>
+
+`sample-input`ディレクトリ配下の`ontap-nas`ディレクトリに移動します。
+```
+$ cd ./sample-input/backends-samples/ontap-nas
+```
+
+`backend-ontap-nas.json`ファイルがあることを確認します。
+```
+$ ls
+backend-ontap-nas-advanced.json       backend-tbc-ontap-nas-advanced.yaml
+backend-ontap-nas-autoexport.json     backend-tbc-ontap-nas-autoexport.yaml
+backend-ontap-nas.json                backend-tbc-ontap-nas-virtual-pools.yaml
+backend-ontap-nas-virtual-pools.json  backend-tbc-ontap-nas.yaml
+```
+
+`backend-ontap-nas.json`を`trident-installer`ディレクトリにコピーします。
+```
+$cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
+```
+
+コピーした`trident-installer`ディレクトリ内の`backend-ontap-nas.json`ファイルを確認します。
+```
+cat backend-ontap-nas.json
+{
+    "version": 1,
+    "storageDriverName": "ontap-nas",
+    "backendName": "customBackendName",
+    "managementLIF": "10.0.0.1",
+    "dataLIF": "10.0.0.2",
+    "svm": "trident_svm",
+    "username": "cluster-admin",
+    "password": "password"
+}
+```
+
+`backend-ontap-nas.json`ファイルを今回のLOD環境に合わせて編集します。
+* backendName: **任意の名前**
+* managementLIF: **192.168.0.101**
+* dataLIF: **192.168.0.121**
+* svm: **svm1**
+* username: **admin**
+* password: **Netapp1!**
 
 
 
-バックエンドストレージを設定するためにjsonファイルを用意します。 サンプルファイルがsample-inputディレクトリにあり、ここではONTAPのNASを設定しますので backend-ontap-nas.jsonをコピーして使います。
+
+
+
 
 
 
