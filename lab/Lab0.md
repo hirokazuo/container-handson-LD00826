@@ -136,7 +136,7 @@ kubectl apply -f calico.yaml
 
 ## kubernetesワーカーノードのセットアップ
 **gpu01** をワーカーノードとしてセットアップします。<br>
-**mgmt01**にログインしている場合にはログアウトしてJumphostからSSHを使って**gpu01**にログインします。
+Jumphostから別のコンソールを立ち上げてSSHを使って**gpu01**にログインします。
 
 ## コンテナランタイムおよび 、kubelet、kubectlのインストール
 Kubernetes公式サイトにある「Linuxワーカーノードの追加」に従ってセットアップします。
@@ -146,8 +146,27 @@ Kubernetes公式サイトにある「Linuxワーカーノードの追加」に�
 * 先ほどインストールしたマスターノードと同様にコンテナランタイム 「CRI-O」を使用して Kubernetesワーカーノードを構築しますので`kubeadm join`コマンドまでの手順は同様となります。<br>
 * マスターノード上で確認した`kubeadm join`コマンドの情報を使ってワーカーノードを構築します。
 
+### 以下メッセージが出力されれば成功です
+```
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
 
-### （補足）インストール手順解説
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
+
+ワーカーノードの状態を確認するために**mgmt01**ホスト上で`kubectl get nodes`コマンドを実行して確認します。
+
+```
+root@mgmt01:~# kubectl get nodes
+NAME     STATUS   ROLES           AGE     VERSION
+gpu01    Ready    <none>          5m25s   v1.33.4
+mgmt01   Ready    control-plane   58m     v1.33.4
+```
+
+
+
+### （補足）ワーカーノード インストール手順解説(gpu01上で実行)
 公式サイトから確認できた手順と見比べてみてください。
 ```
 # Kubernetes、CRI-Oバージョンの変数を設定
