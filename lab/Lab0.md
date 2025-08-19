@@ -22,7 +22,7 @@ Kubernetes公式サイトにある「CRI-Oのインストール手順」リン�
 * CRI-Oバージョン1.33、Kubernetesバージョン1.33
 
 
-### （補足）マスターノードインストール手順解説 ※mgmt01上で実行
+### （補足）マスターノードKubernetesクラスタ構築準備手順解説 ※mgmt01上で実行
 公式サイトから確認できた手順と見比べてみてください。
 ```
 # Kubernetes、CRI-Oバージョンの変数を設定
@@ -107,7 +107,7 @@ kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 * https://docs.tigera.io/calico/latest/about/
 
 
-### （補足）インストール手順解説
+### （補足）マスターノードKubernetesクラスタ構築手順解説 ※mgmt01上で実行
 公式サイトから確認できた手順と見比べてみてください。
 ```
 # Bootstrap a cluster
