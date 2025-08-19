@@ -311,7 +311,7 @@ NAME      STATUS   VOLUME                                     CAPACITY   ACCESS 
 pvctest   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
 ```
 
-続いてPVCによって作成されたPVを確認します。
+続いてPVCによって作成されたPVを確認します。先程の`kubectl get pvc`の出力と見比べてみてください。
 ```
 # kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
