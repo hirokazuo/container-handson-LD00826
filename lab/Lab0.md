@@ -117,12 +117,12 @@ sysctl -w net.ipv4.ip_forward=1
 
 # Pod networkのCIDRを設定して初期化
 # (LODの環境が192.168.0.0/24を使っているため10.244.0.0/16を指定)
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+kubeadm init --pod-network-cidr=10.244.0.0/16
 
 #kubeconfig ファイルを作成して kubectl をクラスターに接続
 mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Podをコントロールプレーンノードにスケジューリング(1ノードクラスタ時に必要)
 kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-
