@@ -1,4 +1,13 @@
-# ネットアップLab on Demand環境を使ったコンテナハンズオンコンテンツとなります
+# ネットアップLab on Demand環境を使ったコンテナハンズオンコンテンツ
 
-## A
-## A
+## ハンズオン環境
+NetApp Lab on Demand
+* https://labondemand.netapp.com/
+* 利用にあたってはNSS(NetApp Supprt Site)アカウントが必要
+
+「Building an AI Data Pipeline with NetApp and NVIDIA v1.3」を利用
+* https://labondemand.netapp.com/lab/ainvidia
+
+## ハンズオンコンテンツ
+操作手順は NetApp Digital Transformation Lab (NDX)のコンテンツをベースにして作成しています。
+NetApp Digital Transformation Lab (NDX) https://datatechnologylab.readthedocs.io/ja/latest/index.html
