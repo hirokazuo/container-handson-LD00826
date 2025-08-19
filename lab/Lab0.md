@@ -76,7 +76,7 @@ https://kubernetes.io/docs/reference/setup-tools/kubeadm/
 またメッセージの末尾にワーカーノード用の`kubeadm join`コマンドが出力されていますので、自身の端末に文字列をコピーしてください。
 
 
-以下、出力サンプル
+以下は出力サンプルです。
 ```
 Your Kubernetes control-plane has initialized successfully!
 
