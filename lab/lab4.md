@@ -227,6 +227,46 @@ TridentではStorageClassを作成するときに以下の属性を設定でき�
 | バックエンドのストレージプラットフォーム属性 | ontap-nas, ontap-nas-economy, ontap-nas-flexgroup, ontap-san, solidfire-san, eseries-iscsi | 
 
 
+### NFSバックエンドのONTAPでのStorageClass
+今回の環境ではSVMに高速なSSDのアグリゲートが割り当てられています。
+まずは高速なストレージ領域用のStorageClassを作成するためのYAMLファイルを作成します。
+* ファイル名: StorageClassFastest.yaml
+* tridentctlと同じ階層にYAMLファイルを作成
+
+以下は上記の高速なストレージ領域用のStorageClass作成方法のサンプルです。
+
+高速ストレージ用のマニフェストファイル例 StorageClassFastest.yaml
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ontap-gold
+provisioner: netapp.io/trident
+reclaimPolicy: Retain
+parameters:
+  backendType: "ontap-nas"
+  media: "ssd"
+  provisioningType: "thin"
+  snapshots: "true"
+```
+
+つづいて、ストレージクラスを作成します。
+```
+# kubectl create -f StorageClassFastest.yaml
+
+storageclass.storage.k8s.io/ontap-gold created
+```
+
+作成したストレージクラスを確認します
+```
+# kubectl get sc
+NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+ontap-gold (default)   csi.trident.netapp.io   Delete          Immediate           false                  10s
+```
+
+
+
+
 
 
 
