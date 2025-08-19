@@ -1,4 +1,6 @@
 # NetApp Trident コンテナハンズオンコンテンツ
+Kubeadmを使ったKubernetsクラスタのインストールからアプリケーションのコンテナ化、コンテナデータの永続化について体験
+
 
 ## ハンズオン環境
 NetApp Lab on Demand
