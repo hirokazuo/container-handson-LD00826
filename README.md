@@ -12,7 +12,8 @@ NetApp Lab on Demand
 
 ## ハンズオンコンテンツ
 操作手順は NetApp Digital Transformation Lab (NDX)のコンテンツをベースにして作成しています。
-NetApp Digital Transformation Lab (NDX) https://datatechnologylab.readthedocs.io/ja/latest/index.html
+* NetApp Digital Transformation Lab (NDX)
+  * https://datatechnologylab.readthedocs.io/ja/latest/index.html
 
 * アジェンダ
   * https://github.com/hirokazuo/container-handson/blob/main/lab/lab-agenda.md
