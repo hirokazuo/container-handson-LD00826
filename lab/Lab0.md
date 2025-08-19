@@ -6,8 +6,8 @@ K8sクラスターを構築する手順は以下「kubeadmセットアップツ�
 * https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
 ## kubernetesマスターノードのセットアップ
-ホスト **mgmt01** をマスターノードしてセットアップします。
-JumphostからSSHを使ってログインします。
+* ホスト **mgmt01** をマスターノードしてセットアップします。
+* JumphostからSSHを使ってログインします。
 
 
 ## コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
@@ -19,6 +19,7 @@ Kubernetes公式サイトにある「CRI-Oのインストール手順」リン�
 ### CRI-O Packaging (Ubuntu用)
 * https://github.com/cri-o/packaging/blob/main/README.md#distributions-using-deb-packages
 * `kubeadm init` は実施しない
+* CRI-Oバージョン1.33、Kubernetesバージョン1.33
 
 
 ### （補足）マスターノードインストール手順解説 ※mgmt01上で実行
