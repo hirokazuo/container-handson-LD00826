@@ -252,7 +252,7 @@ parameters:
 
 つづいて、ストレージクラスを作成します。
 ```
-# kubectl create -f StorageClassFastest.yaml
+# kubectl apply -f StorageClassFastest.yaml
 
 storageclass.storage.k8s.io/ontap-gold created
 ```
@@ -263,6 +263,61 @@ storageclass.storage.k8s.io/ontap-gold created
 NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 ontap-gold (default)   csi.trident.netapp.io   Delete          Immediate           false                  10s
 ```
+
+（補足）
+デフォルトのStorageClassの設定<br>
+StorageClassは記載がないときに使用するStorageClassを指定できます。
+```
+kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+## Persistent Volume Claimの作成
+アプリケーションで必要とされる永続化領域の定義をします。 PVCを作成時に独自の機能を有効化することができます。<br>
+データの保管ポリシー、データ保護ポリシー、SnapShotの取得ポリシー、クローニングの有効化、暗号化の有効化などを設定できます。
+
+Tridentが正しくPVをプロビジョニングできるか確認するためにPVCを作成します。
+以下のPVCを作成するためのYAMLファイルを作成してください。
+
+* ファイル名: pvctest.yaml.yaml
+* tridentctlと同じ階層にYAMLファイルを作成
+
+動作確認用 pvctest.yaml
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvctest
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ontap-gold
+```
+
+作成したYAMLファイルを使ってPVCを作成します。
+```
+# kubectl apply -f pvctest.yaml
+
+persistentvolumeclaim/pvctest created
+```
+
+作成したPVCを確認します。
+以下のようにSTATUSがBoundになっていれば成功です。
+```
+# kubectl get pvc
+NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvctest   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
+```
+
+続いてPVCによって作成されたPVを確認します。
+```
+# kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvctest   ontap-gold     <unset>                          101s
+```
+
 
 
 
