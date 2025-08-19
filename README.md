@@ -13,5 +13,6 @@ NetApp Lab on Demand
 NetApp Digital Transformation Lab (NDX) https://datatechnologylab.readthedocs.io/ja/latest/index.html
 
 * アジェンダ
+ * https://github.com/hirokazuo/container-handson/blob/main/lab/lab-agenda.md
 * ラボコンテンツ
   * https://github.com/hirokazuo/container-handson/tree/main/lab
