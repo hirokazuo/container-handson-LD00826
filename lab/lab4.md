@@ -226,6 +226,8 @@ TridentではStorageClassを作成するときに以下の属性を設定でき�
 | データ保護・管理に関する属性                 | スナップショット有無、クローニング有効化、暗号化の有効化                                   | 
 | バックエンドのストレージプラットフォーム属性 | ontap-nas, ontap-nas-economy, ontap-nas-flexgroup, ontap-san, solidfire-san, eseries-iscsi | 
 
+全てのパラメータ設定については以下のURLに記載があります。
+* https://docs.netapp.com/us-en/trident/trident-reference/objects.html
 
 ### NFSバックエンドのONTAPでのStorageClass
 今回の環境ではSVMに高速なSSDのアグリゲートが割り当てられています。
