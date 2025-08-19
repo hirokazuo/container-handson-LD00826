@@ -17,5 +17,5 @@ NetApp Lab on Demand
 
 * アジェンダ
   * https://github.com/hirokazuo/container-handson/blob/main/lab/lab-agenda.md
-* ラボコンテンツ
+* ラボコンテンツ（Lab0からLab5）
   * https://github.com/hirokazuo/container-handson/tree/main/lab
