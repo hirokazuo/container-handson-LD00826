@@ -219,17 +219,13 @@ StorageClassを定義して、ストレージのサービスカタログを作�
 TridentではStorageClassを作成するときに以下の属性を設定できます。 
 これらの属性のパラメータを組み合わせてストレージサービスをデザインします。
 
-.. list-table:: StorageClass の parameters に設定可能な属性
-    :header-rows: 1
+### StorageClass の parameters に設定可能な属性
+| 設定可能な属性                               | 例                                                                                         | 
+| -------------------------------------------- | ------------------------------------------------------------------------------------------ | 
+| 性能に関する属性                             | メデイアタイプ(hdd, hybrid, ssd)、プロビジョニングのタイプ（シン、シック)、IOPS            | 
+| データ保護・管理に関する属性                 | スナップショット有無、クローニング有効化、暗号化の有効化                                   | 
+| バックエンドのストレージプラットフォーム属性 | ontap-nas, ontap-nas-economy, ontap-nas-flexgroup, ontap-san, solidfire-san, eseries-iscsi | 
 
-    * - 設定可能な属性
-      - 例
-    * - 性能に関する属性
-      - メデイアタイプ(hdd, hybrid, ssd)、プロビジョニングのタイプ（シン、シック)、IOPS
-    * - データ保護・管理に関する属性
-      - スナップショット有無、クローニング有効化、暗号化の有効化
-    * - バックエンドのストレージプラットフォーム属性
-      - ontap-nas, ontap-nas-economy, ontap-nas-flexgroup, ontap-san, solidfire-san, eseries-iscsi
 
 
 
