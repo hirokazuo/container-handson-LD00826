@@ -1,4 +1,4 @@
-# ネットアップLab on Demand環境を使ったコンテナハンズオンコンテンツ
+# NetApp Trident コンテナハンズオンコンテンツ
 
 ## ハンズオン環境
 NetApp Lab on Demand
