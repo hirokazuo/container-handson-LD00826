@@ -107,7 +107,7 @@ NAME            STATUS   VOLUME                                     CAPACITY   A
 pvc-nginxweb3   Bound    pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef   1Gi        RWO            ontap-gold     <unset>                 19s
 ```
 
-
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -148,6 +148,7 @@ spec:
         - name: mydate
           persistentVolumeClaim:
             claimName: pvc-nginxweb3
+```
 
         
 
