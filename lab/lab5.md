@@ -62,7 +62,18 @@ EOF
 作成したYAMLファイルを使ってPVCを作成します。
 ```
 # kubectl apply -f nginxweb3.yaml
+
+service/nginxweb3 created
+deployment.apps/nginxweb3-deployment created
 ```
+
+```
+# kubectl get pod
+
+NAME                                    READY   STATUS    RESTARTS   AGE
+nginxweb3-deployment-8564df9445-mjw6v   1/1     Running   0          2m39s
+```
+
 
 
 pvc-nginxweb3.yaml
@@ -89,6 +100,56 @@ EOF
 
 persistentvolumeclaim/pvc-nginxweb3 created
 ```
+
+```
+# kubectl get pvc
+NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-nginxweb3   Bound    pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef   1Gi        RWO            ontap-gold     <unset>                 19s
+```
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxweb3
+  labels:
+    run: nginx
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginxweb3-deployment
+spec:
+  selector:
+    matchLabels:
+      run: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: mydate
+      volumes:
+        - name: mydate
+          persistentVolumeClaim:
+            claimName: pvc-nginxweb3
+
+        
 
 
   
