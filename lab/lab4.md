@@ -382,7 +382,7 @@ deletionPolicy: Delete
 # kubectl apply -f VolumeSnapshotClass.yaml
 ```
 
-### Snapshotを作成
+### VolumeSnapshotを作成
 先に作成したPVCに対してsnapshotを作成します。
 
 Snapshotを作成するためのYAMLファイルを作成します。
@@ -399,10 +399,12 @@ spec:
     persistentVolumeClaimName: pvctest
 ```
 
+作成したYAMLファイルを使ってVolumeSnapshotを作成します。
 ```
 kubectl apply -f $HOME/snapshot-test.yaml
 ```
 
+VolumeSnapshotの状態を確認します。
 ```
 # kubectl get volumesnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT   CREATIONTIME   AGE
