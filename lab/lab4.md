@@ -425,6 +425,7 @@ pvctest-snap   true         pvctest                             324Ki         cs
 VolumeSnapshotの元となるPVCを削除します。
 ```
 # kubectl delete pvc pvctest
+
 persistentvolumeclaim "pvctest" deleted
 ```
 
@@ -439,8 +440,14 @@ pvctest-snap   true         pvctest                             324Ki         cs
 VolumeSnapshot のライフサイクルはソース PVC から独立しています。つまり、ソース PVC が削除された後もスナップショットは保持されます。スナップショットが関連付けられている PVC を削除すると、 Trident はその PVC のバッキングボリュームを Deleting 状態でマークしますが、完全には削除しません。関連付けられている Snapshot がすべて削除されると、ボリュームは削除されます。
 
 
+VolumeSnapshotを削除します。
+```
+# kubectl delete volumesnapshot pvctest-snap
 
+volumesnapshot.snapshot.storage.k8s.io "pvctest-snap" deleted
+```
 
+Lab4は以上となります。
 
 https://github.com/kubernetes-csi/external-snapshotter/tree/master/client/config/crd
 
