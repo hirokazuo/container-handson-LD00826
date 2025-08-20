@@ -2,7 +2,7 @@
 
 ## 目的・ゴール: アプリケーションのデータ永続化を実現
 アプリケーションは永続化領域がないとデータの保存ができません。 KubernetesではStatic provisioningとDynamic provisioningの２つの永続化の手法があります。
-このレベルではDynamic provisioningを実現するためDynamic provisionerであるTridentをインストールし、 マニフェストファイルを作成しデータの永続化をすることが目標です。
+このレベルではDynamic provisioningを実現するためDynamic provisionerであるTridentをインストールし基本操作を確認します。
 
 ## 流れ
 1. Dynamic storage provisioningを実現(Tridentのインストール)
@@ -11,13 +11,6 @@
     1. 作成したStorageClassを使用する
     2. PVCをkubernetesにリクエストした時点で動的にストレージがプロビジョニングされる
 4. アプリケーションを稼働させて永続化ができていることを確認
-
-## コンテナでの永続データのカテゴライズ
-コンテナ化されたアプリケーション、環境での永続データは 以下のように分類して考え必要な物をリストアップしました。
-* データベースのデータファイル、ログファイル
-* 各サーバのログファイル
-* 設定ファイル
-* 共有ファイル
 
 ## Dynamic provisioning
 ステートフルコンテナを実現する上でストレージは重要なコンポーネントになります。
