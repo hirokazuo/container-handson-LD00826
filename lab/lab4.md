@@ -334,7 +334,7 @@ Work with snapshots
 Deploy a volume snapshot controller
 * https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller
 
-#### snapshot CDRを作成します。
+#### snapshot CRDを作成します。
 
 上記ドキュメントではスクリプトファイルを作成していますが、以下、3つのコマンドを直接実行します。
 ```
