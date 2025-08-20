@@ -362,6 +362,7 @@ Kubernetes VolumeSnapshotClass objects
 Create a volume snapshot
 * https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#create-a-volume-snapshot
 
+ドライバーは、csi-snapclass クラスのボリューム スナップショットのリクエストが Trident によって処理されることを Kubernetes に指定します。削除ポリシーは、スナップショットが削除される際に実行されるアクションを指定します。削除ポリシーが「Delete」に設定されている場合、スナップショットが削除されると、ボリュームスナップショットオブジェクトおよびストレージクラスター上の基盤となるスナップショットが削除されます。一方、「Retain」に設定すると、VolumeSnapshotContentと物理スナップショットが保持されます。
 
 VolumeSnapshotClassを作成するためのYAMLファイルを作成します。
 * ファイル名: VolumeSnapshotClass.yaml
@@ -374,6 +375,11 @@ metadata:
   name: csi-snapclass
 driver: csi.trident.netapp.io
 deletionPolicy: Delete
+```
+
+作成したYAMLファイルを使ってVolumeSnapshotClassを作成します。
+```
+# kubectl apply -f VolumeSnapshotClass.yaml
 ```
 
 ### Snapshotを作成
