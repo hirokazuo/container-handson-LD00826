@@ -58,3 +58,32 @@ spec:
 
 EOF
 ```
+
+
+pvc-nginxweb3.yaml
+```
+$ cat <<EOF | sudo tee $HOME/pvc-nginxweb3.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nginxweb3
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ontap-gold
+
+EOF
+```
+
+作成したYAMLファイルを使ってPVCを作成します。
+```
+# kubectl apply -f pvc-nginxweb3.yaml
+
+persistentvolumeclaim/pvc-nginxweb3 created
+```
+
+
+  
