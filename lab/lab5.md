@@ -17,3 +17,44 @@
 * 各サーバのログファイル
 * 設定ファイル
 * 共有ファイル
+
+
+
+```
+$ cat <<EOF | sudo tee $HOME/nginxweb3.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxweb2
+  labels:
+    run: nginx
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginxweb2-deployment
+spec:
+  selector:
+    matchLabels:
+      run: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+EOF
+```
