@@ -128,7 +128,8 @@ deployment.apps/nginxweb2-deployment created
 
 サービス一覧から公開されたポートを確認します。
 ```
-kubectl get services
+$ kubectl get services
+
 NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        161m
 nginxweb2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
