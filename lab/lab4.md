@@ -323,6 +323,8 @@ pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete     
 
 ## Snapshotの作成
 TridentのSnapshotに関する利用方法は以下URLに記載されています。
+<br>
+Work with snapshots
 * https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html
 
 ### ボリュームスナップショットコントローラをデプロイ
@@ -332,7 +334,7 @@ TridentのSnapshotに関する利用方法は以下URLに記載されていま�
 Deploy a volume snapshot controller
 * https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller
 
-まず、snapshot CDRを作成します。
+#### snapshot CDRを作成します。
 
 上記ドキュメントではスクリプトファイルを作成していますが、以下、3つのコマンドを直接実行します。
 ```
@@ -343,10 +345,63 @@ Deploy a volume snapshot controller
 # kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 ```
 
+#### snapshot controllerを作成します
+ドキュメントに記載のコマンドを実行します。
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+```
+
+### VolumeSnapshotClassを作成
+スナップショットを作成するには 'VolumeSnapshotClass' を管理者が定義する必要があります。
+<br>
+VolumeSnapshotClassについては以下に説明があります。
+Kubernetes VolumeSnapshotClass objects
+* https://docs.netapp.com/us-en/trident/trident-reference/objects.html#kubernetes-attributes
+Create a volume snapshot
+* https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#create-a-volume-snapshot
 
 
+VolumeSnapshotClassを作成するためのYAMLファイルを作成します。
+* ファイル名: VolumeSnapshotClass.yaml
 
+VolumeSnapshotClass.yaml 記述内容
+```
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: csi-snapclass
+driver: csi.trident.netapp.io
+deletionPolicy: Delete
+```
 
+### Snapshotを作成
+先に作成したPVCに対してsnapshotを作成します。
+
+Snapshotを作成するためのYAMLファイルを作成します。
+* ファイル名: snapshot-test.yaml
+
+snapshot-test.yaml 記述内容
+```
+kind: VolumeSnapshot
+metadata:
+  name: pvctest-snap
+spec:
+  volumeSnapshotClassName: csi-snapclass
+  source:
+    persistentVolumeClaimName: pvctest
+```
+
+```
+kubectl apply -f $HOME/snapshot-test.yaml
+```
+
+```
+# kubectl get volumesnapshot
+NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT   CREATIONTIME   AGE
+pvctest-snap                pvctest                                           csi-snapclass                                    58s
+```
 
 
 https://github.com/kubernetes-csi/external-snapshotter/tree/master/client/config/crd
