@@ -382,6 +382,15 @@ deletionPolicy: Delete
 # kubectl apply -f VolumeSnapshotClass.yaml
 ```
 
+作成したVolumeSnapshotClassを確認します。
+```
+# kubectl get VolumeSnapshotClass
+NAME            DRIVER                  DELETIONPOLICY   AGE
+csi-snapclass   csi.trident.netapp.io   Delete           26s
+```
+
+
+
 ### VolumeSnapshotを作成
 先に作成したPVCに対してsnapshotを作成します。
 
