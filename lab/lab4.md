@@ -415,12 +415,6 @@ kubectl apply -f $HOME/snapshot-test.yaml
 
 VolumeSnapshotの状態を確認します。
 ```
-# kubectl get volumesnapshot
-NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT   CREATIONTIME   AGE
-pvctest-snap                pvctest                                           csi-snapclass                                    58s
-```
-
-```
 # kubectl get VolumeSnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvctest-snap   true         pvctest                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
