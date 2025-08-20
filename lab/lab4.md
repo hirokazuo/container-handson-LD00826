@@ -321,10 +321,35 @@ pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete     
 ```
 
 
-## Snapshot
-https://github.com/kubernetes-csi/external-snapshotter/tree/master/client/config/crd
+## Snapshotの作成
+TridentのSnapshotに関する利用方法は以下URLに記載されています。
+* https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html
 
-https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller
+### ボリュームスナップショットコントローラをデプロイ
+今回作成したKubernetes環境にはスナップショットコントローラとCRDが含まれていないため、以下ドキュメントの記述に従って設定します。
+<br>
+
+Deploy a volume snapshot controller
+* https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller
+
+まず、snapshot CDRを作成します。
+
+上記ドキュメントではスクリプトファイルを作成していますが、以下、3つのコマンドを直接実行します。
+```
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+```
+
+
+
+
+
+
+
+https://github.com/kubernetes-csi/external-snapshotter/tree/master/client/config/crd
 
 
 
