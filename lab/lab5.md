@@ -25,7 +25,7 @@ $ cat <<EOF | sudo tee $HOME/nginxweb3.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginxweb2
+  name: nginxweb3
   labels:
     run: nginx
 spec:
@@ -39,7 +39,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginxweb2-deployment
+  name: nginxweb3-deployment
 spec:
   selector:
     matchLabels:
@@ -57,6 +57,11 @@ spec:
         - containerPort: 80
 
 EOF
+```
+
+作成したYAMLファイルを使ってPVCを作成します。
+```
+# kubectl apply -f nginxweb3.yaml
 ```
 
 
