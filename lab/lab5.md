@@ -180,7 +180,7 @@ root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# exit
 
 nginxにアクセスするためのIPアドレスを確認します。
 ```
-root@mgmt01:~# kubectl get svc
+# kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
 nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP   14h
@@ -212,6 +212,15 @@ Podの名前が変わって新たに作成されていることが確認でき�
 * （例）http://192.168.0.223/test.html
 
 余裕があればnginxコンテナへのシェルからtest.htmlがコンテナ内のnginxドキュメントルートの残っていることを確認してください。
+
+
+Kubenetesノード上でのボリュームを確認します。Ubntuホスト上でdfコマンドを実行します。
+```
+(mgmt01 上で実行)
+# df -h |grep trident
+192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef  1.0G  320K  1.0G   1% /var/lib/kubelet/pods/30ed1ae0-e2f1-42a3-916b-b9f3bf3d2605/volumes/kubernetes.io~csi/pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef/mount
+```
+ボリュームはコンテナがマウントしているのではなく、Kubernetesのノードがマウントしていることが確認できます。
 
 
 
