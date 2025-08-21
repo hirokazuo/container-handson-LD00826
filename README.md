@@ -11,11 +11,11 @@ NetApp Lab on Demand
 * https://labondemand.netapp.com/lab/ainvidia
 
 ## ハンズオンコンテンツ
-操作手順は NetApp Digital Transformation Lab (NDX)のコンテンツをベースにして作成しています。
-* NetApp Digital Transformation Lab (NDX)
-  * https://datatechnologylab.readthedocs.io/ja/latest/index.html
-
 * アジェンダ
   * https://github.com/hirokazuo/container-handson/blob/main/lab/lab-agenda.md
 * ラボコンテンツ（Lab0からLab5）
   * https://github.com/hirokazuo/container-handson/tree/main/lab
+ 
+※操作手順は NetApp Digital Transformation Lab (NDX)のコンテンツをベースにして作成しています。
+* NetApp Digital Transformation Lab (NDX)
+  * https://datatechnologylab.readthedocs.io/ja/latest/index.html
