@@ -122,20 +122,16 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 # kubectl apply -f nginxweb3.yaml
 ```
 
-```
-# kubectl apply -f nginxweb3.yaml
 
 
 ```
 
 
+```
+# kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-4rjwm -- /bin/bash
+```
 
-~# kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-4rjwm -- /bin/bash
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+
 root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# df
 Filesystem                                                      1K-blocks    Used Available Use% Mounted on
 overlay                                                         100557880 9265016  86138664  10% /
