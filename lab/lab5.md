@@ -124,7 +124,7 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 
 
 
-```
+
 
 
 ```
@@ -132,6 +132,8 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 ```
 
 
+```
+(コンテナ内のシェルで実行します)
 root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# df
 Filesystem                                                      1K-blocks    Used Available Use% Mounted on
 overlay                                                         100557880 9265016  86138664  10% /
@@ -143,7 +145,47 @@ tmpfs                                                              813612    297
 192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef   1048576     320   1048256   1% /usr/share/nginx/html
 tmpfs                                                             8033692      12   8033680   1% /run/secrets/kubernetes.io/serviceaccount
 udev                                                              4018760       0   4018760   0% /proc/keys
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+```
+
+nginxのドキュメントルートにテスト用のファイルを作成します。
+```
+(コンテナ内のシェルで実行します)
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# cat <<EOF | tee /usr/share/nginx/html/test.html
+<html>
+	<head>
+	<title>
+		NGINX TEST
+	</title>
+	</head>
+
+	<body>
+		Hands on lab test
+	</body>
+</html>
+
+EOF
+```
+
+nginxのコンテナからExitします。
+```
+(コンテナ内のシェルで実行します)
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# exit
+```
+
+nginxにアクセスするためのIPアドレスを確認します。
+```
+root@mgmt01:~# kubectl get svc
+
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
+nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP   14h
+```
+
+プラウザで確認したアドレスを使ってnginxコンテナ内に作成したテストページにアクセスします。
+* http://192.168.0.223/test.html
+
+
+
+
 
 
 
