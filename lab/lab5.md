@@ -20,61 +20,12 @@
 
 
 
-```
-$ cat <<EOF | sudo tee $HOME/nginxweb3.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginxweb3
-  labels:
-    run: nginx
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    protocol: TCP
-  selector:
-    run: nginx
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginxweb3-deployment
-spec:
-  selector:
-    matchLabels:
-      run: nginx
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        run: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
 
-EOF
-```
-
-作成したYAMLファイルを使ってPVCを作成します。
-```
-# kubectl apply -f nginxweb3.yaml
-
-service/nginxweb3 created
-deployment.apps/nginxweb3-deployment created
-```
-
-```
-# kubectl get pod
-
-NAME                                    READY   STATUS    RESTARTS   AGE
-nginxweb3-deployment-8564df9445-mjw6v   1/1     Running   0          2m39s
-```
+アプリケーションのデータ永続化を確認するためにハンズオンで3つ目のnginxのPodを作成します。
 
 
+### PVCの作成 
+nginxweb3用のPVCをデプロイします。デプロイするためのYAMLファイルを作成します。
 
 pvc-nginxweb3.yaml
 ```
@@ -107,9 +58,12 @@ NAME            STATUS   VOLUME                                     CAPACITY   A
 pvc-nginxweb3   Bound    pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef   1Gi        RWO            ontap-gold     <unset>                 19s
 ```
 
-34行目以下にvolumeMountsに関する記述を追記します。
-pvc-nginxweb3.yamlを更新
+nginxをデプロイするためのマニフェストを作成します。<br>
+今回は34行目以下にvolumeMountsに関する記述があることを確認してください。
+
+nginxweb3.yaml
 ```
+$ cat <<EOF | sudo tee $HOME/nginxweb3.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -150,6 +104,8 @@ spec:
         - name: nginxweb3-volume
           persistentVolumeClaim:
             claimName: pvc-nginxweb3
+
+EOF
 ```
 
 KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フィールドは重要な役割を果たします。このフィールドは、Podレベルで定義されたボリュームと特定のボリュームマウントを関連付けます。
@@ -159,6 +115,40 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 
 **Volume Mount定義**：コンテナの`spec.containers`セクション内の`volumeMounts`セクションで、そのコンテナにボリュームをマウントする方法指定します。`volumeMounts`内の`name`フィールドは、`spec.volumes`で定義されたボリュームの名前と完全に一致する必要があります。これにより、コンテナ内のマウントポイントと実際のボリュームとの接続が確立されます。
 要約すると、`volumeMounts`内の名前は定義されたボリュームへの参照として機能し、コンテナが指定されたマウントパスでそのボリュームが提供するストレージにアクセスし利用できるようにします。
+
+
+作成したYAMLファイルを使ってnginxのPodを作成します。
+```
+# kubectl apply -f nginxweb3.yaml
+```
+
+```
+# kubectl apply -f nginxweb3.yaml
+
+
+```
+
+
+
+~# kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-4rjwm -- /bin/bash
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# df
+Filesystem                                                      1K-blocks    Used Available Use% Mounted on
+overlay                                                         100557880 9265016  86138664  10% /
+tmpfs                                                               65536       0     65536   0% /dev
+cgroup                                                               1024       0      1024   0% /sys/fs/cgroup
+shm                                                                 65536       0     65536   0% /dev/shm
+tmpfs                                                              813612    2976    810636   1% /etc/hostname
+/dev/mapper/ubuntu--vg-ubuntu--lv                               100557880 9265016  86138664  10% /etc/hosts
+192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef   1048576     320   1048256   1% /usr/share/nginx/html
+tmpfs                                                             8033692      12   8033680   1% /run/secrets/kubernetes.io/serviceaccount
+udev                                                              4018760       0   4018760   0% /proc/keys
+root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# 
+
 
 
 
