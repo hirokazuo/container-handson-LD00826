@@ -254,7 +254,7 @@ kubectl apply -f $HOME/pvctest.yaml
 sleep 20
 
 # 動作確認用のSnapshotの作成
-cat <<EOF | sudo tee $HOME/snapshottest.yaml
+cat <<EOF | sudo tee $HOME/snapshot-test.yaml
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
@@ -265,7 +265,7 @@ spec:
     persistentVolumeClaimName: pvctest
 EOF
 
-kubectl apply -f $HOME/snapshottest.yaml
+kubectl apply -f $HOME/snapshot-test.yaml
 
 sleep 20
 
