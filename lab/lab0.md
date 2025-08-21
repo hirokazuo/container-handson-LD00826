@@ -10,7 +10,7 @@ K8sクラスターを構築する手順は以下「kubeadmセットアップツ�
 * JumphostからSSHを使ってログインします。
 
 
-## コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
+### コンテナランタイムおよび kubeadm、kubelet、kubectlのインストール
 今回のハンズオンではコンテナランタイム 「CRI-O」を使用して Kubernetes環境を構築します。<br>
 Kubernetes公式サイトにある「CRI-Oのインストール手順」リンク先の以下ドキュメントに CRI-O および kubeadm、kubelet、kubectlのインストール手順が掲載されています。<br>
 こちらの手順に従ってCRI-Oバージョン1.33、Kubernetesバージョン1.33用のkubeadm、kubelet、kubectlをインストールしてください。<br>
@@ -135,11 +135,14 @@ curl -O -L  https://docs.projectcalico.org/manifests/calico.yaml
 kubectl apply -f calico.yaml
 ```
 
+<br>
+<br>
+<br>
 ## kubernetesワーカーノードのセットアップ
 **gpu01** をワーカーノードとしてセットアップします。<br>
 Jumphostから別のコンソールを立ち上げてSSHを使って**gpu01**にログインします。
 
-## コンテナランタイムおよび 、kubelet、kubectlのインストール
+### コンテナランタイムおよび 、kubelet、kubectlのインストール
 Kubernetes公式サイトにある「Linuxワーカーノードの追加」に従ってセットアップします。
 * https://kubernetes.io/ja/docs/tasks/administer-cluster/kubeadm/adding-linux-nodes/
 
