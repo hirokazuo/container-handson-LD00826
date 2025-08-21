@@ -143,9 +143,9 @@ spec:
         - containerPort: 80
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
-          name: mydate
+          name: nginxweb3-volume
       volumes:
-        - name: mydate
+        - name: nginxweb3-volume
           persistentVolumeClaim:
             claimName: pvc-nginxweb3
 ```
