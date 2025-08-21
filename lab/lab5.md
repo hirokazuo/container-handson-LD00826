@@ -107,6 +107,8 @@ NAME            STATUS   VOLUME                                     CAPACITY   A
 pvc-nginxweb3   Bound    pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef   1Gi        RWO            ontap-gold     <unset>                 19s
 ```
 
+34行目以下にvolumeMountsに関する記述を追記します。
+pvc-nginxweb3.yamlを更新
 ```
 apiVersion: v1
 kind: Service
