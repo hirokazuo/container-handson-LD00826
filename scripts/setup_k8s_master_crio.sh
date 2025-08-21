@@ -167,8 +167,8 @@ kubectl apply -f nginx-test.yaml
 # trident用のnamespaceを作成
 kubectl create namespace trident
 
-wget https://github.com/NetApp/trident/releases/download/v24.06.0/trident-installer-24.06.0.tar.gz
-tar -xf trident-installer-24.06.0.tar.gz
+wget https://github.com/NetApp/trident/releases/download/v25.06.0/trident-installer-25.06.0.tar.gz
+tar -xf trident-installer-25.06.0.tar.gz
 $HOME/trident-installer/tridentctl install -n trident
 
 sleep 100
