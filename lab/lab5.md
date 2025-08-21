@@ -187,7 +187,7 @@ nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP  
 ```
 
 プラウザで確認したアドレスを使ってnginxコンテナ内に作成したテストページにアクセスします。
-* http://192.168.0.223/test.html
+* （例）http://192.168.0.223/test.html
 
 
 
@@ -206,6 +206,14 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 nginxweb3-deployment-5f5dd7c595-jdx2k   1/1     Running   0          49s
 ```
 Podの名前が変わって新たに作成されていることが確認できます。
+
+
+再度nginxコンテナ内に作成したテストページにアクセスします。
+* （例）http://192.168.0.223/test.html
+
+余裕があればnginxコンテナへのシェルからtest.htmlがコンテナ内のnginxドキュメントルートの残っていることを確認してください。
+
+
 
 
 
