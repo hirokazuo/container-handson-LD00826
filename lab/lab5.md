@@ -122,16 +122,22 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 # kubectl apply -f nginxweb3.yaml
 ```
 
+Podの状態を確認します。
+```
+root@mgmt01:~# kubectl get pod
+
+NAME                                    READY   STATUS    RESTARTS   AGE
+nginxweb3-deployment-5f5dd7c595-4rjwm   1/1     Running   0          44m
+```
 
 
 
-
-
+nginxコンテナへのシェルの取得します。
 ```
 # kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-4rjwm -- /bin/bash
 ```
 
-
+コンテナ内にTridentが作成したボリュームがマウントされていることを確認します。
 ```
 (コンテナ内のシェルで実行します)
 root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# df
@@ -182,6 +188,25 @@ nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP  
 
 プラウザで確認したアドレスを使ってnginxコンテナ内に作成したテストページにアクセスします。
 * http://192.168.0.223/test.html
+
+
+
+nginxのPodを削除します。
+```
+# kubectl delete pod nginxweb3-deployment-5f5dd7c595-4rjwm
+
+pod "nginxweb3-deployment-5f5dd7c595-4rjwm" deleted
+```
+
+nginxのPodの状態を確認します
+```
+# kubectl get pod
+
+NAME                                    READY   STATUS    RESTARTS   AGE
+nginxweb3-deployment-5f5dd7c595-jdx2k   1/1     Running   0          49s
+```
+Podの名前が変わって新たに作成されていることが確認できます。
+
 
 
 
