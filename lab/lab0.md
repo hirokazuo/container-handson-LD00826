@@ -137,7 +137,7 @@ kubectl apply -f calico.yaml
 
 <br>
 <br>
-<br>
+
 ## kubernetesワーカーノードのセットアップ
 **gpu01** をワーカーノードとしてセットアップします。<br>
 Jumphostから別のコンソールを立ち上げてSSHを使って**gpu01**にログインします。
