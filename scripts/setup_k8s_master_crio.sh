@@ -235,11 +235,11 @@ EOF
 kubectl apply -f $HOME/trident-installer/VolumeSnapshotClass.yaml
 
 # 動作確認用PVCの作成
-cat <<EOF | sudo tee $HOME/pvctest.yaml
+cat <<EOF | sudo tee $HOME/pvc-test.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvctest
+  name: pvc-test
 spec:
   accessModes:
     - ReadWriteOnce
@@ -249,7 +249,7 @@ spec:
   storageClassName: ontap-gold
 EOF
 
-kubectl apply -f $HOME/pvctest.yaml
+kubectl apply -f $HOME/pvc-test.yaml
 
 sleep 20
 
@@ -262,7 +262,7 @@ metadata:
 spec:
   volumeSnapshotClassName: csi-snapclass
   source:
-    persistentVolumeClaimName: pvctest
+    persistentVolumeClaimName: pvc-test
 EOF
 
 kubectl apply -f $HOME/snapshot-test.yaml
