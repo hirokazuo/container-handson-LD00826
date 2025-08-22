@@ -416,13 +416,13 @@ NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SN
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
 ```
 ボリュームスナップショット要求が受信されると、 Trident はバックエンドでのボリュームのスナップショット作成を自動的に管理し、ユニークな「 VolumeSnapshotContent 」オブジェクトを作成することによってスナップショットを公開します。既存の PVC からスナップショットを作成し、新しい PVC を作成するときにスナップショットを DataSource として使用できます。
+
 <br>
 <br>
 
 ONTAP System Managerからの確認
 * ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、どのようなスナップショットが作成されているか確認してください。
-
-
+<br>
 <br>
 
 VolumeSnapshotの元となるPVCを削除します。
@@ -432,14 +432,21 @@ VolumeSnapshotの元となるPVCを削除します。
 persistentvolumeclaim "pvc-test" deleted
 ```
 
+<br>
+<br>
+
+ONTAP System Managerからの確認
+* ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、ボリュームの状態を確認してください。
+<br>
+<br>
+
+
 VolumeSnapshotの状態を確認します。
 ```
 # kubectl get volumesnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   4h2m           4h2m
 ```
-
-
 VolumeSnapshot のライフサイクルはソース PVC から独立しています。つまり、ソース PVC が削除された後もスナップショットは保持されます。スナップショットが関連付けられている PVC を削除すると、 Trident はその PVC のバッキングボリュームを Deleting 状態でマークしますが、完全には削除しません。関連付けられている Snapshot がすべて削除されると、ボリュームは削除されます。
 
 
@@ -449,6 +456,15 @@ VolumeSnapshotを削除します。
 
 volumesnapshot.snapshot.storage.k8s.io "pvc-test-snap" deleted
 ```
+
+<br>
+<br>
+
+ONTAP System Managerからの確認
+* ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、ボリューム及びスナップショットの状態を確認してください。
+<br>
+<br>
+
 
 Lab4は以上となります。
 
