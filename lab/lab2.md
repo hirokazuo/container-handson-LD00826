@@ -68,7 +68,7 @@ spec:
 EOF
 ```
 
-作成したYAMLファイルを使っロードバランサー用のIPアドレスのプールを設定します。
+作成したYAMLファイルを使ってロードバランサー用のIPアドレスのプールを設定します。
 ```
 $ kubectl apply -f $HOME/ipaddresspool.yaml
 
@@ -76,10 +76,11 @@ ipaddresspool.metallb.io/default created
 l2advertisement.metallb.io/default created
 ```
 
-再度nginxウェブサーバのPodを作成します
+再度nginxウェブサーバーのPodを作成します
 * 今回はロードバランサーを使ってExternal-IPを設定します。
 * デプロイ用のYAMLファイルを作成してPodを作成します。
 
+nginxweb2.yaml
 ```
 $ cat <<EOF | sudo tee $HOME/nginxweb2.yaml
 apiVersion: v1
