@@ -176,7 +176,7 @@ backend-ontap-nas-virtual-pools.json  backend-tbc-ontap-nas.yaml
 
 `backend-ontap-nas.json`を`trident-installer`ディレクトリにコピーします。
 ```
-$cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
+$ cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
 ```
 
 コピーした`trident-installer`ディレクトリ内の`backend-ontap-nas.json`ファイルを確認します。
@@ -247,14 +247,14 @@ parameters:
 
 つづいて、ストレージクラスを作成します。
 ```
-# kubectl apply -f StorageClassFastest.yaml
+$ kubectl apply -f StorageClassFastest.yaml
 
 storageclass.storage.k8s.io/ontap-gold created
 ```
 
 作成したストレージクラスを確認します
 ```
-# kubectl get sc
+$ kubectl get sc
 NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 ontap-gold (default)   csi.trident.netapp.io   Delete          Immediate           false                  10s
 ```
@@ -293,7 +293,7 @@ spec:
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-# kubectl apply -f pvctest.yaml
+$ kubectl apply -f pvctest.yaml
 
 persistentvolumeclaim/pvctest created
 ```
@@ -301,14 +301,14 @@ persistentvolumeclaim/pvctest created
 作成したPVCを確認します。
 以下のようにSTATUSがBoundになっていれば成功です。
 ```
-# kubectl get pvc
+$ kubectl get pvc
 NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvctest   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
 ```
 
 続いてPVCによって作成されたPVを確認します。先程の`kubectl get pvc`の出力と見比べてみてください。
 ```
-# kubectl get pv
+$ kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
 pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvctest   ontap-gold     <unset>                          101s
 ```
