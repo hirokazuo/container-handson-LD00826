@@ -112,7 +112,7 @@ INFO Trident installation succeeded.
 
 Tridentの状態を確認します。`-n`でネームスペースを指定してPodの状態を確認します。
 ```
-# kubectl get pod -n trident
+$ kubectl get pod -n trident
 
 NAME                                READY   STATUS    RESTARTS   AGE
 trident-controller-6594747b-t4q9z   6/6     Running   0          9m7s
@@ -125,7 +125,7 @@ trident-node-linux-xqknx            2/2     Running   0          9m7s
 もし、問題が発生した場合には tridentctl を使用してtridentに関するログをまとめて確認することが出来ます。
 
 ```
-./tridentctl -n trident logs
+$ ./tridentctl -n trident logs
 
 time="2018-02-15T03:32:35Z" level=error msg="API invocation failed. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out"
 time="2018-02-15T03:32:35Z" level=error msg="Problem initializing storage driver: 'ontap-nas' error: Error initializing ontap-nas driver. Could not determine Data ONTAP API version. Could not read ONTAPI version. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out" backend= handler=AddBackend
@@ -135,7 +135,7 @@ time="2018-02-15T03:32:35Z" level=info msg="API server REST call." duration=2m10
 ### Tridentのバージョン確認
 Tridentのバージョンは`tridentctl version`を使って確認することができます。
 ```
-./tridentctl version -n trident
+$ ./tridentctl version -n trident
 
 +----------------+----------------+
 | SERVER VERSION | CLIENT VERSION |
