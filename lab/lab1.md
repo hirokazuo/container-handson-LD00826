@@ -401,11 +401,3 @@ kubectl patch storageclass [StorageClass名] -p '{"metadata": {"annotations":{"s
 
 
 
-
-* 12345
-
-|テスト。|
-|:-|
-
-|テスト。|
-|:-|
