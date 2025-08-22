@@ -230,7 +230,7 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
 * http://確認したEXTERNAL-IP/ <br>
 
-アクセス時に「Welcome to nginx!」のメッセージが表示されれば稼働確認完了です。
+アクセス時にWordPressの初期設定画面が表示されれば稼働確認完了です。
 
 
 
