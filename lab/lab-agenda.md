@@ -2,7 +2,7 @@
 本コンテンツは NetApp Digital Transformation Lab (NDX)のコンテンツをベースにして作成しています。
 
 NetApp Digital Transformation Lab (NDX)
-https://datatechnologylab.readthedocs.io/ja/latest/index.html
+* https://datatechnologylab.readthedocs.io/ja/latest/index.html
 
 # アジェンダ
 ## Lab0: Kubenetesクラスタのセットアップ
