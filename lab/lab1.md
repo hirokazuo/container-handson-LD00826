@@ -214,7 +214,7 @@ service "nginxweb" deleted
 <br>
 
 Lab1は以上となります。
-[Lab2](https://github.com/hirokazuo/container-handson-LD00826/edit/main/lab/lab1.md)
+[Lab2](https://github.com/hirokazuo/container-handson-LD00826/blob/main/lab/lab2.md)
 に進んでください。
 
 
