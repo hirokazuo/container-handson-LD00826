@@ -226,7 +226,7 @@ wordpress         LoadBalancer   10.102.247.40   192.168.0.222   80:30672/TCP   
 wordpress-mysql   ClusterIP      None            <none>          3306/TCP  
 ```
 
-今回もTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。<br>
+上記のようにTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。<br>
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
 * http://確認したEXTERNAL-IP/ <br>
 
