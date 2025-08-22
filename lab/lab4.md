@@ -273,7 +273,7 @@ kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annota
 Tridentが正しくPVをプロビジョニングできるか確認するためにPVCを作成します。
 以下のPVCを作成するためのYAMLファイルを作成してください。
 
-* ファイル名: pvctest.yaml.yaml
+* ファイル名: pvctest.yaml
 * tridentctlと同じ階層にYAMLファイルを作成
 
 動作確認用 pvctest.yaml
