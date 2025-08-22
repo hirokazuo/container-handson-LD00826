@@ -417,11 +417,13 @@ pvctest-snap   true         pvctest                             324Ki         cs
 ```
 ボリュームスナップショット要求が受信されると、 Trident はバックエンドでのボリュームのスナップショット作成を自動的に管理し、ユニークな「 VolumeSnapshotContent 」オブジェクトを作成することによってスナップショットを公開します。既存の PVC からスナップショットを作成し、新しい PVC を作成するときにスナップショットを DataSource として使用できます。
 <br>
+<br>
 
 ONTAP System Managerからの確認
 * ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、どのようなスナップショットが作成されているか確認してください。
 
 
+<br>
 
 VolumeSnapshotの元となるPVCを削除します。
 ```
