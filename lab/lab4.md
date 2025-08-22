@@ -276,12 +276,12 @@ Tridentが正しくPVをプロビジョニングできるか確認するため�
 * ファイル名: pvctest.yaml
 * tridentctlと同じ階層にYAMLファイルを作成
 
-動作確認用 pvctest.yaml
+動作確認用 pvc-test.yaml
 ```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvctest
+  name: pvc-test
 spec:
   accessModes:
     - ReadWriteOnce
@@ -293,9 +293,9 @@ spec:
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-$ kubectl apply -f pvctest.yaml
+$ kubectl apply -f pvc-test.yaml
 
-persistentvolumeclaim/pvctest created
+persistentvolumeclaim/pvc-test created
 ```
 
 作成したPVCを確認します。
@@ -303,7 +303,7 @@ persistentvolumeclaim/pvctest created
 ```
 $ kubectl get pvc
 NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvctest   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
+pvc-test   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
 ```
 
 続いてPVCによって作成されたPVを確認します。先程の`kubectl get pvc`の出力と見比べてみてください。
@@ -397,11 +397,11 @@ snapshot-test.yaml 記述内容
 ```
 kind: VolumeSnapshot
 metadata:
-  name: pvctest-snap
+  name: pvc-test-snap
 spec:
   volumeSnapshotClassName: csi-snapclass
   source:
-    persistentVolumeClaimName: pvctest
+    persistentVolumeClaimName: pvc-test
 ```
 
 作成したYAMLファイルを使ってVolumeSnapshotを作成します。
@@ -413,7 +413,7 @@ VolumeSnapshotの状態を確認します。
 ```
 # kubectl get VolumeSnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
-pvctest-snap   true         pvctest                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
+pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
 ```
 ボリュームスナップショット要求が受信されると、 Trident はバックエンドでのボリュームのスナップショット作成を自動的に管理し、ユニークな「 VolumeSnapshotContent 」オブジェクトを作成することによってスナップショットを公開します。既存の PVC からスナップショットを作成し、新しい PVC を作成するときにスナップショットを DataSource として使用できます。
 <br>
@@ -427,16 +427,16 @@ ONTAP System Managerからの確認
 
 VolumeSnapshotの元となるPVCを削除します。
 ```
-# kubectl delete pvc pvctest
+# kubectl delete pvc pvc-test
 
-persistentvolumeclaim "pvctest" deleted
+persistentvolumeclaim "pvc-test" deleted
 ```
 
 VolumeSnapshotの状態を確認します。
 ```
 # kubectl get volumesnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
-pvctest-snap   true         pvctest                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   4h2m           4h2m
+pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   4h2m           4h2m
 ```
 
 
@@ -445,9 +445,9 @@ VolumeSnapshot のライフサイクルはソース PVC から独立していま
 
 VolumeSnapshotを削除します。
 ```
-# kubectl delete volumesnapshot pvctest-snap
+# kubectl delete volumesnapshot pvc-test-snap
 
-volumesnapshot.snapshot.storage.k8s.io "pvctest-snap" deleted
+volumesnapshot.snapshot.storage.k8s.io "pvc-test-snap" deleted
 ```
 
 Lab4は以上となります。
