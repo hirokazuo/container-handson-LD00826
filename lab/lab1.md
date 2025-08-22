@@ -211,6 +211,12 @@ service "nginxweb" deleted
 ## まとめ
 このラボではこの先のラボを行うための基本となる操作及び環境の確認を実施しました。
 よく使うコマンドや問題発生時の確認方法については以下にまとめました。 今後のラボでうまくいかない場合いはぜひ参考にしてください。
+<br>
+
+Lab1は以上となります。Lab2に進んでください。
+[Lab2](https://github.com/hirokazuo/container-handson-LD00826/edit/main/lab/lab1.md)
+
+
 
 <br>
 
