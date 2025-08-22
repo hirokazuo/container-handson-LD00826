@@ -1,6 +1,8 @@
 # Lab2: LoadBalancerのインストール
-Lab1で作成したnginxウェブサーバー手動でExternal-IPを設定しましたが、今回はMetalLBを使ってLoadBalancerでExternal-IPを使用できるようにします。
-MetalLBはService.type: LoadBalancerのサービスをを外部に公開するためのツールです。あらかじめ指定したIPアドレスプールからIPアドレスを割り当て、それを周辺のネットワークに通知することで、外部からのアクセスを可能にします。﻿
+Lab1で作成したnginxウェブサーバー手動でExternal-IPを設定しましたが、今回はMetalLBを使ってLoadBalancerでExternal-IPを使用できるようにします。<br>
+
+MetalLBは`Service.type: LoadBalancer`のサービスをを外部に公開するためのツールです。
+あらかじめ指定したIPアドレスプールからIPアドレスを割り当て、それを周辺のネットワークに通知することで、外部からのアクセスを可能にします。﻿
 
 ## MetalLBのインストール
 公式サイトイントールドキュメント
