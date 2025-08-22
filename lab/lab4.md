@@ -313,6 +313,9 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvctest   ontap-gold     <unset>                          101s
 ```
 
+### ONTAP System Managerからの確認
+ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、どのようなボリュームが作成されているか確認してください。
+
 
 ## Snapshotの作成
 TridentのSnapshotに関する利用方法は以下URLに記載されています。
@@ -414,6 +417,11 @@ pvctest-snap   true         pvctest                             324Ki         cs
 ```
 ボリュームスナップショット要求が受信されると、 Trident はバックエンドでのボリュームのスナップショット作成を自動的に管理し、ユニークな「 VolumeSnapshotContent 」オブジェクトを作成することによってスナップショットを公開します。既存の PVC からスナップショットを作成し、新しい PVC を作成するときにスナップショットを DataSource として使用できます。
 <br>
+
+### ONTAP System Managerからの確認
+ブラウザChrome上でネットアップストレージ**cluster1**のONTAP System Managerにアクセスして、どのようなスナップショットが作成されているか確認してください。
+
+
 
 VolumeSnapshotの元となるPVCを削除します。
 ```
