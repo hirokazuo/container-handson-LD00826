@@ -360,7 +360,7 @@ pvc-nginxweb3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi
 
 作成したYAMLファイルを使ってnginxweb4をデプロイします。
 ```
-$ kubectl apply -f  nginxweb4.yaml
+$ kubectl apply -f nginxweb4.yaml
 
 service/nginxweb4 created
 deployment.apps/nginxweb4-deployment created
