@@ -6,9 +6,7 @@ Kubeadmを使ったKubernetsクラスタのインストールからアプリケ�
 NetApp Lab on Demand
 * https://labondemand.netapp.com/
 * 利用にあたってはNSS(NetApp Supprt Site)アカウントが必要
-
-「Building an AI Data Pipeline with NetApp and NVIDIA v1.3」を利用
-* https://labondemand.netapp.com/lab/ainvidia
+* 「Building an AI Data Pipeline with NetApp and NVIDIA v1.3」を利用
 
 ## ハンズオンコンテンツ
 * アジェンダ
