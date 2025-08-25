@@ -273,7 +273,7 @@ kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annota
 Tridentが正しくPVをプロビジョニングできるか確認するためにPVCを作成します。
 以下のPVCを作成するためのYAMLファイルを作成してください。
 
-* ファイル名: pvctest.yaml
+* ファイル名: pvc-test.yaml
 * tridentctlと同じ階層にYAMLファイルを作成
 
 動作確認用 pvc-test.yaml
@@ -310,7 +310,7 @@ pvc-test   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO   
 ```
 $ kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
-pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvctest   ontap-gold     <unset>                          101s
+pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvc-test   ontap-gold     <unset>                          101s
 ```
 
 ONTAP System Managerからの確認
