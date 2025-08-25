@@ -249,11 +249,19 @@ spec:
 EOF
 ```
 
-作成したYAMLファイルを使ってスナップショットを作成します。
+作成したYAMLファイルを使ってVolumeSnapshoptを作成します。
 ```
-kubectl apply -f $HOME/volumesnapshot-pvc-nginxweb3.yaml
+$ kubectl apply -f $HOME/volumesnapshot-pvc-nginxweb3.yaml
+
+volumesnapshot.snapshot.storage.k8s.io/pvc-nginxweb3-snap created
 ```
 
+VolumeSnapshoptの状態を確認します。
+```
+$ kubectl get volumesnapshot
+NAME                 READYTOUSE   SOURCEPVC            SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT   CREATIONTIME   AGE
+pvc-nginxweb3-snap   false        pvc-nginxweb3-snap                                         csi-snapclass                                    46s
+```
 
 
 スナップショットからPVCを作成するためのマニフェストを作成します。
