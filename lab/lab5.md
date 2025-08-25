@@ -231,6 +231,60 @@ $ df -h |grep trident
 
 
 
+### クローンの作成(1): VolumeSnapshotからPVCを作成
+nginx用に永続化したボリュームのクローンを作成します。
+
+まず、PVCのスナップショットを作成します。
+
+```
+cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-nginxweb3.yaml
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: pvc-nginxweb3-snap
+spec:
+  volumeSnapshotClassName: csi-snapclass
+  source:
+    persistentVolumeClaimName: pvc-nginxweb3-snap
+EOF
+```
+
+作成したYAMLファイルを使ってスナップショットを作成します。
+```
+kubectl apply -f $HOME/volumesnapshot-pvc-nginxweb3.yaml
+```
+
+
+
+スナップショットからPVCを作成するためのマニフェストを作成します。
+pvc-from-snap.yaml
+```
+cat <<EOF | sudo tee $HOME/pvc-from-snap.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-from-snap
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ontap-gold
+  resources:
+    requests:
+      storage: 20Gi
+  dataSource:
+    name: pvc-nginxweb3
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+EOF
+```
+
+作成したYAMLファイルを使ってスナップショットからPVCをデプロイします。
+```
+kubectl apply -f $HOME/pvc-from-snap.yaml
+```
+
+
+
 ## アプリケーションの永続化
 ここまでの学習内容をもとにLab4で作成したWordPressとMySQLから構成されるアプリケーションのデータを永続化します。
 このセクションはどうやって実現するかを考えていただくためあえて答えは書いてありません。
