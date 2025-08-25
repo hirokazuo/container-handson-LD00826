@@ -245,7 +245,7 @@ metadata:
 spec:
   volumeSnapshotClassName: csi-snapclass
   source:
-    persistentVolumeClaimName: pvc-nginxweb3-snap
+    persistentVolumeClaimName: pvc-nginxweb3
 EOF
 ```
 
