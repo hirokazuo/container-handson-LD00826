@@ -350,17 +350,32 @@ pvc-nginxweb3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi
 
 
 
-## アプリケーションの永続化
-ここまでの学習内容をもとにLab4で作成したWordPressとMySQLから構成されるアプリケーションのデータを永続化します。
+### クローンしたPVCにアプリケーションから接続
+新たなnginexWebサーバにクローンしたPVCをマウントします。
+* マニフェスト名: nginxweb4.yaml
+* Pod名: nginxweb4
+* PVC: pvc-from-pvc-nginxweb3
+
 このセクションはどうやって実現するかを考えていただくためあえて答えは書いてありません。
 
-* PVCマニフェストファイルを作成し、PVCオブジェクトを作成
-* WordPressとMySQLをデプロイするためのマニフェストを作成し、Podを作成
+作成したYAMLファイルを使ってnginxweb4をデプロイします。
+```
+$ kubectl apply -f  nginxweb4.yaml
 
-ヒント
-Lab4 で作成したマニフェストにはストレージの定義がありません。 どうやってストレージの定義をし永続化するかを考えてみましょう。 永続化する対象はデータベース(MySQL)になります。 MySQLのデータファイルはデフォルトでは /var/lib/mysql になります。
+service/nginxweb4 created
+deployment.apps/nginxweb4-deployment created
+```
 
-永続化された状態が確認できたら講師と一緒に確認してください。
+nginxweb4のExternal-IPを確認します
+```
+$ kubectl get svc
+
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
+nginxweb4         LoadBalancer   10.104.163.225   192.168.0.224   80:30292/TCP   74s
+```
+
+ブラウザからnginxweb4にアクセスしてnginxweb3で作成したテスト用のHTMLにアクセスできることを確認します。
+* （例）http://192.168.0.224/test.html
 
 <br>
 <br>
