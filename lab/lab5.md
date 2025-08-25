@@ -265,6 +265,8 @@ pvc-nginxweb3-snap   false        pvc-nginxweb3-snap                            
 
 
 スナップショットからPVCを作成するためのマニフェストを作成します。
+dataSourceの記述に注意して作成します。
+
 pvc-from-snap.yaml
 ```
 cat <<EOF | sudo tee $HOME/pvc-from-snap.yaml
@@ -280,7 +282,7 @@ spec:
     requests:
       storage: 20Gi
   dataSource:
-    name: pvc-nginxweb3
+    name: pvc-nginxweb3-snap
     kind: VolumeSnapshot
     apiGroup: snapshot.storage.k8s.io
 EOF
@@ -288,8 +290,21 @@ EOF
 
 作成したYAMLファイルを使ってスナップショットからPVCをデプロイします。
 ```
-kubectl apply -f $HOME/pvc-from-snap.yaml
+$ kubectl apply -f $HOME/pvc-from-snap.yaml
+
+persistentvolumeclaim/pvc-from-snap created
 ```
+
+PVCの状態を確認します。
+```
+$ kubectl get pvc
+
+NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-from-snap   Pending                                                                        ontap-gold     <unset>                 40s
+pvc-nginxweb3   Bound     pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 37m
+
+```
+
 
 
 
