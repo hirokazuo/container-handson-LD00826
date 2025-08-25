@@ -27,7 +27,7 @@
 ### PVCの作成 
 nginxweb3用のPVCをデプロイします。デプロイするためのYAMLファイルを作成します。
 
-pvc-nginxweb3.yaml
+ホームディレクトリにpvc-nginxweb3.yamlを作成
 ```
 $ cat <<EOF | sudo tee $HOME/pvc-nginxweb3.yaml
 apiVersion: v1
@@ -47,23 +47,24 @@ EOF
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-# kubectl apply -f pvc-nginxweb3.yaml
+$ kubectl apply -f pvc-nginxweb3.yaml
 
 persistentvolumeclaim/pvc-nginxweb3 created
 ```
 
 ```
-# kubectl get pvc
+$ kubectl get pvc
+
 NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-nginxweb3   Bound    pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef   1Gi        RWO            ontap-gold     <unset>                 19s
+pvc-nginxweb3   Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 30s
 ```
 
 nginxをデプロイするためのマニフェストを作成します。<br>
 今回は34行目以下にvolumeMountsに関する記述があることを確認してください。
 
-nginxweb3.yaml
+ホームディレクトリにnginxweb3.yamlを作成
 ```
-$ cat <<EOF | sudo tee $HOME/nginxweb3.yaml
+cat <<EOF | sudo tee $HOME/nginxweb3.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -119,38 +120,43 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 
 作成したYAMLファイルを使ってnginxのPodを作成します。
 ```
-# kubectl apply -f nginxweb3.yaml
+$ kubectl apply -f nginxweb3.yaml
+
+service/nginxweb3 created
+deployment.apps/nginxweb3-deployment created
+
 ```
 
 Podの状態を確認します。
 ```
-root@mgmt01:~# kubectl get pod
+$ kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
-nginxweb3-deployment-5f5dd7c595-4rjwm   1/1     Running   0          44m
+nginxweb3-deployment-5f5dd7c595-q6vhh   1/1     Running   0          48s
 ```
 
 
 
 nginxコンテナへのシェルの取得します。
 ```
-# kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-4rjwm -- /bin/bash
+$ kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-q6vhh -- /bin/bash
 ```
 
 コンテナ内にTridentが作成したボリュームがマウントされていることを確認します。
 ```
 (コンテナ内のシェルで実行します)
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# df
-Filesystem                                                      1K-blocks    Used Available Use% Mounted on
-overlay                                                         100557880 9265016  86138664  10% /
-tmpfs                                                               65536       0     65536   0% /dev
-cgroup                                                               1024       0      1024   0% /sys/fs/cgroup
-shm                                                                 65536       0     65536   0% /dev/shm
-tmpfs                                                              813612    2976    810636   1% /etc/hostname
-/dev/mapper/ubuntu--vg-ubuntu--lv                               100557880 9265016  86138664  10% /etc/hosts
-192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef   1048576     320   1048256   1% /usr/share/nginx/html
-tmpfs                                                             8033692      12   8033680   1% /run/secrets/kubernetes.io/serviceaccount
-udev                                                              4018760       0   4018760   0% /proc/keys
+root@nginxweb3-deployment-5f5dd7c595-q6vhh:/# df -h
+
+Filesystem                                                       Size  Used Avail Use% Mounted on
+overlay                                                           96G  8.5G   83G  10% /
+tmpfs                                                             64M     0   64M   0% /dev
+cgroup                                                           1.0M     0  1.0M   0% /sys/fs/cgroup
+shm                                                               64M     0   64M   0% /dev/shm
+tmpfs                                                            796M  3.1M  793M   1% /etc/hostname
+/dev/mapper/ubuntu--vg-ubuntu--lv                                 96G  8.5G   83G  10% /etc/hosts
+192.168.0.121:/trident_pvc_615523cd_6402_48a4_9523_6456fc49f04d  1.0G  256K  1.0G   1% /usr/share/nginx/html
+tmpfs                                                            7.7G   12K  7.7G   1% /run/secrets/kubernetes.io/serviceaccount
+udev                                                             3.9G     0  3.9G   0% /proc/keys
 ```
 
 nginxのドキュメントルートにテスト用のファイルを作成します。
@@ -180,10 +186,10 @@ root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# exit
 
 nginxにアクセスするためのIPアドレスを確認します。
 ```
-# kubectl get svc
+$ kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
-nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP   14h
+nginxweb3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP   3m37s
 ```
 
 プラウザで確認したアドレスを使ってnginxコンテナ内に作成したテストページにアクセスします。
@@ -193,17 +199,17 @@ nginxweb3         LoadBalancer   10.109.194.103   192.168.0.223   80:30744/TCP  
 
 nginxのPodを削除します。
 ```
-# kubectl delete pod nginxweb3-deployment-5f5dd7c595-4rjwm
+$ kubectl delete pod nginxweb3-deployment-5f5dd7c595-q6vhh
 
-pod "nginxweb3-deployment-5f5dd7c595-4rjwm" deleted
+pod "nginxweb3-deployment-5f5dd7c595-q6vhh" deleted
 ```
 
 nginxのPodの状態を確認します
 ```
-# kubectl get pod
+$ kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
-nginxweb3-deployment-5f5dd7c595-jdx2k   1/1     Running   0          49s
+nginxweb3-deployment-5f5dd7c595-qpnv7   1/1     Running   0          27s
 ```
 Podの名前が変わって新たに作成されていることが確認できます。
 
@@ -217,7 +223,7 @@ Podの名前が変わって新たに作成されていることが確認でき�
 Kubenetesノード上でのボリュームを確認します。Ubuntuホスト上でdfコマンドを実行します。
 ```
 (mgmt01 上で実行)
-# df -h |grep trident
+$ df -h |grep trident
 
 192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef  1.0G  320K  1.0G   1% /var/lib/kubelet/pods/30ed1ae0-e2f1-42a3-916b-b9f3bf3d2605/volumes/kubernetes.io~csi/pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef/mount
 ```
