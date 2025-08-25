@@ -181,7 +181,7 @@ $ cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
 
 コピーした`trident-installer`ディレクトリ内の`backend-ontap-nas.json`ファイルを確認します。
 ```
-cat backend-ontap-nas.json
+$ cat backend-ontap-nas.json
 {
     "version": 1,
     "storageDriverName": "ontap-nas",
@@ -334,19 +334,19 @@ Deploy a volume snapshot controller
 
 上記ドキュメントではスクリプトファイルを作成していますが、以下、3つのコマンドを直接実行します。
 ```
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
 
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
 
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 ```
 
 #### snapshot controllerを作成します
 ドキュメントに記載のコマンドを実行します。
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
 ```
 
 ### VolumeSnapshotClassを作成
@@ -375,12 +375,12 @@ deletionPolicy: Delete
 
 作成したYAMLファイルを使ってVolumeSnapshotClassを作成します。
 ```
-# kubectl apply -f VolumeSnapshotClass.yaml
+$ kubectl apply -f VolumeSnapshotClass.yaml
 ```
 
 作成したVolumeSnapshotClassを確認します。
 ```
-# kubectl get VolumeSnapshotClass
+$ kubectl get VolumeSnapshotClass
 NAME            DRIVER                  DELETIONPOLICY   AGE
 csi-snapclass   csi.trident.netapp.io   Delete           26s
 ```
@@ -406,12 +406,12 @@ spec:
 
 作成したYAMLファイルを使ってVolumeSnapshotを作成します。
 ```
-kubectl apply -f $HOME/snapshot-test.yaml
+$ kubectl apply -f $HOME/snapshot-test.yaml
 ```
 
 VolumeSnapshotの状態を確認します。
 ```
-# kubectl get VolumeSnapshot
+$ kubectl get VolumeSnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
 ```
@@ -427,7 +427,7 @@ ONTAP System Managerからの確認
 
 VolumeSnapshotの元となるPVCを削除します。
 ```
-# kubectl delete pvc pvc-test
+$ kubectl delete pvc pvc-test
 
 persistentvolumeclaim "pvc-test" deleted
 ```
@@ -443,7 +443,7 @@ ONTAP System Managerからの確認
 
 VolumeSnapshotの状態を確認します。
 ```
-# kubectl get volumesnapshot
+$ kubectl get volumesnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   4h2m           4h2m
 ```
@@ -452,7 +452,7 @@ VolumeSnapshot のライフサイクルはソース PVC から独立していま
 
 VolumeSnapshotを削除します。
 ```
-# kubectl delete volumesnapshot pvc-test-snap
+$ kubectl delete volumesnapshot pvc-test-snap
 
 volumesnapshot.snapshot.storage.k8s.io "pvc-test-snap" deleted
 ```
@@ -469,9 +469,6 @@ ONTAP System Managerからの確認
 Lab4は以上となります。
 
 https://github.com/kubernetes-csi/external-snapshotter/tree/master/client/config/crd
-
-
-
 
 
 
