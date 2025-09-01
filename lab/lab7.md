@@ -162,9 +162,77 @@ kubernetes-dashboard-metrics-scraper   ClusterIP      10.106.225.88    <none>   
 kubernetes-dashboard-web               ClusterIP      10.102.244.190   <none>          8000/TCP        14m
 ```
 
+ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
+https://確認したEXTERNAL-IP/
 
-192.168.0.223
+ブラウザ画面に証明書のエラーが出るので、アドバンスドモードでアクセスします。
 
+`You can generate token for service account with: kubectl -n NAMESPACE create token SERVICE_ACCOUNT`
+
+Creating sample user
+https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
+
+
+**Creating a Service Account**に従って、dashboard-adminuser.yamlを作成します。
+```
+cat <<EOF | sudo tee $HOME/dashboard-adminuser.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+EOF
+```
+
+ダッシュボード管理ユーザーを作成します
+```
+$ kubectl apply -f dashboard-adminuser.yaml
+
+serviceaccount/admin-user created
+```
+`admin-user`が作成されました。
+
+
+**Creating a ClusterRoleBinding**に従って、ClusterRoleBinding-admin-user.yamlを作成します。
+cat <<EOF | sudo tee $HOME/ClusterRoleBinding-admin-user.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+EOF
+
+```
+$ kubectl apply -f ClusterRoleBinding-admin-user.yaml
+
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+```
+
+admin-userのServiceAccountのtokenを生成
+```
+kubectl -n kubernetes-dashboard create token admin-user
+eyJhbGciOiJSUzI1NiIsImtpZCI6ImlDQzlna3FYUk9fY3VfWjNBRDVjMTgtYzRjUDZEV1BFckloWVUtMjJ5cUUifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzU2NzQxODM4LCJpYXQiOjE3NTY3MzgyMzgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiMTg4YTEyODUtOGM4ZS00Zjk4LTk5N2ItZWU1ZDhiMWM4MzQyIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiYTU1NTFkZWQtY2RlNC00OGE4LTkxZDItZGExMGY4MWVlYzVjIn19LCJuYmYiOjE3NTY3MzgyMzgsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.Vl6x3tP9WAOb4d4sRvCbOFOzmMSWCTP--VPI3RLOvfQxYAUiCpUzaUlSXpzvAax92j1oGj5JXkm0gDNtMEJ1CS0fcSF_WnKt8Qx68jsR5MU8Si_-qhAoMLnxSysEQdRowR5tpmYusrtgu0H-9Gtm3z1FEaV6oh9nt1p3a9IDZZ2X6YmD-bLzLcRFNmyqsbN6goucY-sY32G3TvcsbxBXv1MgEzjO4ot7cl0xjejF8aH4ewitarE4it5wzeUf55bObeGW8waaLxDg34NZ5ygqP_J2A86vu3wX_KYvpQ1nh3hLrndZeFCbC9AHWCH57BlwpZg3uuqIQEuaR7ShCqVq3g
+```
+
+ここで出力されたtokenを先のGUIにペーストします。
+
+
+
+
+
+
+
+
+  
 
 
 
