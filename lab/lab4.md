@@ -210,9 +210,8 @@ $ tridentctl -n trident create backend -f $HOME/trident-installer/backend-ontap-
 +-------------------+----------------+--------------------------------------+--------+------------+---------+
 |       NAME        | STORAGE DRIVER |                 UUID                 | STATE  | USER-STATE | VOLUMES |
 +-------------------+----------------+--------------------------------------+--------+------------+---------+
-| customBackendName | ontap-nas      | ee13fb62-1753-401a-8e97-b67a1d8c7444 | online | normal     |       0 |
+| NFS_ONTAP_Backend | ontap-nas      | fbbd19c0-5974-4e21-9382-0ee196fbc7a9 | online | normal     |       0 |
 +-------------------+----------------+--------------------------------------+--------+------------+---------+
-
 ```
 
 ## StorageClassの定義
@@ -247,9 +246,10 @@ TridentではStorageClassを作成するときに以下の属性を設定でき�
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
   name: ontap-gold
-provisioner: netapp.io/trident
-reclaimPolicy: Retain
+provisioner: csi.trident.netapp.io
 parameters:
   backendType: "ontap-nas"
   media: "ssd"
