@@ -66,6 +66,105 @@ Dashboard will be available at:
   https://localhost:8443
 ```
 
+kubernetes-dashboardのリソースの確認します。
+```
+$ kubectl get pod -n kubernetes-dashboard
+NAME                                                   READY   STATUS    RESTARTS   AGE
+kubernetes-dashboard-api-656d888496-htlnr              1/1     Running   0          3m7s
+kubernetes-dashboard-auth-69d9ff4fb6-z9bl9             1/1     Running   0          3m7s
+kubernetes-dashboard-kong-648658d45f-g89r2             1/1     Running   0          3m7s
+kubernetes-dashboard-metrics-scraper-547874fcf-lw7gx   1/1     Running   0          3m7s
+kubernetes-dashboard-web-7796b9fbbb-tb6js              1/1     Running   0          3m7s
+```
+
+ブラウザからWeb UIにアクセスするためにサービスの状態を確認します。
+```
+root@mgmt01:~# kubectl get svc -n kubernetes-dashboard
+NAME                                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+kubernetes-dashboard-api               ClusterIP   10.99.6.5        <none>        8000/TCP   4m8s
+kubernetes-dashboard-auth              ClusterIP   10.106.138.153   <none>        8000/TCP   4m8s
+kubernetes-dashboard-kong-proxy        ClusterIP   10.108.116.248   <none>        443/TCP    4m8s
+kubernetes-dashboard-metrics-scraper   ClusterIP   10.106.225.88    <none>        8000/TCP   4m8s
+kubernetes-dashboard-web               ClusterIP   10.102.244.190   <none>        8000/TCP   4m8s
+```
+外部のブラウザからWeb UIにアクセスするには`kubernetes-dashboard-kong-proxy`にアクセスしますが、EXTERNAL-IPが設定されていません。
+
+<br>
+ロードバランサーを使って`kubernetes-dashboard-kong-proxy`にEXTERNAL-IPを設定します。
+
+今回は、マニフェストを使わず、`kubectl edit`を使って直接設定を変更します。
+```
+$ kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
+```
+
+
+`type: ClusterIP`を `type: LoadBalancer`に書き換えます。
+```
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubernetes-dashboard
+    meta.helm.sh/release-namespace: kubernetes-dashboard
+  creationTimestamp: "2025-09-01T14:18:56Z"
+  labels:
+    app.kubernetes.io/instance: kubernetes-dashboard
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kong
+    app.kubernetes.io/version: "3.8"
+    enable-metrics: "true"
+    helm.sh/chart: kong-2.46.0
+  name: kubernetes-dashboard-kong-proxy
+  namespace: kubernetes-dashboard
+  resourceVersion: "45712"
+  uid: 59f811bf-5e21-4ed8-a34d-bba27df6d488
+spec:
+  clusterIP: 10.108.116.248
+  clusterIPs:
+  - 10.108.116.248
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: kong-proxy-tls
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/instance: kubernetes-dashboard
+    app.kubernetes.io/name: kong
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+```
+
+編集が終わったらセーブして抜けます。
+```
+$ kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
+service/kubernetes-dashboard-kong-proxy edited
+```
+
+kubernetes-dashboard-kong-proxy のEXTERNAL-IPを確認します。
+```
+$ kubectl get svc -n kubernetes-dashboard
+NAME                                   TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)         AGE
+kubernetes-dashboard-api               ClusterIP      10.99.6.5        <none>          8000/TCP        14m
+kubernetes-dashboard-auth              ClusterIP      10.106.138.153   <none>          8000/TCP        14m
+kubernetes-dashboard-kong-proxy        LoadBalancer   10.108.116.248   192.168.0.223   443:31860/TCP   14m
+kubernetes-dashboard-metrics-scraper   ClusterIP      10.106.225.88    <none>          8000/TCP        14m
+kubernetes-dashboard-web               ClusterIP      10.102.244.190   <none>          8000/TCP        14m
+```
+
+
+192.168.0.223
+
 
 
 
