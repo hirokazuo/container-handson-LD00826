@@ -4,6 +4,8 @@
 kubernetesクラスタに作成したコンテナアプリケーションをデプロイするためには 「Deployment」を作成します。 kubectlを使用して、アプリケーションをデプロイします。<br>
 今回はnginxのWebサーバーを作成します<br>
 以下では `kubectl create deployment` を実行すると「Deployment」が作成されます。
+
+以下の例では `nginxweb` がデプロイメント名
 ```
 $ kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
 
@@ -74,8 +76,10 @@ PORT 列を確認します。上の実行例でいうと「31600」ポートの�
 `--type="NodePort"` を指定すると各ノード上にアプリケーションにアクセスするポート（標準で30000–32767）を作成します。 ノードにアクセスしポッドが動いていれば、そのままアクセスします。 ノードにポッドがなければ適切なノード転送される仕組みを持っています。 そのためマスターノードにアクセスすればk8sが適切に転送するという動作をします。
 
 <br><br>
-ホストのIPを確認します。
+ホストのIPを確認します。`ifconfig`コマンドが使えない場合には`net-tools`をインストールします。
 ```
+$ sudo apt install net-tools
+
 $ ifconfig -a | grep 192.168.*
 
   inet 192.168.0.203  netmask 255.255.255.0  broadcast 192.168.0.255
