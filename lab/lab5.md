@@ -261,15 +261,13 @@ VolumeSnapshoptの状態を確認します。
 $ kubectl get volumesnapshot
 
 NAME                 READYTOUSE   SOURCEPVC       SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
-pvc-nginxweb3-snap   true         pvc-nginxweb3                           332Ki         csi-snapclass   snapcontent-064381b0-6b0b-4978-a484-825b2f8d788e   17s            13s
+pvc-nginxweb3-snap   true         pvc-nginxweb3                           292Ki         csi-snapclass   snapcontent-5422404a-574f-4736-86a6-556eabb26f8c   44s            40s
 ```
 
 
 スナップショットからPVCを作成するためのマニフェストを作成します。
-* dataSourceの記述に注意して作成します。
-* ストレージサイズ(今回は1Gi)がオリジナルと同じサイズであることを確認します。
-  
-pvc-from-snap.yaml
+
+pvc-from-snap.yamlを以下の内容で作成してください
 ```
 cat <<EOF | sudo tee $HOME/pvc-from-snap.yaml
 apiVersion: v1
@@ -282,7 +280,7 @@ spec:
   storageClassName: ontap-gold
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   dataSource:
     name: pvc-nginxweb3-snap
     kind: VolumeSnapshot
@@ -301,10 +299,43 @@ PVCの状態を確認します。
 ```
 $ kubectl get pvc
 
-NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-from-snap   Bound    pvc-adcbf77e-4bbe-4d3a-929d-5624fadc1d5c   1Gi        RWO            ontap-gold     <unset>                 3s
-pvc-nginxweb3   Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 57m
+NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-from-snap   Pending                                                                        ontap-gold     <unset>                 14s
+pvc-nginxweb3   Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
 ```
+PVC `pvc-from-snap`の状態が `Pending`になっています。
+<br>
+
+原因を確認するため、PVC `pvc-from-snap`リソースの割当状況を確認してください。
+```
+$ kubectl describe pvc pvc-from-snap
+```
+コマンドの出力から何が確認できるでしょうか？
+先に作成した `pvc-from-snap.yaml` のどこが間違っているでしょうか？
+
+ `pvc-from-snap.yaml` の修正内容がわかったら修正してください。
+修正したマニフェストを使って pvc-from-snapをデプロイする前にPending状態のpvc-from-snapを削除します。
+```
+$ kubectl delete pvc pvc-from-snap
+
+persistentvolumeclaim "pvc-from-snap" deleted
+```
+
+修正したマニフェストを使って pvc-from-snapをデプロイします。
+```
+$ kubectl apply -f pvc-from-snap.yaml
+
+persistentvolumeclaim/pvc-from-snap created
+```
+
+PVCの状態を確認します。
+```
+kubectl get pvc
+NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-from-snap   Bound    pvc-5346dbec-b53f-444f-a267-d6a0efe49b39   1Gi        RWO            ontap-gold     <unset>                 11s
+pvc-nginxweb3   Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
+```
+
 
 ### クローンの作成(2): PVCから直接クローン
 nginx用に永続化したボリュームのクローンを作成します。
