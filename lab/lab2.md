@@ -78,9 +78,9 @@ l2advertisement.metallb.io/default created
 
 再度nginxウェブサーバーのPodを作成します
 * 今回はロードバランサーを使ってExternal-IPを設定します。
-* デプロイ用のYAMLファイルを作成してPodを作成します。
+* Podをデプロイするためののマニフェストをホームディレクトリに作成します。
 
-nginxweb2.yaml
+マニフェスト: nginxweb2.yaml
 ```
 $ cat <<EOF | sudo tee $HOME/nginxweb2.yaml
 apiVersion: v1
