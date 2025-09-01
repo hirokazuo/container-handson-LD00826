@@ -203,6 +203,11 @@ apt-get install -y cri-o kubelet kubeadm kubectl
 # Start CRI-O
 systemctl start crio.service
 
+# Bootstrap a cluster
+swapoff -a
+modprobe br_netfilter
+sysctl -w net.ipv4.ip_forward=1
+
 # 新たなワーカーノードとしてクラスタに追加（token含むコマンド情報は自分自身の環境で出力された文字列を利用）
 kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 	--discovery-token-ca-cert-hash sha256:0b834c42c8d3a484c27df33de06adc66fb49e98f41c130f17dd3fbc8a91d4378 
