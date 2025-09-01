@@ -269,6 +269,7 @@ kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annota
 StorageClassのサンプルファイルは`storage-class-samples`にありますので必要に応じて参照してください。
 ```
 $ ls $HOME/trident-installer/sample-input/storage-class-samples/
+
 storage-class-anf-smb.yaml         storage-class-gold-regex.yaml
 storage-class-basic.yaml.templ     storage-class-ontapnas-gold.yaml
 storage-class-bronze-default.yaml  storage-class-ontapnas-k8s1.8-mountoptions.yaml
