@@ -131,7 +131,7 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-
 kubectl create secret generic regcred --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson
 
 # Pod network: Calico設定
-curl -O -L  https://docs.projectcalico.org/manifests/calico.yaml
+curl -O -L https://docs.projectcalico.org/manifests/calico.yaml
 kubectl apply -f calico.yaml
 ```
 
