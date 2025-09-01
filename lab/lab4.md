@@ -418,6 +418,7 @@ Snapshotを作成するためのYAMLファイルを作成します。
 
 snapshot-test.yaml 記述内容
 ```
+apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
   name: pvc-test-snap
