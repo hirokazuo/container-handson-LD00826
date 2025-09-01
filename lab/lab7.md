@@ -28,3 +28,50 @@ Verifying checksum... Done.
 Preparing to install helm into /usr/local/bin
 helm installed into /usr/local/bin/helm
 ```
+
+## kubernetes-dashboard のインストール
+kubernetes-dashboard レポジトリを追加
+```
+$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+
+"kubernetes-dashboard" has been added to your repositories
+```
+
+kubernetes-dashboard チャートを使って`kubernetes-dashboard`という名前のHelmリリースをデプロイ
+```
+$ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+
+Release "kubernetes-dashboard" does not exist. Installing it now.
+NAME: kubernetes-dashboard
+LAST DEPLOYED: Mon Sep  1 14:18:55 2025
+NAMESPACE: kubernetes-dashboard
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+*************************************************************************************************
+*** PLEASE BE PATIENT: Kubernetes Dashboard may need a few minutes to get up and become ready ***
+*************************************************************************************************
+
+Congratulations! You have just installed Kubernetes Dashboard in your cluster.
+
+To access Dashboard run:
+  kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+
+NOTE: In case port-forward command does not work, make sure that kong service name is correct.
+      Check the services in Kubernetes Dashboard namespace using:
+        kubectl -n kubernetes-dashboard get svc
+
+Dashboard will be available at:
+  https://localhost:8443
+```
+
+
+
+
+
+
+
+
+
+
