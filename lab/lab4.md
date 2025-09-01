@@ -54,7 +54,7 @@ $ kubectl auth can-i '*' '*' --all-namespaces
 ```
 $ kubectl run -i --tty ping --image=busybox --restart=Never --rm --  ping [マネジメントIP]
 ```
-
+※Tridentのドキュメントには上記の手順があるのですが、Errorで終了するかと思います。
 
 ### インストール
 Tridentのインストール方法は複数ありますが、今回は`tridentctl`を使ってインストールします。<br>
@@ -265,6 +265,16 @@ StorageClassは記載がないときに使用するStorageClassを指定でき�
 ```
 kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
+
+StorageClassのサンプルファイルは`storage-class-samples`にありますので必要に応じて参照してください。
+```
+$ ls $HOME/trident-installer/sample-input/storage-class-samples/
+storage-class-anf-smb.yaml         storage-class-gold-regex.yaml
+storage-class-basic.yaml.templ     storage-class-ontapnas-gold.yaml
+storage-class-bronze-default.yaml  storage-class-ontapnas-k8s1.8-mountoptions.yaml
+storage-class-csi.yaml.templ       storage-class-solidfire-bronze.yaml
+```
+
 
 ## Persistent Volume Claimの作成
 アプリケーションで必要とされる永続化領域の定義をします。 PVCを作成時に独自の機能を有効化することができます。<br>
