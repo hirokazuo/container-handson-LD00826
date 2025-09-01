@@ -203,6 +203,18 @@ $ cat backend-ontap-nas.json
 * password: **Netapp1!**
 
 
+作成したJSONファイルを使ってONTAP NASのバックエンドを設定します。
+```
+$ tridentctl -n trident create backend -f $HOME/trident-installer/backend-ontap-nas.json
+
++-------------------+----------------+--------------------------------------+--------+------------+---------+
+|       NAME        | STORAGE DRIVER |                 UUID                 | STATE  | USER-STATE | VOLUMES |
++-------------------+----------------+--------------------------------------+--------+------------+---------+
+| customBackendName | ontap-nas      | ee13fb62-1753-401a-8e97-b67a1d8c7444 | online | normal     |       0 |
++-------------------+----------------+--------------------------------------+--------+------------+---------+
+
+```
+
 ## StorageClassの定義
 Manage storage classes
 https://docs.netapp.com/us-en/trident/trident-use/manage-stor-class.html
