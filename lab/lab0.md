@@ -213,7 +213,7 @@ kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 	--discovery-token-ca-cert-hash sha256:0b834c42c8d3a484c27df33de06adc66fb49e98f41c130f17dd3fbc8a91d4378 
 ```
 
-
+Lab0は以上となります。Lab1に進んでください。
 
 
 
