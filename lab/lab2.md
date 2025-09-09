@@ -128,8 +128,19 @@ EOF
 $ kubectl apply -f my-nginx.yaml
 
 service/my-nginx created
-deployment.apps/my-nginx-deployment created
+deployment.apps/my-nginx created
 ```
+
+Podの状態を確認します。
+```
+$ kubectl get pods -l run=my-nginx -o wide
+NAME                        READY   STATUS    RESTARTS   AGE     IP               NODE     NOMINATED NODE   READINESS GATES
+my-nginx-5594c56d97-7cgk5   1/1     Running   0          2m16s   10.244.69.132    gpu01    <none>           <none>
+my-nginx-5594c56d97-q2vcv   1/1     Running   0          2m16s   10.244.102.196   mgmt01   <none>           <none>
+```
+マニフェストに`replicas: 2`と記述したので2つのPodが確認できます。
+<br>
+
 
 
 サービス一覧から公開されたポートを確認します。
