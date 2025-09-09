@@ -79,6 +79,9 @@ l2advertisement.metallb.io/default created
 再度nginxウェブサーバーのPodを作成します
 * 今回はロードバランサーを使ってExternal-IPを設定します。
 * Podをデプロイするためののマニフェストをホームディレクトリに作成します。
+* マニフェストに記述内容の説明はKubernetes公式サイト サービスとアプリケーションの接続を参照
+https://kubernetes.io/ja/docs/concepts/services-networking/connect-applications-service/
+  * service/networking/nginx-svc.yaml
 
 マニフェスト: my-nginx.yaml
 ```
