@@ -80,39 +80,39 @@ l2advertisement.metallb.io/default created
 * 今回はロードバランサーを使ってExternal-IPを設定します。
 * Podをデプロイするためののマニフェストをホームディレクトリに作成します。
 
-マニフェスト: nginxweb2.yaml
+マニフェスト: my-nginx.yaml
 ```
-$ cat <<EOF | sudo tee $HOME/nginxweb2.yaml
+$ cat <<EOF | sudo tee $HOME/my-nginx.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginxweb2
+  name: my-nginx
   labels:
-    run: nginx
+    run: my-nginx
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
   selector:
-    run: nginx
+    run: my-nginx
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginxweb2-deployment
+  name: my-nginx
 spec:
   selector:
     matchLabels:
-      run: nginx
+      run: my-nginx
   replicas: 2
   template:
     metadata:
       labels:
-        run: nginx
+        run: my-nginx
     spec:
       containers:
-      - name: nginx
+      - name: my-nginx
         image: nginx:latest
         ports:
         - containerPort: 80
@@ -122,10 +122,10 @@ EOF
 
 作成したYAMLファイルを使って新しいnginxWebサーバーをデプロイします。
 ```
-$ kubectl apply -f nginxweb2.yaml
+$ kubectl apply -f my-nginx.yaml
 
-service/nginxweb2 created
-deployment.apps/nginxweb2-deployment created
+service/my-nginx created
+deployment.apps/my-nginx-deployment created
 ```
 
 
@@ -135,7 +135,7 @@ $ kubectl get services
 
 NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        161m
-nginxweb2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
+my-nginx    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
 ```
 今回はTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。
 
