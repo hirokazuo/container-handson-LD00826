@@ -81,7 +81,7 @@ l2advertisement.metallb.io/default created
 * Podをデプロイするためののマニフェストをホームディレクトリに作成します。
 * マニフェストに記述内容の説明はKubernetes公式サイト サービスとアプリケーションの接続を参照
 https://kubernetes.io/ja/docs/concepts/services-networking/connect-applications-service/
-  * service/networking/nginx-svc.yaml
+  * `service/networking/run-my-nginx.yaml`と `service/networking/nginx-svc.yaml`の記述を1つのマニフェストにして、ロードバランサーを使用するようにカスタマイズしています。
 
 マニフェスト: my-nginx.yaml
 ```
