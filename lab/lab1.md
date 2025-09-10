@@ -5,11 +5,11 @@ kubernetesクラスタに作成したコンテナアプリケーションをデ�
 今回はnginxのWebサーバーを作成します<br>
 以下では `kubectl create deployment` を実行すると「Deployment」が作成されます。
 
-以下の例では `nginxweb` がデプロイメント名
+以下の例では `my-nginx` がデプロイメント名
 ```
 $ kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
 
-deployment.apps/nginxweb created
+deployment.apps/my-nginx created
 ```
 
 <br><br>
@@ -19,7 +19,7 @@ deployment.apps/nginxweb created
 $ kubectl get deployments
 
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-nginxweb   1/1     1            1           78s
+my-nginx   1/1     1            1           78s
 ```
 
 <br><br>
@@ -29,7 +29,7 @@ Podの状態を以下のコマンドで状況を確認します。
 $ kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
-nginxweb-86b474f5bb-qlgzf   1/1     Running   0          16m
+my-nginx-86b474f5bb-qlgzf   1/1     Running   0          16m
 ```
 Pod名とデプロイメント名が異なることを確認してください。
 
@@ -52,7 +52,7 @@ kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   95m
 ```
 $ kubectl expose deployment/上記のデプロイメント名 --type="NodePort" --port 80
 
-service "nginxweb" exposed
+service "my-nginx" exposed
 ```
 
 `kubectl expose` コマンドで外部へ公開しました。
@@ -66,7 +66,7 @@ $ kubectl get services
 
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        99m
-nginxweb     NodePort    10.101.151.52   <none>        80:31600/TCP   53s
+my-nginx     NodePort    10.101.151.52   <none>        80:31600/TCP   53s
 
 ```
 
@@ -97,19 +97,19 @@ Jumphost上のChromeプラウザを起動して以下のURLでアクセスしま
 nginex Webサーバの状態を確認します。
 
 ```
-$ kubectl describe deployment nginxweb
-Name:                   nginxweb
+$ kubectl describe deployment my-nginx
+Name:                   my-nginx
 Namespace:              default
 CreationTimestamp:      Fri, 15 Aug 2025 06:39:04 +0000
-Labels:                 app=nginxweb
+Labels:                 app=my-nginx
 Annotations:            deployment.kubernetes.io/revision: 1
-Selector:               app=nginxweb
+Selector:               app=my-nginx
 Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
 StrategyType:           RollingUpdate
 MinReadySeconds:        0
 RollingUpdateStrategy:  25% max unavailable, 25% max surge
 Pod Template:
-  Labels:  app=nginxweb
+  Labels:  app=my-nginx
   Containers:
    nginx:
     Image:         nginx
@@ -126,11 +126,11 @@ Conditions:
   Available      True    MinimumReplicasAvailable
   Progressing    True    NewReplicaSetAvailable
 OldReplicaSets:  <none>
-NewReplicaSet:   nginxweb-86b474f5bb (1/1 replicas created)
+NewReplicaSet:   my-nginx-86b474f5bb (1/1 replicas created)
 Events:
   Type    Reason             Age   From                   Message
   ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled up replica set nginxweb-86b474f5bb from 0 to 1
+  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled up replica set my-nginx-86b474f5bb from 0 to 1
 
 ```
 
@@ -163,17 +163,17 @@ $ kubectl describe -l ラベル名
 <br>
 
 ## クリーンアップ
-Pod名を確認してnginxwebのポッドを削除します。
+Pod名を確認してmy-nginxのポッドを削除します。
 
 ```
 $ kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
-nginxweb-86b474f5bb-qlgzf   1/1     Running   0          20m
+my-nginx-86b474f5bb-qlgzf   1/1     Running   0          20m
 
-$ kubectl delete pod nginxweb-86b474f5bb-qlgzf
+$ kubectl delete pod my-nginx-86b474f5bb-qlgzf
 
-pod "nginxweb-86b474f5bb-qlgzf" deleted
+pod "my-nginx-86b474f5bb-qlgzf" deleted
 ```
 
 Podの状態を再度確認します。
@@ -182,9 +182,9 @@ Podの状態を再度確認します。
 $ kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
-nginxweb-86b474f5bb-cz4fb   1/1     Running   0          2m
+my-nginx-86b474f5bb-cz4fb   1/1     Running   0          2m
 ```
-Pod名が`nginxweb-86b474f5bb-qlgzf`から`nginxweb-86b474f5bb-cz4fb`変わって再作成されていることが確認できます。
+Pod名が`my-nginx-86b474f5bb-qlgzf`から`my-nginx-86b474f5bb-cz4fb`変わって再作成されていることが確認できます。
 
 
  Podを削除するにはデプロイメントを削除します。
@@ -195,19 +195,19 @@ Pod名が`nginxweb-86b474f5bb-qlgzf`から`nginxweb-86b474f5bb-cz4fb`変わっ�
 $ kubectl get deployment
 
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-nginxweb   1/1     1            1           26m
+my-nginx   1/1     1            1           26m
 
-$ kubectl delete deployment nginxweb
+$ kubectl delete deployment my-nginx
 
-deployment.apps "nginxweb" deleted
+deployment.apps "my-nginx" deleted
 
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        122m
-nginxweb     NodePort    10.101.151.52   <none>        80:31600/TCP   23m
+my-nginx     NodePort    10.101.151.52   <none>        80:31600/TCP   23m
 
-$  kubectl delete services nginxweb
-service "nginxweb" deleted
+$  kubectl delete services my-nginx
+service "my-nginx" deleted
 ```
 
 <br>
