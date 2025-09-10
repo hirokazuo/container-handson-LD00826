@@ -241,7 +241,7 @@ cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-my-nginx3.yaml
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
-  name: pvc-my-nginx3-snap
+  name: snap-pvc-my-nginx3
 spec:
   volumeSnapshotClassName: csi-snapclass
   source:
@@ -253,7 +253,7 @@ EOF
 ```
 $ kubectl apply -f $HOME/volumesnapshot-pvc-my-nginx3.yaml
 
-volumesnapshot.snapshot.storage.k8s.io/pvc-my-nginx3-snap created
+volumesnapshot.snapshot.storage.k8s.io/snap-pvc-my-nginx3 created
 ```
 
 VolumeSnapshoptの状態を確認します。
@@ -261,7 +261,8 @@ VolumeSnapshoptの状態を確認します。
 $ kubectl get volumesnapshot
 
 NAME                 READYTOUSE   SOURCEPVC       SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
-pvc-my-nginx3-snap   true         pvc-my-nginx3                           292Ki         csi-snapclass   snapcontent-5422404a-574f-4736-86a6-556eabb26f8c   44s            40s
+pvc-my-nginx3-snap   true         pvc-my-nginx3                           340Ki         csi-snapclass   snapcontent-efcc9dd1-7c05-4699-9841-f361de099eb5   3m16s          3m14s
+snap-pvc-my-nginx3   true         pvc-my-nginx3                           536Ki         csi-snapclass   snapcontent-6f5aea83-a19b-4433-8563-5d8f3877235b   19s            17s
 ```
 
 
@@ -282,7 +283,7 @@ spec:
     requests:
       storage: 10Gi
   dataSource:
-    name: pvc-my-nginx3-snap
+    name: snap-pvc-my-nginx3
     kind: VolumeSnapshot
     apiGroup: snapshot.storage.k8s.io
 EOF
@@ -299,41 +300,41 @@ PVCの状態を確認します。
 ```
 $ kubectl get pvc
 
-NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-from-snap   Pending                                                                        ontap-gold     <unset>                 14s
-pvc-my-nginx3   Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
+NAME                 STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-my-nginx3        Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
+pvcclone-from-snap   Pending                                                                        ontap-gold     <unset>                 14s
 ```
-PVC `pvc-from-snap`の状態が `Pending`になっています。
+PVC `pvcclone-from-snap`の状態が `Pending`になっています。
 <br>
 
 原因を確認するため、PVC `pvc-from-snap`リソースの割当状況を確認してください。
 ```
-$ kubectl describe pvc pvc-from-snap
+$ kubectl describe pvc pvcclone-from-snap
 ```
 コマンドの出力から何が確認できるでしょうか？
-先に作成した `pvc-from-snap.yaml` のどこが間違っているでしょうか？
+先に作成した `pvcclone-from-snap.yaml` のどこが間違っているでしょうか？
 
- `pvc-from-snap.yaml` の修正内容がわかったら修正してください。
-修正したマニフェストを使って pvc-from-snapをデプロイする前にPending状態のpvc-from-snapを削除します。
+ `pvcclone-from-snap.yaml` の修正内容がわかったら修正してください。
+修正したマニフェストを使って pvcclone-from-snapをデプロイする前にPending状態のpvcclone-from-snapを削除します。
 ```
-$ kubectl delete pvc pvc-from-snap
+$ kubectl delete pvc pvcclone-from-snap
 
-persistentvolumeclaim "pvc-from-snap" deleted
+persistentvolumeclaim "pvcclone-from-snap" deleted
 ```
 
-修正したマニフェストを使って pvc-from-snapをデプロイします。
+修正したマニフェストを使って pvcclone-from-snapをデプロイします。
 ```
-$ kubectl apply -f pvc-from-snap.yaml
+$ kubectl apply -f pvcclone-from-snap.yaml
 
-persistentvolumeclaim/pvc-from-snap created
+persistentvolumeclaim/pvcclone-from-snap created
 ```
 
 PVCの状態を確認します。
 ```
 kubectl get pvc
-NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-from-snap   Bound    pvc-5346dbec-b53f-444f-a267-d6a0efe49b39   1Gi        RWO            ontap-gold     <unset>                 11s
-pvc-my-nginx3   Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-my-nginx3        Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
+pvcclone-from-snap   Bound    pvc-5346dbec-b53f-444f-a267-d6a0efe49b39   1Gi        RWO            ontap-gold     <unset>                 11s
 ```
 
 
@@ -346,7 +347,7 @@ cat <<EOF | sudo tee $HOME/clone-from-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-from-pvc-my-nginx3
+  name: pvcclone-from-pvc-my-nginx3
 spec:
   accessModes:
   - ReadWriteOnce
@@ -365,7 +366,7 @@ EOF
 ```
 $ kubectl apply -f clone-from-pvc.yaml
 
-persistentvolumeclaim/pvc-from-pvc-my-nginx3 created
+persistentvolumeclaim/pvcclone-from-pvc-my-nginx3 created
 ```
 
 
@@ -373,10 +374,11 @@ PVCの状態を確認します。
 ```
 $ kubectl get pvc
 
-NAME                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-from-pvc-my-nginx3   Bound    pvc-ebfa082d-07c7-4807-ab32-1c98a367a221   1Gi        RWO            ontap-gold     <unset>                 79s
-pvc-from-snap            Bound    pvc-adcbf77e-4bbe-4d3a-929d-5624fadc1d5c   1Gi        RWO            ontap-gold     <unset>                 5m56s
-pvc-my-nginx3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 63m
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-my-nginx3                 Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 63m
+pvcclone-from-pvc-my-nginx3   Bound    pvc-ebfa082d-07c7-4807-ab32-1c98a367a221   1Gi        RWO            ontap-gold     <unset>                 79s
+pvcclone-from-snap            Bound    pvc-adcbf77e-4bbe-4d3a-929d-5624fadc1d5c   1Gi        RWO            ontap-gold     <unset>                 5m56s
+
 ```
 
 
@@ -385,7 +387,7 @@ pvc-my-nginx3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi
 新たなnginexWebサーバにクローンしたPVCをマウントします。
 * マニフェスト名: my-nginx4.yaml
 * Pod名: my-nginx4
-* PVC: pvc-from-pvc-my-nginx3
+* PVC: pvcclone-from-pvc-my-nginx3
 
 このセクションはどうやって実現するかを考えていただくためあえて答えは書いてありません。
 
