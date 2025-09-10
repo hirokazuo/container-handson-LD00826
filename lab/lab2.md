@@ -81,41 +81,41 @@ l2advertisement.metallb.io/default created
 * Podをデプロイするためののマニフェストをホームディレクトリに作成します。
 * マニフェストに記述内容の説明はKubernetes公式サイト サービスとアプリケーションの接続を参照
 https://kubernetes.io/ja/docs/concepts/services-networking/connect-applications-service/
-  * `service/networking/run-my-nginx.yaml`と `service/networking/nginx-svc.yaml`の記述を1つのマニフェストにして、ロードバランサーを使用するようにカスタマイズしています。
+  * `service/networking/run-my-nginx2.yaml`と `service/networking/nginx-svc.yaml`の記述を1つのマニフェストにして、ロードバランサーを使用するようにカスタマイズしています。
 
-マニフェスト: my-nginx.yaml
+マニフェスト: my-nginx2.yaml
 ```
-$ cat <<EOF | sudo tee $HOME/my-nginx.yaml
+$ cat <<EOF | sudo tee $HOME/my-nginx2.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-nginx
+  name: my-nginx2
   labels:
-    run: my-nginx
+    run: my-nginx2
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
   selector:
-    run: my-nginx
+    run: my-nginx2
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-nginx
+  name: my-nginx2
 spec:
   selector:
     matchLabels:
-      run: my-nginx
+      run: my-nginx2
   replicas: 2
   template:
     metadata:
       labels:
-        run: my-nginx
+        run: my-nginx2
     spec:
       containers:
-      - name: my-nginx
+      - name: my-nginx2
         image: nginx:latest
         ports:
         - containerPort: 80
@@ -125,18 +125,18 @@ EOF
 
 作成したYAMLファイルを使って新しいnginxWebサーバーをデプロイします。
 ```
-$ kubectl apply -f my-nginx.yaml
+$ kubectl apply -f my-nginx2.yaml
 
-service/my-nginx created
-deployment.apps/my-nginx created
+service/my-nginx2 created
+deployment.apps/my-nginx2 created
 ```
 
 Podの状態を確認します。
 ```
-$ kubectl get pods -l run=my-nginx -o wide
+$ kubectl get pods -l run=my-nginx2 -o wide
 NAME                        READY   STATUS    RESTARTS   AGE     IP               NODE     NOMINATED NODE   READINESS GATES
-my-nginx-5594c56d97-7cgk5   1/1     Running   0          2m16s   10.244.69.132    gpu01    <none>           <none>
-my-nginx-5594c56d97-q2vcv   1/1     Running   0          2m16s   10.244.102.196   mgmt01   <none>           <none>
+my-nginx2-5594c56d97-7cgk5   1/1     Running   0          2m16s   10.244.69.132    gpu01    <none>           <none>
+my-nginx2-5594c56d97-q2vcv   1/1     Running   0          2m16s   10.244.102.196   mgmt01   <none>           <none>
 ```
 マニフェストに`replicas: 2`と記述したので2つのPodが確認できます。
 <br>
@@ -149,7 +149,7 @@ $ kubectl get services
 
 NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        161m
-my-nginx    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
+my-nginx2    LoadBalancer   10.108.71.217   192.168.0.221   80:31952/TCP   110s
 ```
 今回はTYPE　LoadBalancerでEXTERNAL-IPが設定されていることが確認できます。
 
