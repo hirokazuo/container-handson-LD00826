@@ -122,7 +122,10 @@ spec:
 上記のマニフェストをもとにDeploymentを作成します。
 
 ```
-kubectl create -f mysql-deployment.yaml
+$ kubectl create -f mysql-deployment.yaml
+
+service/wordpress-mysql created
+deployment.apps/wordpress-mysql created
 ```
 
 少々時間がかかるのでどのように状態が移って行くか確認し、「Status」が「Running」になることを確認してください。
@@ -193,7 +196,7 @@ spec:
 MySQLと同様にデプロイします。
 
 ```
-kubectl create -f wordpress-deployment.yaml
+$ kubectl create -f wordpress-deployment.yaml
 ```
 
 
@@ -214,7 +217,7 @@ kubectlのオペレーションの簡易化のためlabelをつけることを�
 アクセスするIPについてはサービスを取得して確認します。
 
 ```
- kubectl get svc
+ $ kubectl get svc
 ```
 
 結果として以下のような出力が得られます。
