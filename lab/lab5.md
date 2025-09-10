@@ -383,29 +383,29 @@ pvc-my-nginx3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi
 
 ### クローンしたPVCにアプリケーションから接続
 新たなnginexWebサーバにクローンしたPVCをマウントします。
-* マニフェスト名: nginxweb4.yaml
-* Pod名: nginxweb4
+* マニフェスト名: my-nginx4.yaml
+* Pod名: my-nginx4
 * PVC: pvc-from-pvc-my-nginx3
 
 このセクションはどうやって実現するかを考えていただくためあえて答えは書いてありません。
 
-作成したYAMLファイルを使ってnginxweb4をデプロイします。
+作成したYAMLファイルを使ってmy-nginx4をデプロイします。
 ```
-$ kubectl apply -f nginxweb4.yaml
+$ kubectl apply -f my-nginx4.yaml
 
-service/nginxweb4 created
-deployment.apps/nginxweb4-deployment created
+service/my-nginx4 created
+deployment.apps/my-nginx4-deployment created
 ```
 
-nginxweb4のExternal-IPを確認します
+my-nginx4のExternal-IPを確認します
 ```
 $ kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
-nginxweb4         LoadBalancer   10.104.163.225   192.168.0.224   80:30292/TCP   74s
+my-nginx4         LoadBalancer   10.104.163.225   192.168.0.224   80:30292/TCP   74s
 ```
 
-ブラウザからnginxweb4にアクセスしてmy-nginx3で作成したテスト用のHTMLにアクセスできることを確認します。
+ブラウザからmy-nginx4にアクセスしてmy-nginx3で作成したテスト用のHTMLにアクセスできることを確認します。
 * （例）http://192.168.0.224/test.html
 
 <br>
