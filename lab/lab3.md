@@ -216,13 +216,12 @@ kubectlのオペレーションの簡易化のためlabelをつけることを�
 デプロイしたアプリケーションにアクセスし正常稼働しているか確認します。
 アクセスするIPについてはサービスを取得して確認します。
 
-```
- $ kubectl get svc
-```
-
 結果として以下のような出力が得られます。
 今回はService.typeをLoadBalancerで指定しているため、EXTERNAL-IP欄に表示されたIPでアクセスしてみましょう。
+
 ```
+$ kubectl get svc
+
 NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes        ClusterIP      10.96.0.1       <none>          443/TCP        179m
 wordpress         LoadBalancer   10.102.247.40   192.168.0.222   80:30672/TCP   16s
@@ -233,7 +232,65 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
 * http://確認したEXTERNAL-IP/ <br>
 
-アクセス時にWordPressの初期設定画面が表示されれば稼働確認完了です。
+アクセス時にWordPressの初期設定画面が表示されれば正常です。
+『日本語』を選んで次のセットアップ画面に進んでください。
+<br>
+
+『ようこそ』画面に必要な情報を設定してWordPressをインストールします。
+<br>
+
+インストールが成功したら先に設定したユーザでログインします。
+<br>
+
+『ブログに投稿する』をクリックします。
+<br>
+
+新規投稿を追加します。
+タイトルと本文を記入したら『公開』ボタンを押して公開します。
+<br>
+
+投稿が公開されたら『投稿を表示』をクリックして投稿内容を確認します。
+<br>
+
+
+投稿内容サンプル
+<br>
+
+投稿内容を確認したらkubernetesクラスタ上からmysqlのポッドを削除します。
+```
+$ kubectl get pod
+
+NAME                               READY   STATUS    RESTARTS   AGE
+wordpress-6f7cdb5785-fcdzp         1/1     Running   0          15m
+wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          94s
+
+
+$ kubectl delete pod wordpress-6f7cdb5785-fcdzp
+
+pod "wordpress-6f7cdb5785-fcdzp" deleted
+```
+
+ブラウザをリロードして投稿内容が表示されるか確認します。
+以下のようにデータベースへの接続エラーが表示されるはずです。
+
+
+今度はkubernetesクラスタ上からWordPressのポッドを削除します。
+```
+$ kubectl get pod
+
+NAME                               READY   STATUS    RESTARTS   AGE
+wordpress-6f7cdb5785-lc6t6         1/1     Running   0          5s
+wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          2m19s
+
+$ kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
+pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
+```
+
+再度ブラウザをリロードして投稿内容が表示されるか確認します。
+
+
+
+
 
 
 
