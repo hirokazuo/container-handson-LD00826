@@ -238,9 +238,11 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 <br>
 
 『ようこそ』画面に必要な情報を設定してWordPressをインストールします。
+![WordPress Setup2](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0302.png)
 <br>
 
 インストールが成功したら先に設定したユーザでログインします。
+![WordPress Setup3](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0303.png)
 <br>
 
 『ブログに投稿する』をクリックします。
