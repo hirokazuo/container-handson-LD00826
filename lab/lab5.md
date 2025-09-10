@@ -269,11 +269,11 @@ pvc-my-nginx3-snap   true         pvc-my-nginx3                           292Ki 
 
 pvc-from-snap.yamlを以下の内容で作成してください
 ```
-cat <<EOF | sudo tee $HOME/pvc-from-snap.yaml
+cat <<EOF | sudo tee $HOME/pvcclone-from-snap.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-from-snap
+  name: pvcclone-from-snap
 spec:
   accessModes:
     - ReadWriteOnce
@@ -290,7 +290,7 @@ EOF
 
 作成したYAMLファイルを使ってスナップショットからPVCをデプロイします。
 ```
-$ kubectl apply -f pvc-from-snap.yaml
+$ kubectl apply -f pvcclone-from-snap.yaml
 
 persistentvolumeclaim/pvc-from-snap created
 ```
