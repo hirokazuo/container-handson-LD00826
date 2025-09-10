@@ -134,9 +134,10 @@ deployment.apps/my-nginx2 created
 Podの状態を確認します。
 ```
 $ kubectl get pods -l run=my-nginx2 -o wide
-NAME                        READY   STATUS    RESTARTS   AGE     IP               NODE     NOMINATED NODE   READINESS GATES
-my-nginx2-5594c56d97-7cgk5   1/1     Running   0          2m16s   10.244.69.132    gpu01    <none>           <none>
-my-nginx2-5594c56d97-q2vcv   1/1     Running   0          2m16s   10.244.102.196   mgmt01   <none>           <none>
+
+NAME                         READY   STATUS    RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
+my-nginx2-84948888cc-6s87x   1/1     Running   0          11s   10.244.102.197   mgmt01   <none>           <none>
+my-nginx2-84948888cc-fqztb   1/1     Running   0          11s   10.244.69.134    gpu01    <none>           <none>
 ```
 マニフェストに`replicas: 2`と記述したので2つのPodが確認できます。
 <br>
