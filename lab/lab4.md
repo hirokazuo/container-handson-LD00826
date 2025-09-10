@@ -375,9 +375,11 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-sna
 ### VolumeSnapshotClassを作成
 スナップショットを作成するには 'VolumeSnapshotClass' を管理者が定義する必要があります。
 <br>
-VolumeSnapshotClassについては以下に説明があります。
+VolumeSnapshotClassについては以下に説明があります。<br>
+
 Kubernetes VolumeSnapshotClass objects
 * https://docs.netapp.com/us-en/trident/trident-reference/objects.html#kubernetes-attributes
+
 Create a volume snapshot
 * https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#create-a-volume-snapshot
 
