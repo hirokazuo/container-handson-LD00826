@@ -25,15 +25,15 @@
 
 
 ### PVCの作成 
-nginxweb3用のPVCをデプロイします。デプロイするためのYAMLファイルを作成します。
+my-nginx3用のPVCをデプロイします。デプロイするためのYAMLファイルを作成します。
 
-ホームディレクトリにpvc-nginxweb3.yamlを作成
+ホームディレクトリにpvc-my-nginx3.yamlを作成
 ```
-$ cat <<EOF | sudo tee $HOME/pvc-nginxweb3.yaml
+$ cat <<EOF | sudo tee $HOME/pvc-my-nginx3.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-nginxweb3
+  name: pvc-my-nginx3
 spec:
   accessModes:
     - ReadWriteOnce
@@ -47,64 +47,64 @@ EOF
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-$ kubectl apply -f pvc-nginxweb3.yaml
+$ kubectl apply -f pvc-my-nginx3.yaml
 
-persistentvolumeclaim/pvc-nginxweb3 created
+persistentvolumeclaim/pvc-my-nginx3 created
 ```
 
 ```
 $ kubectl get pvc
 
 NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-nginxweb3   Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 30s
+pvc-my-nginx3   Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 30s
 ```
 
 nginxをデプロイするためのマニフェストを作成します。<br>
 今回は34行目以下にvolumeMountsに関する記述があることを確認してください。
 
-ホームディレクトリにnginxweb3.yamlを作成
+ホームディレクトリにmy-nginx3.yamlを作成
 ```
-cat <<EOF | sudo tee $HOME/nginxweb3.yaml
+cat <<EOF | sudo tee $HOME/my-nginx3.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginxweb3
+  name: my-nginx3
   labels:
-    run: nginx
+    run: my-nginx3
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
   selector:
-    run: nginx
+    run: my-nginx3
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginxweb3-deployment
+  name: my-nginx3
 spec:
   selector:
     matchLabels:
-      run: nginx
+      run: my-nginx3
   replicas: 1
   template:
     metadata:
       labels:
-        run: nginx
+        run: my-nginx3
     spec:
       containers:
-      - name: nginx
+      - name: my-nginx3
         image: nginx:latest
         ports:
         - containerPort: 80
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
-          name: nginxweb3-volume
+          name: my-nginx3-volume
       volumes:
-        - name: nginxweb3-volume
+        - name: my-nginx3-volume
           persistentVolumeClaim:
-            claimName: pvc-nginxweb3
+            claimName: pvc-my-nginx3
 
 EOF
 ```
@@ -120,10 +120,10 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 
 作成したYAMLファイルを使ってnginxのPodを作成します。
 ```
-$ kubectl apply -f nginxweb3.yaml
+$ kubectl apply -f my-nginx3.yaml
 
-service/nginxweb3 created
-deployment.apps/nginxweb3-deployment created
+service/my-nginx3 created
+deployment.apps/my-nginx3-deployment created
 
 ```
 
@@ -132,20 +132,20 @@ Podの状態を確認します。
 $ kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
-nginxweb3-deployment-5f5dd7c595-q6vhh   1/1     Running   0          48s
+my-nginx3-deployment-5f5dd7c595-q6vhh   1/1     Running   0          48s
 ```
 
 
 
 nginxコンテナへのシェルの取得します。
 ```
-$ kubectl exec --stdin --tty nginxweb3-deployment-5f5dd7c595-q6vhh -- /bin/bash
+$ kubectl exec --stdin --tty my-nginx3-deployment-5f5dd7c595-q6vhh -- /bin/bash
 ```
 
 コンテナ内にTridentが作成したボリュームがマウントされていることを確認します。
 ```
 (コンテナ内のシェルで実行します)
-root@nginxweb3-deployment-5f5dd7c595-q6vhh:/# df -h
+root@my-nginx3-deployment-5f5dd7c595-q6vhh:/# df -h
 
 Filesystem                                                       Size  Used Avail Use% Mounted on
 overlay                                                           96G  8.5G   83G  10% /
@@ -162,7 +162,7 @@ udev                                                             3.9G     0  3.9
 nginxのドキュメントルートにテスト用のファイルを作成します。
 ```
 (コンテナ内のシェルで実行します)
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# cat <<EOF | tee /usr/share/nginx/html/test.html
+root@my-nginx3-deployment-5f5dd7c595-4rjwm:/# cat <<EOF | tee /usr/share/nginx/html/test.html
 <html>
 	<head>
 	<title>
@@ -181,7 +181,7 @@ EOF
 nginxのコンテナからExitします。
 ```
 (コンテナ内のシェルで実行します)
-root@nginxweb3-deployment-5f5dd7c595-4rjwm:/# exit
+root@my-nginx3-deployment-5f5dd7c595-4rjwm:/# exit
 ```
 
 nginxにアクセスするためのIPアドレスを確認します。
@@ -189,7 +189,7 @@ nginxにアクセスするためのIPアドレスを確認します。
 $ kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
-nginxweb3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP   3m37s
+my-nginx3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP   3m37s
 ```
 
 プラウザで確認したアドレスを使ってnginxコンテナ内に作成したテストページにアクセスします。
@@ -199,9 +199,9 @@ nginxweb3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP  
 
 nginxのPodを削除します。
 ```
-$ kubectl delete pod nginxweb3-deployment-5f5dd7c595-q6vhh
+$ kubectl delete pod my-nginx3-deployment-5f5dd7c595-q6vhh
 
-pod "nginxweb3-deployment-5f5dd7c595-q6vhh" deleted
+pod "my-nginx3-deployment-5f5dd7c595-q6vhh" deleted
 ```
 
 nginxのPodの状態を確認します
@@ -209,7 +209,7 @@ nginxのPodの状態を確認します
 $ kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
-nginxweb3-deployment-5f5dd7c595-qpnv7   1/1     Running   0          27s
+my-nginx3-deployment-5f5dd7c595-qpnv7   1/1     Running   0          27s
 ```
 Podの名前が変わって新たに作成されていることが確認できます。
 
@@ -237,23 +237,23 @@ nginx用に永続化したボリュームのクローンを作成します。
 まず、PVCのスナップショットを作成します。
 
 ```
-cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-nginxweb3.yaml
+cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-my-nginx3.yaml
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
-  name: pvc-nginxweb3-snap
+  name: pvc-my-nginx3-snap
 spec:
   volumeSnapshotClassName: csi-snapclass
   source:
-    persistentVolumeClaimName: pvc-nginxweb3
+    persistentVolumeClaimName: pvc-my-nginx3
 EOF
 ```
 
 作成したYAMLファイルを使ってVolumeSnapshoptを作成します。
 ```
-$ kubectl apply -f $HOME/volumesnapshot-pvc-nginxweb3.yaml
+$ kubectl apply -f $HOME/volumesnapshot-pvc-my-nginx3.yaml
 
-volumesnapshot.snapshot.storage.k8s.io/pvc-nginxweb3-snap created
+volumesnapshot.snapshot.storage.k8s.io/pvc-my-nginx3-snap created
 ```
 
 VolumeSnapshoptの状態を確認します。
@@ -261,7 +261,7 @@ VolumeSnapshoptの状態を確認します。
 $ kubectl get volumesnapshot
 
 NAME                 READYTOUSE   SOURCEPVC       SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
-pvc-nginxweb3-snap   true         pvc-nginxweb3                           292Ki         csi-snapclass   snapcontent-5422404a-574f-4736-86a6-556eabb26f8c   44s            40s
+pvc-my-nginx3-snap   true         pvc-my-nginx3                           292Ki         csi-snapclass   snapcontent-5422404a-574f-4736-86a6-556eabb26f8c   44s            40s
 ```
 
 
@@ -282,7 +282,7 @@ spec:
     requests:
       storage: 10Gi
   dataSource:
-    name: pvc-nginxweb3-snap
+    name: pvc-my-nginx3-snap
     kind: VolumeSnapshot
     apiGroup: snapshot.storage.k8s.io
 EOF
@@ -301,7 +301,7 @@ $ kubectl get pvc
 
 NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-from-snap   Pending                                                                        ontap-gold     <unset>                 14s
-pvc-nginxweb3   Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
+pvc-my-nginx3   Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
 ```
 PVC `pvc-from-snap`の状態が `Pending`になっています。
 <br>
@@ -333,20 +333,20 @@ PVCの状態を確認します。
 kubectl get pvc
 NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-from-snap   Bound    pvc-5346dbec-b53f-444f-a267-d6a0efe49b39   1Gi        RWO            ontap-gold     <unset>                 11s
-pvc-nginxweb3   Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
+pvc-my-nginx3   Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
 ```
 
 
 ### クローンの作成(2): PVCから直接クローン
 nginx用に永続化したボリュームのクローンを作成します。
-今回はオリジナルのPVCである`pvc-nginxweb3`から作成します。
+今回はオリジナルのPVCである`pvc-my-nginx3`から作成します。
 
 ```
 cat <<EOF | sudo tee $HOME/clone-from-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-from-pvc-nginxweb3
+  name: pvc-from-pvc-my-nginx3
 spec:
   accessModes:
   - ReadWriteOnce
@@ -356,7 +356,7 @@ spec:
       storage: 1Gi
   dataSource:
     kind: PersistentVolumeClaim
-    name: pvc-nginxweb3
+    name: pvc-my-nginx3
     
 EOF
 ```
@@ -365,7 +365,7 @@ EOF
 ```
 $ kubectl apply -f clone-from-pvc.yaml
 
-persistentvolumeclaim/pvc-from-pvc-nginxweb3 created
+persistentvolumeclaim/pvc-from-pvc-my-nginx3 created
 ```
 
 
@@ -374,9 +374,9 @@ PVCの状態を確認します。
 $ kubectl get pvc
 
 NAME                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-pvc-from-pvc-nginxweb3   Bound    pvc-ebfa082d-07c7-4807-ab32-1c98a367a221   1Gi        RWO            ontap-gold     <unset>                 79s
+pvc-from-pvc-my-nginx3   Bound    pvc-ebfa082d-07c7-4807-ab32-1c98a367a221   1Gi        RWO            ontap-gold     <unset>                 79s
 pvc-from-snap            Bound    pvc-adcbf77e-4bbe-4d3a-929d-5624fadc1d5c   1Gi        RWO            ontap-gold     <unset>                 5m56s
-pvc-nginxweb3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 63m
+pvc-my-nginx3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 63m
 ```
 
 
@@ -385,7 +385,7 @@ pvc-nginxweb3            Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi
 新たなnginexWebサーバにクローンしたPVCをマウントします。
 * マニフェスト名: nginxweb4.yaml
 * Pod名: nginxweb4
-* PVC: pvc-from-pvc-nginxweb3
+* PVC: pvc-from-pvc-my-nginx3
 
 このセクションはどうやって実現するかを考えていただくためあえて答えは書いてありません。
 
@@ -405,7 +405,7 @@ NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)       
 nginxweb4         LoadBalancer   10.104.163.225   192.168.0.224   80:30292/TCP   74s
 ```
 
-ブラウザからnginxweb4にアクセスしてnginxweb3で作成したテスト用のHTMLにアクセスできることを確認します。
+ブラウザからnginxweb4にアクセスしてmy-nginx3で作成したテスト用のHTMLにアクセスできることを確認します。
 * （例）http://192.168.0.224/test.html
 
 <br>
