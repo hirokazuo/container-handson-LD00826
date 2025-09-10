@@ -234,6 +234,7 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 
 アクセス時にWordPressの初期設定画面が表示されれば正常です。
 『日本語』を選んで次のセットアップ画面に進んでください。
+![WordPress Setup1](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0301.png)
 <br>
 
 『ようこそ』画面に必要な情報を設定してWordPressをインストールします。
