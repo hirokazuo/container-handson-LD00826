@@ -245,18 +245,26 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 ![WordPress Setup3](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0303.png)
 <br>
 
+先に設定したユーザでログインします。
+![WordPress Setup4](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0304.png)
+<br>
+
 『ブログに投稿する』をクリックします。
+![WordPress Setup5](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0305.png)
 <br>
 
 新規投稿を追加します。
 タイトルと本文を記入したら『公開』ボタンを押して公開します。
+![WordPress Setup6](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0306.png)
 <br>
 
 投稿が公開されたら『投稿を表示』をクリックして投稿内容を確認します。
+![WordPress Setup7](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0307.png)
 <br>
 
 
 投稿内容サンプル
+![WordPress Setup8](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0308.png)
 <br>
 
 投稿内容を確認したらkubernetesクラスタ上からmysqlのポッドを削除します。
@@ -275,6 +283,7 @@ pod "wordpress-6f7cdb5785-fcdzp" deleted
 
 ブラウザをリロードして投稿内容が表示されるか確認します。
 以下のようにデータベースへの接続エラーが表示されるはずです。
+![WordPress Setup9](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0309.png)
 
 
 今度はkubernetesクラスタ上からWordPressのポッドを削除します。
@@ -289,10 +298,11 @@ $ kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
 pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
 ```
 
-再度ブラウザをリロードして投稿内容が表示されるか確認します。
+再度ブラウザをリロードして投稿内容が表示されるか確認します。<br>
+![WordPress Setup10](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0310.png)
 
-
-
+再度、WordPressの初期設定画面が表示されます。
+MySQL内のデータが永続されていないのでコンテナが再作成されたときにデータが保持されなかったことが確認できます。
 
 
 
@@ -304,8 +314,8 @@ kubectl引数の省略系について<br>
 
 ### まとめ
 kubectlやYAMLで記載するマニフェストファイルを使ってk8sへのデプロイが体感できたかと思います。 実運用になるとこのYAMLをたくさん書くことは負荷になることもあるかもしれません.
-
 その解決のためにパッケージマネージャーHelm 等を使ってデプロイすることが多いかと思います。 このラボでは仕組みを理解していただき、応用出来ることを目的としています。
+Lab3は以上となります。Lab4に進んでください。
 
 
 
