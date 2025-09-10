@@ -232,38 +232,38 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 ここで確認したIPアドレスをつかってJumphost上のChromeプラウザからアクセスします。
 * http://確認したEXTERNAL-IP/ <br>
 
-アクセス時にWordPressの初期設定画面が表示されれば正常です。
-『日本語』を選んで次のセットアップ画面に進んでください。
+アクセス時にWordPressの初期設定画面が表示されれば正常です。<br>
+『日本語』を選んで次のセットアップ画面に進んでください。<br>
 ![WordPress Setup1](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0301.png)
 <br>
 
-『ようこそ』画面に必要な情報を設定してWordPressをインストールします。
+『ようこそ』画面に必要な情報を設定してWordPressをインストールします。<br>
 ![WordPress Setup2](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0302.png)
 <br>
 
-インストールが成功したら先に設定したユーザでログインします。
+インストールが成功したら先に設定したユーザでログインします。<br>
 ![WordPress Setup3](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0303.png)
 <br>
 
-先に設定したユーザでログインします。
+先に設定したユーザでログインします。<br>
 ![WordPress Setup4](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0304.png)
 <br>
 
-『ブログに投稿する』をクリックします。
+『ブログに投稿する』をクリックします。<br>
 ![WordPress Setup5](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0305.png)
 <br>
 
-新規投稿を追加します。
-タイトルと本文を記入したら『公開』ボタンを押して公開します。
+新規投稿を追加します。<br>
+タイトルと本文を記入したら『公開』ボタンを押して公開します。<br>
 ![WordPress Setup6](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0306.png)
 <br>
 
-投稿が公開されたら『投稿を表示』をクリックして投稿内容を確認します。
+投稿が公開されたら『投稿を表示』をクリックして投稿内容を確認します。<br>
 ![WordPress Setup7](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0307.png)
 <br>
 
 
-投稿内容サンプル
+投稿内容サンプル<br>
 ![WordPress Setup8](https://github.com/hirokazuo/container-handson-LD00826/blob/main/image/lab0308.png)
 <br>
 
