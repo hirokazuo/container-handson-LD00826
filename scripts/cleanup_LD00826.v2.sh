@@ -38,6 +38,9 @@ sudo iptables -t raw -X
 sudo iptables -t mangle -F 
 sudo iptables -t mangle -X
 
+#reset system's IPVS tables.
+sudo ipvsadm --clear 
+
 sudo reboot
 
 EOL
@@ -177,6 +180,9 @@ sudo iptables -t raw -F
 sudo iptables -t raw -X
 sudo iptables -t mangle -F 
 sudo iptables -t mangle -X
+
+#reset system's IPVS tables.
+sudo ipvsadm --clear 
 
 # Remove docker
 sudo apt-mark unhold docker*
