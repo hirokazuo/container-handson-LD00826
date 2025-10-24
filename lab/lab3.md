@@ -279,13 +279,11 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 $ kubectl get pod
 
 NAME                               READY   STATUS    RESTARTS   AGE
-wordpress-6f7cdb5785-fcdzp         1/1     Running   0          15m
-wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          94s
+wordpress-6f7cdb5785-lc6t6         1/1     Running   0          5s
+wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          2m19s
 
-
-$ kubectl delete pod wordpress-6f7cdb5785-fcdzp
-
-pod "wordpress-6f7cdb5785-fcdzp" deleted
+$ kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
+pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
 ```
 <br>
 
@@ -299,11 +297,13 @@ pod "wordpress-6f7cdb5785-fcdzp" deleted
 $ kubectl get pod
 
 NAME                               READY   STATUS    RESTARTS   AGE
-wordpress-6f7cdb5785-lc6t6         1/1     Running   0          5s
-wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          2m19s
+wordpress-6f7cdb5785-fcdzp         1/1     Running   0          15m
+wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          94s
 
-$ kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
-pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
+
+$ kubectl delete pod wordpress-6f7cdb5785-fcdzp
+
+pod "wordpress-6f7cdb5785-fcdzp" deleted
 ```
 <br>
 
