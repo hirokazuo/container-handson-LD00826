@@ -51,12 +51,12 @@ Secretの説明はこちらです。
 * https://kubernetes.io/docs/concepts/configuration/secret/
 
 ```
-$ kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
+root@mgmt01:~# kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
 ```
 
 作成後は以下のコマンドで結果を確認します。
 ```
-$ kubectl get secrets
+root@mgmt01:~# kubectl get secrets
 
 NAME         TYPE                             DATA   AGE
 mysql-pass   Opaque                           1      12s
@@ -122,7 +122,7 @@ spec:
 上記のマニフェストをもとにDeploymentを作成します。
 
 ```
-$ kubectl create -f mysql-deployment.yaml
+root@mgmt01:~# kubectl create -f mysql-deployment.yaml
 
 service/wordpress-mysql created
 deployment.apps/wordpress-mysql created
@@ -131,7 +131,7 @@ deployment.apps/wordpress-mysql created
 少々時間がかかるのでどのように状態が移って行くか確認し、「Status」が「Running」になることを確認してください。
 
 ```
-$ kubectl get pods
+root@mgmt01:~# kubectl get pods
 
 NAME                                    READY   STATUS    RESTARTS   AGE
 wordpress-mysql-59b85fd8dc-5gdch        1/1     Running   0          2m20s
@@ -196,7 +196,7 @@ spec:
 MySQLと同様にデプロイします。
 
 ```
-$ kubectl create -f wordpress-deployment.yaml
+root@mgmt01:~# kubectl create -f wordpress-deployment.yaml
 ```
 
 
@@ -220,7 +220,7 @@ kubectlのオペレーションの簡易化のためlabelをつけることを�
 今回はService.typeをLoadBalancerで指定しているため、EXTERNAL-IP欄に表示されたIPでアクセスしてみましょう。
 
 ```
-$ kubectl get svc
+root@mgmt01:~# kubectl get svc
 
 NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes        ClusterIP      10.96.0.1       <none>          443/TCP        179m
@@ -276,13 +276,13 @@ wordpress-mysql   ClusterIP      None            <none>          3306/TCP
 
 投稿内容を確認したらkubernetesクラスタ上からmysqlのポッドを削除します。
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                               READY   STATUS    RESTARTS   AGE
 wordpress-6f7cdb5785-lc6t6         1/1     Running   0          5s
 wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          2m19s
 
-$ kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
+root@mgmt01:~# kubectl delete pod wordpress-mysql-59b85fd8dc-wfzmd
 pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
 ```
 <br>
@@ -294,14 +294,14 @@ pod "wordpress-mysql-59b85fd8dc-wfzmd" deleted
 
 今度はkubernetesクラスタ上からWordPressのポッドを削除します。
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                               READY   STATUS    RESTARTS   AGE
 wordpress-6f7cdb5785-fcdzp         1/1     Running   0          15m
 wordpress-mysql-59b85fd8dc-wfzmd   1/1     Running   0          94s
 
 
-$ kubectl delete pod wordpress-6f7cdb5785-fcdzp
+root@mgmt01:~# kubectl delete pod wordpress-6f7cdb5785-fcdzp
 
 pod "wordpress-6f7cdb5785-fcdzp" deleted
 ```
