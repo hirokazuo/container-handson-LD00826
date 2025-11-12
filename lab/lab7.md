@@ -11,17 +11,17 @@ Deploy and Access the Kubernetes Dashboard
 
 インストール用のスクリプトをダウンロードします。
 ```
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+root@mgmt01:~# curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 ```
 
 スクリプトに実行権限を付与します。
 ```
-$ chmod +x get_helm.sh
+root@mgmt01:~# chmod +x get_helm.sh
 ```
 
 スクリプトを実行します。
 ```
-$ ./get_helm.sh
+root@mgmt01:~# ./get_helm.sh
 
 Downloading https://get.helm.sh/helm-v3.18.6-linux-amd64.tar.gz
 Verifying checksum... Done.
@@ -32,14 +32,14 @@ helm installed into /usr/local/bin/helm
 ## kubernetes-dashboard のインストール
 kubernetes-dashboard レポジトリを追加
 ```
-$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+root@mgmt01:~# helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 
 "kubernetes-dashboard" has been added to your repositories
 ```
 
 kubernetes-dashboard チャートを使って`kubernetes-dashboard`という名前のHelmリリースをデプロイ
 ```
-$ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+root@mgmt01:~# helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 
 Release "kubernetes-dashboard" does not exist. Installing it now.
 NAME: kubernetes-dashboard
@@ -68,7 +68,7 @@ Dashboard will be available at:
 
 kubernetes-dashboardのリソースの確認します。
 ```
-$ kubectl get pod -n kubernetes-dashboard
+root@mgmt01:~# kubectl get pod -n kubernetes-dashboard
 NAME                                                   READY   STATUS    RESTARTS   AGE
 kubernetes-dashboard-api-656d888496-htlnr              1/1     Running   0          3m7s
 kubernetes-dashboard-auth-69d9ff4fb6-z9bl9             1/1     Running   0          3m7s
@@ -94,7 +94,7 @@ kubernetes-dashboard-web               ClusterIP   10.102.244.190   <none>      
 
 今回は、マニフェストを使わず、`kubectl edit`を使って直接設定を変更します。
 ```
-$ kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
+root@mgmt01:~# kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
 ```
 
 
@@ -147,13 +147,13 @@ status:
 
 編集が終わったらセーブして抜けます。
 ```
-$ kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
+root@mgmt01:~# kubectl edit service kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
 service/kubernetes-dashboard-kong-proxy edited
 ```
 
 kubernetes-dashboard-kong-proxy のEXTERNAL-IPを確認します。
 ```
-$ kubectl get svc -n kubernetes-dashboard
+root@mgmt01:~# kubectl get svc -n kubernetes-dashboard
 NAME                                   TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)         AGE
 kubernetes-dashboard-api               ClusterIP      10.99.6.5        <none>          8000/TCP        14m
 kubernetes-dashboard-auth              ClusterIP      10.106.138.153   <none>          8000/TCP        14m
@@ -187,7 +187,7 @@ EOF
 
 ダッシュボード管理ユーザーを作成します
 ```
-$ kubectl apply -f dashboard-adminuser.yaml
+root@mgmt01:~# kubectl apply -f dashboard-adminuser.yaml
 
 serviceaccount/admin-user created
 ```
@@ -212,7 +212,7 @@ subjects:
 EOF
 
 ```
-$ kubectl apply -f ClusterRoleBinding-admin-user.yaml
+root@mgmt01:~# kubectl apply -f ClusterRoleBinding-admin-user.yaml
 
 clusterrolebinding.rbac.authorization.k8s.io/admin-user created
 ```
