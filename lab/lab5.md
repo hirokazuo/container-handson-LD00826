@@ -64,7 +64,7 @@ nginxをデプロイするためのマニフェストを作成します。<br>
 
 ホームディレクトリにmy-nginx3.yamlを作成
 ```
-cat <<EOF | sudo tee $HOME/my-nginx3.yaml
+root@mgmt01:~# cat <<EOF | sudo tee $HOME/my-nginx3.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -237,7 +237,7 @@ nginx用に永続化したボリュームのクローンを作成します。
 まず、PVCのスナップショットを作成します。
 
 ```
-cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-my-nginx3.yaml
+root@mgmt01:~# cat <<EOF | sudo tee $HOME/volumesnapshot-pvc-my-nginx3.yaml
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
