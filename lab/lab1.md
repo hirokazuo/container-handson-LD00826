@@ -78,7 +78,7 @@ PORT 列を確認します。上の実行例でいうと「31600」ポートの�
 <br><br>
 ホストのIPを確認します。`ifconfig`コマンドが使えない場合には`net-tools`をインストールします。
 ```
-root@mgmt01:~# sudo apt install net-tools
+root@mgmt01:~# apt install net-tools
 
 root@mgmt01:~# ifconfig -a | grep 192.168.*
 
