@@ -11,7 +11,7 @@ MetalLBは`Service.type: LoadBalancer`のサービスをを外部に公開する
 
 公式サイトのYAMLファイルを使ってクラスター内にMetalLBのリソースを作成します。
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml
 namespace/metallb-system created
 customresourcedefinition.apiextensions.k8s.io/bfdprofiles.metallb.io created
 customresourcedefinition.apiextensions.k8s.io/bgpadvertisements.metallb.io created
@@ -45,7 +45,7 @@ validatingwebhookconfiguration.admissionregistration.k8s.io/metallb-webhook-conf
 
 以下、ヒアドキュメントでの作成例（viを使った作成でも構いません）
 ```
-$ cat <<EOF | sudo tee $HOME/ipaddresspool.yaml
+root@mgmt01:~# cat <<EOF | sudo tee root@mgmt01:~#HOME/ipaddresspool.yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -70,7 +70,7 @@ EOF
 
 作成したYAMLファイルを使ってロードバランサー用のIPアドレスのプールを設定します。
 ```
-$ kubectl apply -f $HOME/ipaddresspool.yaml
+root@mgmt01:~# kubectl apply -f root@mgmt01:~#HOME/ipaddresspool.yaml
 
 ipaddresspool.metallb.io/default created
 l2advertisement.metallb.io/default created
@@ -85,7 +85,7 @@ https://kubernetes.io/ja/docs/concepts/services-networking/connect-applications-
 
 マニフェスト: my-nginx2.yaml
 ```
-$ cat <<EOF | sudo tee $HOME/my-nginx2.yaml
+root@mgmt01:~# cat <<EOF | sudo tee root@mgmt01:~#HOME/my-nginx2.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -125,7 +125,7 @@ EOF
 
 作成したYAMLファイルを使って新しいnginxWebサーバーをデプロイします。
 ```
-$ kubectl apply -f my-nginx2.yaml
+root@mgmt01:~# kubectl apply -f my-nginx2.yaml
 
 service/my-nginx2 created
 deployment.apps/my-nginx2 created
@@ -133,7 +133,7 @@ deployment.apps/my-nginx2 created
 
 Podの状態を確認します。
 ```
-$ kubectl get pods -l run=my-nginx2 -o wide
+root@mgmt01:~# kubectl get pods -l run=my-nginx2 -o wide
 
 NAME                         READY   STATUS    RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
 my-nginx2-84948888cc-6s87x   1/1     Running   0          11s   10.244.102.197   mgmt01   <none>           <none>
@@ -146,7 +146,7 @@ my-nginx2-84948888cc-fqztb   1/1     Running   0          11s   10.244.69.134   
 
 サービス一覧から公開されたポートを確認します。
 ```
-$ kubectl get services
+root@mgmt01:~# kubectl get services
 
 NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
 kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        161m
