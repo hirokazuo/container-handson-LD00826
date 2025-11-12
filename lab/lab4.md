@@ -45,14 +45,14 @@ Dynamic storage provisioningを実現するためNetApp Tridentを導入しま�
 Trident のインストールでk8sクラスタの管理者権限が必要になります。
 
 ```
-$ kubectl auth can-i '*' '*' --all-namespaces
+root@mgmt01:~# kubectl auth can-i '*' '*' --all-namespaces
 ```
 
 
 バックエンドに登録するストレージのマネジメントIPにk8sクラスタのコンテナから疎通が取れるかを確認します。<br>
 ※本ラボ環境のONTAPストレージのマネージメントIPは`192.168.0.101`になります。
 ```
-$ kubectl run -i --tty ping --image=busybox --restart=Never --rm --  ping [マネジメントIP]
+root@mgmt01:~# kubectl run -i --tty ping --image=busybox --restart=Never --rm --  ping [マネジメントIP]
 ```
 ※Tridentのドキュメントには上記の手順があるのですが、Errorで終了するかと思います。
 
@@ -68,11 +68,11 @@ Install using tridentctl
 ### Tridentインストール(25.06)
 今回はKubernetes v1.33に対応した Trident 25.6をインストールします。
 ```
-$ wget https://github.com/NetApp/trident/releases/download/v25.06.0/trident-installer-25.06.0.tar.gz
+root@mgmt01:~# wget https://github.com/NetApp/trident/releases/download/v25.06.0/trident-installer-25.06.0.tar.gz
 
-$ tar -xf trident-installer-25.06.0.tar.gz
+root@mgmt01:~# tar -xf trident-installer-25.06.0.tar.gz
 
-$ cd trident-installer
+root@mgmt01:~# cd trident-installer
 ```
 
 Tridentの制御には `tridentctl` を使います。
@@ -82,7 +82,7 @@ Tridentの制御には `tridentctl` を使います。
 * `-n`オプションでTrident用のKubernetesネームスペースを指定します。
 
 ```
-$ ./tridentctl install -n trident
+root@mgmt01:~# ./tridentctl install -n trident
 INFO Starting Trident installation.                namespace=trident
 INFO Created namespace.                            namespace=trident
 INFO Created controller service account.          
@@ -112,7 +112,7 @@ INFO Trident installation succeeded.
 
 Tridentの状態を確認します。`-n`でネームスペースを指定してPodの状態を確認します。
 ```
-$ kubectl get pod -n trident
+root@mgmt01:~# kubectl get pod -n trident
 
 NAME                                READY   STATUS    RESTARTS   AGE
 trident-controller-6594747b-t4q9z   6/6     Running   0          9m7s
@@ -125,7 +125,7 @@ trident-node-linux-xqknx            2/2     Running   0          9m7s
 もし、問題が発生した場合には tridentctl を使用してtridentに関するログをまとめて確認することが出来ます。
 
 ```
-$ ./tridentctl -n trident logs
+root@mgmt01:~# ./tridentctl -n trident logs
 
 time="2018-02-15T03:32:35Z" level=error msg="API invocation failed. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out"
 time="2018-02-15T03:32:35Z" level=error msg="Problem initializing storage driver: 'ontap-nas' error: Error initializing ontap-nas driver. Could not determine Data ONTAP API version. Could not read ONTAPI version. Post https://10.0.1.146/servlets/netapp.servlets.admin.XMLrequest_filer: dial tcp 10.0.1.146:443: getsockopt: connection timed out" backend= handler=AddBackend
@@ -135,7 +135,7 @@ time="2018-02-15T03:32:35Z" level=info msg="API server REST call." duration=2m10
 ### Tridentのバージョン確認
 Tridentのバージョンは`tridentctl version`を使って確認することができます。
 ```
-$ ./tridentctl version -n trident
+root@mgmt01:~# ./tridentctl version -n trident
 
 +----------------+----------------+
 | SERVER VERSION | CLIENT VERSION |
@@ -162,12 +162,12 @@ Prepare to configure a backend with ONTAP NAS drivers
 
 `sample-input`ディレクトリ配下の`ontap-nas`ディレクトリに移動します。
 ```
-$ cd ./sample-input/backends-samples/ontap-nas
+root@mgmt01:~# cd ./sample-input/backends-samples/ontap-nas
 ```
 
 `backend-ontap-nas.json`ファイルがあることを確認します。
 ```
-$ ls
+root@mgmt01:~# ls
 backend-ontap-nas-advanced.json       backend-tbc-ontap-nas-advanced.yaml
 backend-ontap-nas-autoexport.json     backend-tbc-ontap-nas-autoexport.yaml
 backend-ontap-nas.json                backend-tbc-ontap-nas-virtual-pools.yaml
@@ -176,12 +176,12 @@ backend-ontap-nas-virtual-pools.json  backend-tbc-ontap-nas.yaml
 
 `backend-ontap-nas.json`を`trident-installer`ディレクトリにコピーします。
 ```
-$ cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
+root@mgmt01:~# cp backend-ontap-nas.json $HOME/trident-installer/backend-ontap-nas.json
 ```
 
 コピーした`trident-installer`ディレクトリ内の`backend-ontap-nas.json`ファイルを確認します。
 ```
-$ cat backend-ontap-nas.json
+root@mgmt01:~# cat backend-ontap-nas.json
 {
     "version": 1,
     "storageDriverName": "ontap-nas",
@@ -205,7 +205,7 @@ $ cat backend-ontap-nas.json
 
 作成したJSONファイルを使ってONTAP NASのバックエンドを設定します。
 ```
-$ tridentctl -n trident create backend -f $HOME/trident-installer/backend-ontap-nas.json
+root@mgmt01:~# tridentctl -n trident create backend -f $HOME/trident-installer/backend-ontap-nas.json
 
 +-------------------+----------------+--------------------------------------+--------+------------+---------+
 |       NAME        | STORAGE DRIVER |                 UUID                 | STATE  | USER-STATE | VOLUMES |
@@ -259,14 +259,14 @@ parameters:
 
 つづいて、ストレージクラスを作成します。
 ```
-$ kubectl apply -f StorageClassFastest.yaml
+root@mgmt01:~# kubectl apply -f StorageClassFastest.yaml
 
 storageclass.storage.k8s.io/ontap-gold created
 ```
 
 作成したストレージクラスを確認します
 ```
-$ kubectl get sc
+root@mgmt01:~# kubectl get sc
 NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 ontap-gold (default)   csi.trident.netapp.io   Delete          Immediate           false                  10s
 ```
@@ -280,7 +280,7 @@ kubectl patch storageclass ストレージクラス名 -p '{"metadata": {"annota
 
 StorageClassのサンプルファイルは`storage-class-samples`にありますので必要に応じて参照してください。
 ```
-$ ls $HOME/trident-installer/sample-input/storage-class-samples/
+root@mgmt01:~# ls $HOME/trident-installer/sample-input/storage-class-samples/
 
 storage-class-anf-smb.yaml         storage-class-gold-regex.yaml
 storage-class-basic.yaml.templ     storage-class-ontapnas-gold.yaml
@@ -316,7 +316,7 @@ spec:
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-$ kubectl apply -f pvc-test.yaml
+root@mgmt01:~# kubectl apply -f pvc-test.yaml
 
 persistentvolumeclaim/pvc-test created
 ```
@@ -324,14 +324,14 @@ persistentvolumeclaim/pvc-test created
 作成したPVCを確認します。
 以下のようにSTATUSがBoundになっていれば成功です。
 ```
-$ kubectl get pvc
+root@mgmt01:~# kubectl get pvc
 NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-test   Bound    pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            ontap-gold     <unset>                 40s
 ```
 
 続いてPVCによって作成されたPVを確認します。先程の`kubectl get pvc`の出力と見比べてみてください。
 ```
-$ kubectl get pv
+root@mgmt01:~# kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
 pvc-ca9d0b07-7e1a-4903-8546-79d6081f7bcc   1Gi        RWO            Delete           Bound    default/pvc-test   ontap-gold     <unset>                          101s
 ```
@@ -357,19 +357,19 @@ Deploy a volume snapshot controller
 
 上記ドキュメントではスクリプトファイルを作成していますが、以下、3つのコマンドを直接実行します。
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 ```
 
 #### snapshot controllerを作成します
 ドキュメントに記載のコマンドを実行します。
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+root@mgmt01:~# kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-6.1/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
 ```
 
 ### VolumeSnapshotClassを作成
@@ -402,12 +402,12 @@ deletionPolicy: Delete
 
 作成したYAMLファイルを使ってVolumeSnapshotClassを作成します。
 ```
-$ kubectl apply -f VolumeSnapshotClass.yaml
+root@mgmt01:~# kubectl apply -f VolumeSnapshotClass.yaml
 ```
 
 作成したVolumeSnapshotClassを確認します。
 ```
-$ kubectl get VolumeSnapshotClass
+root@mgmt01:~# kubectl get VolumeSnapshotClass
 NAME            DRIVER                  DELETIONPOLICY   AGE
 csi-snapclass   csi.trident.netapp.io   Delete           26s
 ```
@@ -434,12 +434,12 @@ spec:
 
 作成したYAMLファイルを使ってVolumeSnapshotを作成します。
 ```
-$ kubectl apply -f $HOME/snapshot-test.yaml
+root@mgmt01:~# kubectl apply -f $HOME/snapshot-test.yaml
 ```
 
 VolumeSnapshotの状態を確認します。
 ```
-$ kubectl get VolumeSnapshot
+root@mgmt01:~# kubectl get VolumeSnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   11s            6s
 ```
@@ -455,7 +455,7 @@ ONTAP System Managerからの確認
 
 VolumeSnapshotの元となるPVCを削除します。
 ```
-$ kubectl delete pvc pvc-test
+root@mgmt01:~# kubectl delete pvc pvc-test
 
 persistentvolumeclaim "pvc-test" deleted
 ```
@@ -471,7 +471,7 @@ ONTAP System Managerからの確認
 
 VolumeSnapshotの状態を確認します。
 ```
-$ kubectl get volumesnapshot
+root@mgmt01:~# kubectl get volumesnapshot
 NAME           READYTOUSE   SOURCEPVC   SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-test-snap   true         pvc-test                             324Ki         csi-snapclass   snapcontent-66e0abe7-ff0e-4c70-a742-792beffc15df   4h2m           4h2m
 ```
@@ -480,7 +480,7 @@ VolumeSnapshot のライフサイクルはソース PVC から独立していま
 
 VolumeSnapshotを削除します。
 ```
-$ kubectl delete volumesnapshot pvc-test-snap
+root@mgmt01:~# kubectl delete volumesnapshot pvc-test-snap
 
 volumesnapshot.snapshot.storage.k8s.io "pvc-test-snap" deleted
 ```
