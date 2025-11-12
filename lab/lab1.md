@@ -7,7 +7,7 @@ kubernetesクラスタに作成したコンテナアプリケーションをデ�
 
 以下の例では `my-nginx` がデプロイメント名
 ```
-$ kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
+root@mgmt01:~# kubectl create deployment 任意のデプロイメント名 --image=nginx --port=80
 
 deployment.apps/my-nginx created
 ```
@@ -16,7 +16,7 @@ deployment.apps/my-nginx created
 デプロイが完了したら以下のコマンドで状況を確認します。
 
 ```
-$ kubectl get deployments
+root@mgmt01:~# kubectl get deployments
 
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 my-nginx   1/1     1            1           78s
@@ -26,7 +26,7 @@ my-nginx   1/1     1            1           78s
 Podの状態を以下のコマンドで状況を確認します。
 
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
 my-nginx-86b474f5bb-qlgzf   1/1     Running   0          16m
@@ -37,7 +37,7 @@ Pod名とデプロイメント名が異なることを確認してください�
 デプロイしたアプリケーションのサービスを確認します。 まだこの状態ではデプロイしたアプリケーションのサービスは存在しない状況です。
 
 ```
-$ kubectl get services
+root@mgmt01:~# kubectl get services
 
 kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -50,7 +50,7 @@ kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   95m
 外部向けにサービスを公開します。 公開後、再度サービスを確認します。
 
 ```
-$ kubectl expose deployment/上記のデプロイメント名 --type="NodePort" --port 80
+root@mgmt01:~# kubectl expose deployment/上記のデプロイメント名 --type="NodePort" --port 80
 
 service "my-nginx" exposed
 ```
@@ -62,7 +62,7 @@ service "my-nginx" exposed
 サービス一覧から公開されたポートを確認します。
 
 ```
-$ kubectl get services
+root@mgmt01:~# kubectl get services
 
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        99m
@@ -78,9 +78,9 @@ PORT 列を確認します。上の実行例でいうと「31600」ポートの�
 <br><br>
 ホストのIPを確認します。`ifconfig`コマンドが使えない場合には`net-tools`をインストールします。
 ```
-$ sudo apt install net-tools
+root@mgmt01:~# sudo apt install net-tools
 
-$ ifconfig -a | grep 192.168.*
+root@mgmt01:~# ifconfig -a | grep 192.168.*
 
   inet 192.168.0.203  netmask 255.255.255.0  broadcast 192.168.0.255
 ```
@@ -97,7 +97,7 @@ Jumphost上のChromeプラウザを起動して以下のURLでアクセスしま
 nginex Webサーバの状態を確認します。
 
 ```
-$ kubectl describe deployment my-nginx
+root@mgmt01:~# kubectl describe deployment my-nginx
 Name:                   my-nginx
 Namespace:              default
 CreationTimestamp:      Fri, 15 Aug 2025 06:39:04 +0000
@@ -144,20 +144,20 @@ Replicas の項目で `1 available` となっていればデプロイメント�
 
 ポッドの状態を確認するコマンド
 ```
-$ kubectl logs ポッド名
+root@mgmt01:~# kubectl logs ポッド名
 ```
 
 <br><br>
 デプロイメントの状態を確認するコマンド
 ```
-$ kubectl describe deployments デプロイメント名
+root@mgmt01:~# kubectl describe deployments デプロイメント名
 ```
 
 <br><br>
 他にも以下のようなコマンドで状態を確認することができます。 デプロイ時のYAMLファイル単位や、定義しているラベル単位でも情報を確認できます。
 ```
-$ kubectl describe -f YAML定義ファイル
-$ kubectl describe -l ラベル名
+root@mgmt01:~# kubectl describe -f YAML定義ファイル
+root@mgmt01:~# kubectl describe -l ラベル名
 ```
 
 <br>
@@ -166,12 +166,12 @@ $ kubectl describe -l ラベル名
 Pod名を確認してmy-nginxのポッドを削除します。
 
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
 my-nginx-86b474f5bb-qlgzf   1/1     Running   0          20m
 
-$ kubectl delete pod my-nginx-86b474f5bb-qlgzf
+root@mgmt01:~# kubectl delete pod my-nginx-86b474f5bb-qlgzf
 
 pod "my-nginx-86b474f5bb-qlgzf" deleted
 ```
@@ -179,7 +179,7 @@ pod "my-nginx-86b474f5bb-qlgzf" deleted
 Podの状態を再度確認します。
 
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                        READY   STATUS    RESTARTS   AGE
 my-nginx-86b474f5bb-cz4fb   1/1     Running   0          2m
@@ -188,25 +188,25 @@ Pod名が`my-nginx-86b474f5bb-qlgzf`から`my-nginx-86b474f5bb-cz4fb`変わっ�
 
 
  Podを削除するにはデプロイメントを削除します。
-* $ kubectl delete deployments デプロイメント名
-* $ kubectl delete services サービス名
+* root@mgmt01:~# kubectl delete deployments デプロイメント名
+* root@mgmt01:~# kubectl delete services サービス名
  
 ```
-$ kubectl get deployment
+root@mgmt01:~# kubectl get deployment
 
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 my-nginx   1/1     1            1           26m
 
-$ kubectl delete deployment my-nginx
+root@mgmt01:~# kubectl delete deployment my-nginx
 
 deployment.apps "my-nginx" deleted
 
-$ kubectl get services
+root@mgmt01:~# kubectl get services
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        122m
 my-nginx     NodePort    10.101.151.52   <none>        80:31600/TCP   23m
 
-$  kubectl delete services my-nginx
+root@mgmt01:~#  kubectl delete services my-nginx
 service "my-nginx" deleted
 ```
 
