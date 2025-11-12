@@ -331,7 +331,7 @@ persistentvolumeclaim/pvcclone-from-snap created
 
 PVCの状態を確認します。
 ```
-kubectl get pvc
+root@mgmt01:~# kubectl get pvc
 NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-my-nginx3        Bound    pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 14m
 pvcclone-from-snap   Bound    pvc-5346dbec-b53f-444f-a267-d6a0efe49b39   1Gi        RWO            ontap-gold     <unset>                 11s
