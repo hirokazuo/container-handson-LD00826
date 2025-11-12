@@ -29,7 +29,7 @@ my-nginx3用のPVCをデプロイします。デプロイするためのYAMLフ�
 
 ホームディレクトリにpvc-my-nginx3.yamlを作成
 ```
-$ cat <<EOF | sudo tee $HOME/pvc-my-nginx3.yaml
+root@mgmt01:~# cat <<EOF | sudo tee $HOME/pvc-my-nginx3.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -47,13 +47,13 @@ EOF
 
 作成したYAMLファイルを使ってPVCを作成します。
 ```
-$ kubectl apply -f pvc-my-nginx3.yaml
+root@mgmt01:~# kubectl apply -f pvc-my-nginx3.yaml
 
 persistentvolumeclaim/pvc-my-nginx3 created
 ```
 
 ```
-$ kubectl get pvc
+root@mgmt01:~# kubectl get pvc
 
 NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-my-nginx3   Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 30s
@@ -120,7 +120,7 @@ KubernetesのPod定義をYAMLで記述する際、`volumeMounts`内の`name`フ�
 
 作成したYAMLファイルを使ってnginxのPodを作成します。
 ```
-$ kubectl apply -f my-nginx3.yaml
+root@mgmt01:~# kubectl apply -f my-nginx3.yaml
 
 service/my-nginx3 created
 deployment.apps/my-nginx3-deployment created
@@ -129,7 +129,7 @@ deployment.apps/my-nginx3-deployment created
 
 Podの状態を確認します。
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
 my-nginx3-deployment-5f5dd7c595-q6vhh   1/1     Running   0          48s
@@ -139,7 +139,7 @@ my-nginx3-deployment-5f5dd7c595-q6vhh   1/1     Running   0          48s
 
 nginxコンテナへのシェルの取得します。
 ```
-$ kubectl exec --stdin --tty my-nginx3-deployment-5f5dd7c595-q6vhh -- /bin/bash
+root@mgmt01:~# kubectl exec --stdin --tty my-nginx3-deployment-5f5dd7c595-q6vhh -- /bin/bash
 ```
 
 コンテナ内にTridentが作成したボリュームがマウントされていることを確認します。
@@ -186,7 +186,7 @@ root@my-nginx3-deployment-5f5dd7c595-4rjwm:/# exit
 
 nginxにアクセスするためのIPアドレスを確認します。
 ```
-$ kubectl get svc
+root@mgmt01:~# kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
 my-nginx3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP   3m37s
@@ -199,14 +199,14 @@ my-nginx3         LoadBalancer   10.109.105.180   192.168.0.223   80:31466/TCP  
 
 nginxのPodを削除します。
 ```
-$ kubectl delete pod my-nginx3-deployment-5f5dd7c595-q6vhh
+root@mgmt01:~# kubectl delete pod my-nginx3-deployment-5f5dd7c595-q6vhh
 
 pod "my-nginx3-deployment-5f5dd7c595-q6vhh" deleted
 ```
 
 nginxのPodの状態を確認します
 ```
-$ kubectl get pod
+root@mgmt01:~# kubectl get pod
 
 NAME                                    READY   STATUS    RESTARTS   AGE
 my-nginx3-deployment-5f5dd7c595-qpnv7   1/1     Running   0          27s
@@ -223,7 +223,7 @@ Podの名前が変わって新たに作成されていることが確認でき�
 Kubenetesノード上でのボリュームを確認します。Ubuntuホスト上でdfコマンドを実行します。
 ```
 (mgmt01 上で実行)
-$ df -h |grep trident
+root@mgmt01:~# df -h |grep trident
 
 192.168.0.121:/trident_pvc_bdf5a40d_a6d9_4e99_91bc_951343916eef  1.0G  320K  1.0G   1% /var/lib/kubelet/pods/30ed1ae0-e2f1-42a3-916b-b9f3bf3d2605/volumes/kubernetes.io~csi/pvc-bdf5a40d-a6d9-4e99-91bc-951343916eef/mount
 ```
@@ -251,14 +251,14 @@ EOF
 
 作成したYAMLファイルを使ってVolumeSnapshoptを作成します。
 ```
-$ kubectl apply -f $HOME/volumesnapshot-pvc-my-nginx3.yaml
+root@mgmt01:~# kubectl apply -f $HOME/volumesnapshot-pvc-my-nginx3.yaml
 
 volumesnapshot.snapshot.storage.k8s.io/snap-pvc-my-nginx3 created
 ```
 
 VolumeSnapshoptの状態を確認します。
 ```
-$ kubectl get volumesnapshot
+root@mgmt01:~# kubectl get volumesnapshot
 
 NAME                 READYTOUSE   SOURCEPVC       SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS   SNAPSHOTCONTENT                                    CREATIONTIME   AGE
 pvc-my-nginx3-snap   true         pvc-my-nginx3                           340Ki         csi-snapclass   snapcontent-efcc9dd1-7c05-4699-9841-f361de099eb5   3m16s          3m14s
@@ -291,14 +291,14 @@ EOF
 
 作成したYAMLファイルを使ってスナップショットからPVCをデプロイします。
 ```
-$ kubectl apply -f pvcclone-from-snap.yaml
+root@mgmt01:~# kubectl apply -f pvcclone-from-snap.yaml
 
 persistentvolumeclaim/pvc-from-snap created
 ```
 
 PVCの状態を確認します。
 ```
-$ kubectl get pvc
+root@mgmt01:~# kubectl get pvc
 
 NAME                 STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-my-nginx3        Bound     pvc-2d09720e-ba3c-498c-ab01-98555a76042f   1Gi        RWO            ontap-gold     <unset>                 5m58s
@@ -309,7 +309,7 @@ PVC `pvcclone-from-snap`の状態が `Pending`になっています。
 
 原因を確認するため、PVC `pvc-from-snap`リソースの割当状況を確認してください。
 ```
-$ kubectl describe pvc pvcclone-from-snap
+root@mgmt01:~# kubectl describe pvc pvcclone-from-snap
 ```
 コマンドの出力から何が確認できるでしょうか？
 先に作成した `pvcclone-from-snap.yaml` のどこが間違っているでしょうか？
@@ -317,14 +317,14 @@ $ kubectl describe pvc pvcclone-from-snap
  `pvcclone-from-snap.yaml` の修正内容がわかったら修正してください。
 修正したマニフェストを使って pvcclone-from-snapをデプロイする前にPending状態のpvcclone-from-snapを削除します。
 ```
-$ kubectl delete pvc pvcclone-from-snap
+root@mgmt01:~# kubectl delete pvc pvcclone-from-snap
 
 persistentvolumeclaim "pvcclone-from-snap" deleted
 ```
 
 修正したマニフェストを使って pvcclone-from-snapをデプロイします。
 ```
-$ kubectl apply -f pvcclone-from-snap.yaml
+root@mgmt01:~# kubectl apply -f pvcclone-from-snap.yaml
 
 persistentvolumeclaim/pvcclone-from-snap created
 ```
@@ -364,7 +364,7 @@ EOF
 
 作成したYAMLファイルを使ってスナップショットからPVCをデプロイします。
 ```
-$ kubectl apply -f clone-from-pvc.yaml
+root@mgmt01:~# kubectl apply -f clone-from-pvc.yaml
 
 persistentvolumeclaim/pvcclone-from-pvc-my-nginx3 created
 ```
@@ -372,7 +372,7 @@ persistentvolumeclaim/pvcclone-from-pvc-my-nginx3 created
 
 PVCの状態を確認します。
 ```
-$ kubectl get pvc
+root@mgmt01:~# kubectl get pvc
 
 NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 pvc-my-nginx3                 Bound    pvc-615523cd-6402-48a4-9523-6456fc49f04d   1Gi        RWO            ontap-gold     <unset>                 63m
@@ -393,7 +393,7 @@ pvcclone-from-snap            Bound    pvc-adcbf77e-4bbe-4d3a-929d-5624fadc1d5c 
 
 作成したYAMLファイルを使ってmy-nginx4をデプロイします。
 ```
-$ kubectl apply -f my-nginx4.yaml
+root@mgmt01:~# kubectl apply -f my-nginx4.yaml
 
 service/my-nginx4 created
 deployment.apps/my-nginx4-deployment created
@@ -401,7 +401,7 @@ deployment.apps/my-nginx4-deployment created
 
 my-nginx4のExternal-IPを確認します
 ```
-$ kubectl get svc
+root@mgmt01:~# kubectl get svc
 
 NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
 my-nginx4         LoadBalancer   10.104.163.225   192.168.0.224   80:30292/TCP   74s
