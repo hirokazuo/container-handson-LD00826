@@ -146,3 +146,21 @@ sysctl -w net.ipv4.ip_forward=1
 kubeadm join 192.168.0.203:6443 --token 6zekdp.18g39vcoxg7sjvm9 \
 	--discovery-token-ca-cert-hash sha256:0b834c42c8d3a484c27df33de06adc66fb49e98f41c130f17dd3fbc8a91d4378 
 ```
+
+### 以下メッセージが出力されれば成功です
+```
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
+
+ワーカーノードの状態を確認するために**mgmt01**ホスト上で`kubectl get nodes`コマンドを実行して確認します。
+
+```
+root@mgmt01:~# kubectl get nodes
+NAME     STATUS   ROLES           AGE     VERSION
+gpu01    Ready    <none>          5m25s   v1.33.4
+mgmt01   Ready    control-plane   58m     v1.33.4
+```
