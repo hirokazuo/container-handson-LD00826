@@ -195,6 +195,7 @@ serviceaccount/admin-user created
 
 
 **Creating a ClusterRoleBinding**に従って、ClusterRoleBinding-admin-user.yamlを作成します。
+```
 cat <<EOF | sudo tee $HOME/ClusterRoleBinding-admin-user.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -210,6 +211,7 @@ subjects:
   namespace: kubernetes-dashboard
 
 EOF
+```
 
 ```
 root@mgmt01:~# kubectl apply -f ClusterRoleBinding-admin-user.yaml
