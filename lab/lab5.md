@@ -268,7 +268,7 @@ snap-pvc-my-nginx3   true         pvc-my-nginx3                           536Ki 
 
 スナップショットからPVCを作成するためのマニフェストを作成します。
 
-pvc-from-snap.yamlを以下の内容で作成してください
+pvcclone-from-snap.yamlを以下の内容で作成してください
 ```
 cat <<EOF | sudo tee $HOME/pvcclone-from-snap.yaml
 apiVersion: v1
