@@ -45,7 +45,7 @@ validatingwebhookconfiguration.admissionregistration.k8s.io/metallb-webhook-conf
 
 以下、ヒアドキュメントでの作成例（viを使った作成でも構いません）
 ```
-root@mgmt01:~# cat <<EOF | sudo tee root@mgmt01:~#HOME/ipaddresspool.yaml
+root@mgmt01:~# cat <<EOF | sudo tee $HOME/ipaddresspool.yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -70,7 +70,7 @@ EOF
 
 作成したYAMLファイルを使ってロードバランサー用のIPアドレスのプールを設定します。
 ```
-root@mgmt01:~# kubectl apply -f root@mgmt01:~#HOME/ipaddresspool.yaml
+root@mgmt01:~# kubectl apply -f $HOME/ipaddresspool.yaml
 
 ipaddresspool.metallb.io/default created
 l2advertisement.metallb.io/default created
@@ -85,7 +85,7 @@ https://kubernetes.io/ja/docs/concepts/services-networking/connect-applications-
 
 マニフェスト: my-nginx2.yaml
 ```
-root@mgmt01:~# cat <<EOF | sudo tee root@mgmt01:~#HOME/my-nginx2.yaml
+root@mgmt01:~# cat <<EOF | sudo tee $HOME/my-nginx2.yaml
 apiVersion: v1
 kind: Service
 metadata:
